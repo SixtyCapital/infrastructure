@@ -1,0 +1,238 @@
+---
+- hosts: localhost
+  tasks:
+  - name: update
+    sudo: true
+    shell: sudo apt-get update
+
+  - name: Install pip
+    apt: name=python-pip
+
+  - name: Install python-dev
+    apt: name=python-all-dev
+
+  - name: Install psUtil
+    pip: name=psutil
+
+  - name: Installing pip packages - Quandl 2.8.6
+    pip: name=Quandl version=2.8.6
+
+  - name: Installing pip packages - SQLAlchemy 0.9.8
+    pip: name=SQLAlchemy version=0.9.8
+
+  - name: Installing pip packages - boto 2.34.0
+    pip: name=boto version=2.34.0
+
+  - name: Installing pip packages - dill 0.2.2
+    pip: name=dill version=0.2.2
+
+  - name: Installing pip packages - dogpile 0.2.2
+    pip: name=dogpile version=0.2.2
+
+  - name: Installing pip packages - dogpile.cache 0.5.4
+    pip: name=dogpile.cache version=0.5.4
+
+  - name: Installing pip packages - dogpile.core 0.4.1
+    pip: name=dogpile.core version=0.4.1
+
+  - name: Installing freetype for matplotlib
+    apt: name=freetype*
+
+
+  - name: Installing libs for matplotlib
+    apt: name=libxft-dev
+
+  - name: Installing matplotlib
+    pip: name=matplotlib
+
+  - name: Installing pip packages - ipython latest
+    pip: name=ipython #version=2.3.1
+
+  - name: Installing pip packages - lazy 1.2
+    pip: name=lazy version=1.2
+
+  - name: Installing pip packages - nose 1.3.6
+    pip: name=nose version=1.3.6
+
+  - name: Installing pip packages - numpy 1.9.2
+    pip: name=numpy version=1.9.2
+
+  - name: Installing pip packages - pandas 0.16.2
+    pip: name=pandas version=0.16.2
+
+  - name: Installing pyodbc
+    apt: name=unixodbc-dev
+
+  - name: Installing pip packages - pyodbc 3.0.6
+    pip: name=https://pyodbc.googlecode.com/files/pyodbc-3.0.7.zip
+
+  - name: Installing pip packages - python-dateutil 2.2
+    pip: name=python-dateutil version=2.2
+
+  - name: Installing pip packages - pytz 2014.9
+    pip: name=pytz version=2014.9
+
+  - name: Installing pip packages - setuptools 7.0
+    pip: name=setuptools version=7.0
+
+  - name: Installing pip packages - six 1.8.0
+    pip: name=six version=1.8.0
+
+  - name: Installing pip packages - wsgiref 0.1.2
+    pip: name=wsgiref version=0.1.2
+
+  - name: Installing pip packages - plotly
+    pip: name=plotly
+
+  - name: Installing freetds-dev
+    apt: name=freetds-dev
+
+  - name: Installing freetds-bin
+    apt: name=freetds-bin
+
+  - name: Installing tdsodbc
+    apt: name=tdsodbc
+
+  - name: Installing git-core
+    apt: name=git-core
+
+  - name: Installing bash-completion
+    apt: name=bash-completion
+
+  - name: Installing git up
+    pip: name=git-up
+
+  - name: Installing python-scipy
+    apt: name=python-scipy
+
+  - name: Installing Celery
+    pip: name=celery
+
+  - name: install lru-dict
+    pip: name=lru-dict
+
+  - name: install celery-s3
+    pip: name=celery-s3
+
+  - name: install statsmodel
+    pip: name=statsmodels version=0.6.1
+
+  - name: install libblas-dev
+    apt: name=libblas-dev
+
+  - name: install liblapack-dev
+    apt: name=liblapack-dev
+
+  - name: install futures
+    pip: name=futures
+
+  - name: install redis
+    pip: name=redis
+
+  - name: install profilehooks
+    pip: name=profilehooks
+
+  - name: install terminado
+    pip: name=terminado
+
+  - name: install cvxopt
+    pip: name=cvxopt
+
+  - name: install pysftp
+    pip: name=pysftp
+
+  - name: install quickfix
+    pip: name=quickfix
+
+  - name: install passlib
+    pip: name=passlib
+
+  - name: install flask_login
+    pip: name=flask_login
+
+  - name: install xlwt
+    pip: name=xlwt
+
+  - name: install qualname
+    pip: name=qualname
+
+  - name: install watchdog
+    pip: name=watchdog
+
+  - name: install watchdog
+    pip: name=flask-bootstrap
+
+  - name: install watchdog
+    pip: name=flask-bower
+
+  - name: install watchdog
+    pip: name=flask-wtf
+
+  - name: install nose-ipdb
+    pip: name=ipdbplugin
+
+  - name: install sklearn
+    pip: name=sklearn
+
+  - name: install funcsigs (backport of Py3 Signature)
+    pip: name=funcsigs
+
+  - name: install python-tk
+    apt: name=python-tk
+
+  - name: Add repo part 1
+    shell: sudo apt-get install -y python-software-properties
+
+  - name: Add repo part 2
+    shell: sudo add-apt-repository -y ppa:rwky/redis
+
+  - name: Redis Server
+    apt: name=redis-server update_cache=yes
+
+  - name: install tower-cli
+    pip: name=ansible-tower-cli
+
+  - name: uninstall pip to fix tower-cli
+    apt: name=python-pip state=absent
+
+  - name: reinstall pip to fix tower-cli
+    apt: name=python-pip
+
+    #Adding path as root user for pycharm!
+  - name: Setting up python path
+    copy: src=../files/enviroment dest=/etc/environment
+    sudo_user: root
+    sudo: yes
+
+  - name: Setting up odbc
+    copy: src=../files/odbcinst.ini dest=/etc/odbcinst.ini
+    sudo: yes
+
+  - name: Setting up python path II
+    copy: src=../files/bash_completion.sh dest=/etc/profile.d/bash_completion.sh
+    sudo_user: root
+    sudo: yes
+
+  - name: adding log level
+    lineinfile: dest=/home/ubuntu/.profile line="alias info='export LOGLVL=info'"
+    sudo: yes
+
+  - name: adding log level II
+    lineinfile: dest=/home/ubuntu/.profile line="alias debug='export LOGLVL=debug'"
+    sudo: yes
+
+  - name: adding current git branch checker
+    lineinfile: dest=/home/ubuntu/.profile line="alias cur='git rev-parse --abbrev-ref HEAD'"
+    sudo: yes
+
+  - name: Copy Environment Variables for redis DB
+    shell: echo  "REDIS_DB=3" >> /etc/environment
+    sudo: yes
+
+  - name: Copy Environment Variables for redis DB
+    shell: export REDIS_DB=3
+
+
+
+
+
