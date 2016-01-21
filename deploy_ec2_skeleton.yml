@@ -189,6 +189,13 @@
   - name: Redis Server
     apt: name=redis-server update_cache=yes
 
+  - name: Setting up odbc
+    template: src=redis.conf dest=/etc/redis/redis.conf
+    sudo: yes
+
+  - name: Start Redis Server
+    shell: sudo redis-server /etc/redis/redis.conf
+
   - name: install tower-cli
     pip: name=ansible-tower-cli
 
@@ -200,16 +207,16 @@
 
     #Adding path as root user for pycharm!
   - name: Setting up python path
-    copy: src=../files/enviroment dest=/etc/environment
+    copy: src=/home/ubuntu/ansible/files/enviroment dest=/etc/environment
     sudo_user: root
     sudo: yes
 
   - name: Setting up odbc
-    copy: src=../files/odbcinst.ini dest=/etc/odbcinst.ini
+    copy: src=/home/ubuntu/ansible/files/odbcinst.ini dest=/etc/odbcinst.ini
     sudo: yes
 
   - name: Setting up python path II
-    copy: src=../files/bash_completion.sh dest=/etc/profile.d/bash_completion.sh
+    copy: src=/home/ubuntu/ansible/files/bash_completion.sh dest=/etc/profile.d/bash_completion.sh
     sudo_user: root
     sudo: yes
 
@@ -226,11 +233,11 @@
     sudo: yes
 
   - name: Copy Environment Variables for redis DB
-    shell: echo  "REDIS_DB=3" >> /etc/environment
+    shell: echo  "REDIS_DB={{redis_db}}" >> /etc/environment
     sudo: yes
 
   - name: Copy Environment Variables for redis DB
-    shell: export REDIS_DB=3
+    shell: export REDIS_DB="{{redis_db}}"
 
 
 
