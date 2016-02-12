@@ -5,7 +5,7 @@
     region: us-east-1
     image: ami-fce3c696
     type: m3.large
-    keyname: temp2014-10-10
+    keyname: infrastructure
     sg: sg-4a28e12d
     vpc_subnet_id: subnet-64b0a04c
     name: development
