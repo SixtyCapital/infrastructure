@@ -62,12 +62,7 @@
   sudo: yes
   sudo_user: ubuntu
   vars:
-    sixty_branch: master
-    sector_branch: master
-    alpha_branch: master
-    mercury_branch: master
-    delphi_branch: master
-    minerva_branch: master
+    infrastructure_branch: master
     email: admin@sixtycapital.com
   roles:
     - git
