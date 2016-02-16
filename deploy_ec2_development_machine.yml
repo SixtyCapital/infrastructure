@@ -33,6 +33,7 @@
       wait: yes
       wait_timeout: 300
     register: ec2 
+    changed_when: false
 
   - name: waiting for ssh to start
     wait_for: port=22 host={{ item.public_dns_name }} timeout=300
@@ -56,6 +57,7 @@
   tasks:
     - name: start notebook server
       shell: nohup /home/ubuntu/inote.sh
+      changed_when: false
 
 - hosts: dev
   remote_user: ubuntu
@@ -69,3 +71,4 @@
   tasks:
     - name: Change github name
       shell: git config --global user.email "{{ email }}"
+      changed_when: false
