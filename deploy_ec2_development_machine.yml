@@ -54,10 +54,6 @@
   roles:
      - development
      - { role: ipython_notebook, tags: 'ipython_notebook' }
-  tasks:
-    - name: start notebook server
-      shell: nohup /home/ubuntu/inote.sh
-      changed_when: false
 
 - hosts: dev
   remote_user: ubuntu
