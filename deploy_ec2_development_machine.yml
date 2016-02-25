@@ -47,8 +47,6 @@
 
 - hosts: dev
   remote_user: ubuntu
-  sudo_user: root
-  sudo: yes
   vars:
     redis_db: 1
   roles:
