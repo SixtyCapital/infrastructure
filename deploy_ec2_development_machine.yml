@@ -12,7 +12,6 @@
     class: dev
     count: 1
     email: admin@sixtycapital.com
-    
 
   tasks:
   - name: launch temporary instance
@@ -49,6 +48,8 @@
   remote_user: ubuntu
   vars:
     redis_db: 1
+    repos:
+    - { repo: sixty, branch: develop }
   roles:
      - development
      - { role: ipython_notebook, tags: 'ipython_notebook' }
