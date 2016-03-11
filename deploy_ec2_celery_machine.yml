@@ -4,7 +4,7 @@
   vars:
     region: us-east-1
     image: ami-fce3c696
-    type: t2.large
+    type: m4.2xlarge
     keyname: infrastructure
     sg: sg-4a28e12d
     vpc_subnet_id: subnet-64b0a04c
@@ -48,7 +48,11 @@
   remote_user: ubuntu
   vars:
     redis_db: 1
+    type: m4.2xlarge
+    repos:
+    - { repo: sixty, branch: develop }
   roles:
+     - atlas
      - development
      - celery
 
