@@ -4,7 +4,7 @@
   vars:
     region: us-east-1
     image: ami-fce3c696
-    type: m4.2xlarge
+    type: t2.large
     keyname: infrastructure
     sg: sg-4a28e12d
     vpc_subnet_id: subnet-64b0a04c
@@ -47,7 +47,7 @@
   remote_user: ubuntu
   vars:
     redis_db: 1
-    type: m4.2xlarge
+    type: "{{ hostvars['localhost']['ec2']['instances'][0]['instance_type'] }}"
     repos:
     - { repo: sixty, branch: develop }
   roles:
