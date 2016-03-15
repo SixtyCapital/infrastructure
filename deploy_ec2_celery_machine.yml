@@ -48,7 +48,11 @@
   remote_user: ubuntu
   vars:
     redis_db: 1
+    type: "{{ hostvars['localhost']['ec2']['instances'][0]['instance_type'] }}"
+    repos:
+    - { repo: sixty, branch: develop }
   roles:
+     - atlas
      - development
      - celery
 
