@@ -5,10 +5,10 @@
     region: us-east-1
     image: ami-fce3c696
     type: t2.large
-    keyname: infrastructure
+    keyname: alex
     sg: sg-4a28e12d
     vpc_subnet_id: subnet-64b0a04c
-    name: development
+    name: celery
     class: dev
     count: 1
 
@@ -49,7 +49,4 @@
     repos:
     - { repo: sixty, branch: develop }
   roles:
-     - development
-#     - atlas
-#     - git
-
+    - celery_docker

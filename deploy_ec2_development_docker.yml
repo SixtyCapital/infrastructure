@@ -5,7 +5,7 @@
     region: us-east-1
     image: ami-fce3c696
     type: t2.large
-    keyname: infrastructure
+    keyname: alex
     sg: sg-4a28e12d
     vpc_subnet_id: subnet-64b0a04c
     name: development
@@ -48,8 +48,8 @@
     email: admin@sixtycapital.com
     repos:
     - { repo: sixty, branch: develop }
+    - { repo: infrastructure, branch: master }
   roles:
-     - development
-#     - atlas
-#     - git
-
+    - development_docker
+#    - git
+#    - atlas

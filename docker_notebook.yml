@@ -1,0 +1,5 @@
+---
+- name: configure the container with ansible
+  hosts: localhost
+  roles:
+  - ipython_notebook

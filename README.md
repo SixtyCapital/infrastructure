@@ -1,22 +1,54 @@
-### Automated iPython Server
+# Ansible cookbooks
 
-#### Usage:
 
-Connect to a dev linux server: `ssh ubuntu@54.172.16.9 -i keys/temp2014-10-10.pem`
+## Plain deployment cookbooks
 
-To deploy EC2 instance and tag it with class=notebook:  
-`ansible-playbook deploy_ec2.yml`
+### `deploy_ec2_celery_machine.yml`
 
-To install, configure, and run ipython notebook server on the EC2:  
-`ansible-playbook -i ec2.py deploy_notebook.yml`
+Build & deploy Celery machine on EC2 instance
 
-Link to notebook will be displayed on debug message.
+### `deploy_ec2_development_machine.yml`
 
-To start ipython notebook only, and display link:  
-`ansible-playbook -i ec2.py deploy_notebook.yml --tags=run`
+Build & deploy Development machine on EC2 instance
 
-To kill ipython notebook:  
-`ansible-playbook -i ec2.py kill_notebook.yml`  
+## Docker deployment cookbooks
+
+### `deploy_ec2_celery_docker.yml`
+
+Deploy Celery machine on EC2 using prebuilt Docker container
+
+### `deploy_ec2_development_docker.yml`
+
+Deploy Development machine on EC2 using prebuilt Docker container
+
+### `deploy_ec2_notebook_docker.yml`
+
+Deploy iPython Notebook on EC2 using prebuilt Docker container
+
+## Build cookbooks
+
+###  `build_development.yml`
+
+Builds basis Docker container (APT & PIP installs) and pushes it to ECR
+
+### `build_celery.yml`
+
+Builds Docker container for Celery machine and pushes it to ECR
+
+### `build_notebook.yml`
+
+Builds Docker container for iPython notebook and pushes it to ECR
+
+## Other cookbooks
+
+### `docker_celery.yml`
+Used by `build_celery.yml`
+### `docker_development.yml`
+Used by `build_development.yml`
+### `docker_notebook.yml`
+Used by `build_notebook.yml`
+
+
 
 
 
