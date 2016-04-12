@@ -45,8 +45,13 @@
 - hosts: dev
   remote_user: ubuntu
   vars:
+    tag: latest
     email: admin@sixtycapital.com
     repos:
     - { repo: sixty, branch: develop }
+    env:
+    - { name: REDIS_DB, value: 1 }
+    - { name: SIXTY_CONFIG_FILE, value: ~/git/sixty/config.yaml }
   roles:
+    - git 
     - celery_docker

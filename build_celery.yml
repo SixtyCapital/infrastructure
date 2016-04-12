@@ -1,4 +1,6 @@
 - hosts: localhost
+  vars:
+    tag: latest
 
   tasks:
   - name: create an unique temp container name
@@ -12,14 +14,14 @@
       -w /home/ubuntu
       -u ubuntu
       --name={{temp_container_name}}
-      491722570113.dkr.ecr.us-east-1.amazonaws.com/development:latest
+      491722570113.dkr.ecr.us-east-1.amazonaws.com/development:{{ tag }}
       ansible-playbook /tmp/ansible/docker_celery.yml -c local"
 
   - name: create an image
     command: "docker commit 
       -c 'EXPOSE 80'
       -c 'CMD [\"/etc/init.d/celeryd start\"]'
-      {{temp_container_name}} 491722570113.dkr.ecr.us-east-1.amazonaws.com/celery"
+      {{temp_container_name}} 491722570113.dkr.ecr.us-east-1.amazonaws.com/celery:{{ tag }}"
 
   - name: delete temporary container
     command: "docker rm {{temp_container_name}}"
@@ -28,5 +30,5 @@
     shell: eval $(aws ecr get-login)
 
   - name: push container
-    command: docker push 491722570113.dkr.ecr.us-east-1.amazonaws.com/celery
+    command: docker push 491722570113.dkr.ecr.us-east-1.amazonaws.com/celery:{{ tag }}
 

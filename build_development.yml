@@ -1,4 +1,6 @@
 - hosts: localhost
+  vars:
+    tag: latest
 
   tasks:
   - name: create an unique temp container name
@@ -15,7 +17,7 @@
       ansible-playbook docker_development.yml -c local"
 
   - name: create an image
-    command: "docker commit {{temp_container_name}} 491722570113.dkr.ecr.us-east-1.amazonaws.com/development"
+    command: "docker commit {{temp_container_name}} 491722570113.dkr.ecr.us-east-1.amazonaws.com/development:{{ tag }}"
 
   - name: delete temporary container
     command: "docker rm {{temp_container_name}}"
@@ -24,5 +26,5 @@
     shell: eval $(aws ecr get-login)
 
   - name: push container
-    command: docker push 491722570113.dkr.ecr.us-east-1.amazonaws.com/development
+    command: docker push 491722570113.dkr.ecr.us-east-1.amazonaws.com/development:{{ tag }}
 
