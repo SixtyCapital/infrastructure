@@ -51,7 +51,9 @@
     - { repo: sixty, branch: develop }
     env:
     - { name: REDIS_DB, value: 1 }
-    - { name: SIXTY_CONFIG_FILE, value: ~/git/sixty/config.yaml }
+    - { name: IS_CELERY_WORKER, value: 1 }
+    - { name: SIXTY_CONFIG_FILE, value: ~/workspace/sixty/config.yaml }
+    - { name: PYTHONPATH, value: /home/ubuntu/workspace/sixty }
   roles:
     - git 
     - celery_docker
