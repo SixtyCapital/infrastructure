@@ -5,10 +5,10 @@
     region: us-east-1
     image: ami-fce3c696
     type: t2.large
-    keyname: infrastructure
+    keyname: alex
     sg: sg-4a28e12d
     vpc_subnet_id: subnet-64b0a04c
-    name: development
+    name: celery
     class: dev
     count: 1
 
@@ -45,11 +45,15 @@
 - hosts: dev
   remote_user: ubuntu
   vars:
+    tag: latest
     email: admin@sixtycapital.com
     repos:
     - { repo: sixty, branch: develop }
+    env:
+    - { name: REDIS_DB, value: 1 }
+    - { name: IS_CELERY_WORKER, value: 1 }
+    - { name: SIXTY_CONFIG_FILE, value: ~/workspace/sixty/config.yaml }
+    - { name: PYTHONPATH, value: /home/ubuntu/workspace/sixty }
   roles:
-     - development
-#     - atlas
-#     - git
-
+    - git 
+    - celery_docker
