@@ -1,30 +1,5 @@
 - hosts: localhost
   vars:
     tag: latest
-
-  tasks:
-  - name: create an unique temp container name
-    set_fact:
-      temp_container_name: "temp_build_{{lookup('pipe', 'date \"+%Y%m%d%H%M%S\"')}}"
-      dir: "{{lookup('pipe', 'pwd')}}"
-    
-  - name: build site by running ansible in a docker container
-    command: "docker run
-      -v {{dir}}:/root/ansible
-      -w /root/ansible
-      --name={{temp_container_name}}
-      ansible/ubuntu14.04-ansible:stable
-      ansible-playbook docker_development.yml -c local"
-
-  - name: create an image
-    command: "docker commit {{temp_container_name}} 491722570113.dkr.ecr.us-east-1.amazonaws.com/development:{{ tag }}"
-
-  - name: delete temporary container
-    command: "docker rm {{temp_container_name}}"
-
-  - name: authenticate against ECR
-    shell: eval $(aws ecr get-login)
-
-  - name: push container
-    command: docker push 491722570113.dkr.ecr.us-east-1.amazonaws.com/development:{{ tag }}
-
+  roles:
+  - build_development

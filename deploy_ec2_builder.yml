@@ -1,0 +1,65 @@
+---
+
+- hosts: localhost
+  vars:
+    region: us-east-1
+    image: ami-fce3c696
+    type: t2.large
+    keyname: alex
+    sg: sg-4a28e12d
+    vpc_subnet_id: subnet-64b0a04c
+    name: builder
+    class: dev
+    count: 1
+
+  tasks:
+  - name: launch temporary instance
+    ec2:
+      assign_public_ip: yes
+      region: "{{ region }}"
+      key_name: "{{ keyname }}"
+      group: "{{ sg }}"
+      instance_type: "{{ type }}"
+      vpc_subnet_id: "{{ vpc_subnet_id }}"
+      image: "{{ image }}"
+      instance_profile_name: ecsInstanceRole
+      wait: yes
+      wait_timeout: 500
+      count: "{{ count }}"
+      instance_tags:
+          Name: "{{ name }}"
+          class: "{{ class }}"
+    register: ec2 
+    tags: always
+
+  - name: waiting for ssh to start
+    wait_for: port=22 host={{ item.public_dns_name }} timeout=300
+              search_regex=OpenSSH
+    with_items: ec2.instances
+    tags: always
+
+  - name: add host to group
+    add_host: name={{ item.public_ip }} groups=dev
+    with_items: ec2.instances    
+    tags: always
+
+- hosts: dev
+  remote_user: ubuntu
+  vars:
+    email: admin@sixtycapital.com
+    tag: latest
+    repos:
+    - { repo: infrastructure, branch: master }
+  roles:
+    - { role: docker, tags: always }
+    - { role: git, tags: always }
+    - build_container
+
+- hosts: localhost
+  tasks:
+  - name: delete temporary instance
+    ec2:
+      region: "{{ ec2.instances.0.region }}"
+      state: absent
+      instance_ids: "{{ ec2.instance_ids }}"
+    tags: always
