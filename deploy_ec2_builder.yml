@@ -22,14 +22,13 @@
       instance_type: "{{ type }}"
       vpc_subnet_id: "{{ vpc_subnet_id }}"
       image: "{{ image }}"
+      instance_profile_name: ecsInstanceRole
       wait: yes
       wait_timeout: 500
       count: "{{ count }}"
       instance_tags:
           Name: "{{ name }}"
           class: "{{ class }}"
-      wait: yes
-      wait_timeout: 300
     register: ec2 
     tags: always
 
@@ -50,7 +49,7 @@
     email: admin@sixtycapital.com
     tag: latest
     repos:
-    - { repo: infrastructure, branch: build_container }
+    - { repo: infrastructure, branch: master }
   roles:
     - { role: docker, tags: always }
     - { role: git, tags: always }
@@ -58,7 +57,7 @@
 
 - hosts: localhost
   tasks:
-  - name: stop the instance
+  - name: delete temporary instance
     ec2:
       region: "{{ ec2.instances.0.region }}"
       state: absent
