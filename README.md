@@ -17,6 +17,10 @@ Build & deploy Development machine on EC2 instance
 
 Deploy Celery machine on EC2 using prebuilt Docker container
 
+### `deploy_ec2_celery_grid.yml`
+
+Deploy Celery grid (worker machines + flower machine) on EC2 using prebuilt Docker container
+
 ### `deploy_ec2_development_docker.yml`
 
 Deploy Development machine on EC2 using prebuilt Docker container
@@ -27,26 +31,30 @@ Deploy iPython Notebook on EC2 using prebuilt Docker container
 
 ## Build cookbooks
 
-###  `build_development.yml`
+###  `deploy_ec2_builder.yml`
 
-Builds basis Docker container (APT & PIP installs) and pushes it to ECR
+Deploy Builder machine which builds Docker container and pushes it to ECR. Must be supplied with one of following tags:
 
-### `build_celery.yml`
+#### `--tags development`
 
-Builds Docker container for Celery machine and pushes it to ECR
+Builds a basic Docker container (APT & PIP installs)
 
-### `build_notebook.yml`
+#### `--tags celery`
 
-Builds Docker container for iPython notebook and pushes it to ECR
+Builds a Docker container for Celery machine
+
+#### `--tags notebook`
+
+Builds a Docker container for iPython notebook
 
 ## Other cookbooks
 
 ### `docker_celery.yml`
-Used by `build_celery.yml`
+Used by `deploy_ec2_builder.yml --tags celery`
 ### `docker_development.yml`
-Used by `build_development.yml`
+Used by `deploy_ec2_builder.yml --tags development`
 ### `docker_notebook.yml`
-Used by `build_notebook.yml`
+Used by `deploy_ec2_builder.yml --tags notebook`
 
 
 

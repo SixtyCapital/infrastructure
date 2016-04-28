@@ -8,7 +8,7 @@
     keyname: alex
     sg: sg-4a28e12d
     vpc_subnet_id: subnet-64b0a04c
-    name: development
+    name: notebook
     class: dev
     count: 1
 
@@ -21,6 +21,7 @@
       group: "{{ sg }}"
       instance_type: "{{ type }}"
       vpc_subnet_id: "{{ vpc_subnet_id }}"
+      instance_profile_name: ecsInstanceRole
       image: "{{ image }}"
       wait: yes
       wait_timeout: 500
@@ -49,5 +50,6 @@
     repos:
     - { repo: sixty, branch: develop }
     - { repo: infrastructure, branch: master }
+
   roles:
     - notebook_docker
