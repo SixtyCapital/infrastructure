@@ -52,4 +52,4 @@
     - { repo: infrastructure, branch: master }
 
   roles:
-    - notebook_docker
+    - jupyter_docker

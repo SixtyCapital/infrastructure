@@ -25,9 +25,9 @@ Deploy Celery grid (worker machines + flower machine) on EC2 using prebuilt Dock
 
 Deploy Development machine on EC2 using prebuilt Docker container
 
-### `deploy_ec2_notebook_docker.yml`
+### `deploy_ec2_jupyter.yml`
 
-Deploy iPython Notebook on EC2 using prebuilt Docker container
+Deploy iPython Jupyter on EC2 using prebuilt Docker container
 
 ## Build cookbooks
 
@@ -43,9 +43,9 @@ Builds a basic Docker container (APT & PIP installs)
 
 Builds a Docker container for Celery machine
 
-#### `--tags notebook`
+#### `--tags jupyter`
 
-Builds a Docker container for iPython notebook
+Builds a Docker container for iPython jupyter
 
 ## Other cookbooks
 
@@ -53,8 +53,8 @@ Builds a Docker container for iPython notebook
 Used by `deploy_ec2_builder.yml --tags celery`
 ### `docker_development.yml`
 Used by `deploy_ec2_builder.yml --tags development`
-### `docker_notebook.yml`
-Used by `deploy_ec2_builder.yml --tags notebook`
+### `docker_jupyter.yml`
+Used by `deploy_ec2_builder.yml --tags jupyter`
 
 
 
