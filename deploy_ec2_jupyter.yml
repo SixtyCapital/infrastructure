@@ -52,4 +52,5 @@
     - { repo: infrastructure, branch: master }
 
   roles:
+    - git
     - jupyter_docker
