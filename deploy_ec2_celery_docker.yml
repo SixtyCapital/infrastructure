@@ -57,3 +57,4 @@
   roles:
     - git 
     - celery_docker
+    - celery_worker
