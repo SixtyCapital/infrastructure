@@ -81,7 +81,6 @@
     - { name: REDIS_DB, value: 1 }
     - { name: IS_CELERY_WORKER, value: 1 }
     - { name: SIXTY_CONFIG_FILE, value: ~/workspace/sixty/config.yaml }
-    - { name: PYTHONPATH, value: "/home/ubuntu/workspace/sixty:/home/ubuntu/workspace/sector:/home/ubuntu/workspace/alpha:/home/ubuntu/workspace/delphi:/home/ubuntu/workspace/minerva:/home/ubuntu/workspace/mercury" }
   roles:
     - git 
     - celery_worker
@@ -97,7 +96,6 @@
     - { name: REDIS_DB, value: 1 }
     - { name: IS_CELERY_WORKER, value: 1 }
     - { name: SIXTY_CONFIG_FILE, value: ~/workspace/sixty/config.yaml }
-    - { name: PYTHONPATH, value: "/home/ubuntu/workspace/sixty:/home/ubuntu/workspace/sector:/home/ubuntu/workspace/alpha:/home/ubuntu/workspace/delphi:/home/ubuntu/workspace/minerva:/home/ubuntu/workspace/mercury" }
     etl_args: ""
   roles:
     - git
