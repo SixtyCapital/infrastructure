@@ -74,7 +74,6 @@
   remote_user: ubuntu
   vars:
     tag: latest
-    email: admin@sixtycapital.com
     repos:
     - { repo: sixty, branch: fake_celery }
     env:
@@ -89,7 +88,6 @@
   remote_user: ubuntu
   vars:
     tag: latest
-    email: admin@sixtycapital.com
     repos:
     - { repo: sixty, branch: fake_celery }
     env:

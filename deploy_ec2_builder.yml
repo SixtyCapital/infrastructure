@@ -46,7 +46,6 @@
 - hosts: dev
   remote_user: ubuntu
   vars:
-    email: admin@sixtycapital.com
     tag: latest
     repos:
     - { repo: infrastructure, branch: master }
