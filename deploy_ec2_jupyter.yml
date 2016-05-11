@@ -50,7 +50,8 @@
     repos:
     - { repo: sixty, branch: develop }
     - { repo: infrastructure, branch: master }
-
+    env:
+    - { name: PYTHONPATH, value: "/home/ubuntu/workspace/sixty:/home/ubuntu/workspace/sector:/home/ubuntu/workspace/alpha:/home/ubuntu/workspace/delphi:/home/ubuntu/workspace/minerva:/home/ubuntu/workspace/mercury" }
   roles:
     - git
     - jupyter_docker
