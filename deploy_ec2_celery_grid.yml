@@ -74,14 +74,12 @@
   remote_user: ubuntu
   vars:
     tag: latest
-    email: admin@sixtycapital.com
     repos:
     - { repo: sixty, branch: fake_celery }
     env:
     - { name: REDIS_DB, value: 1 }
     - { name: IS_CELERY_WORKER, value: 1 }
     - { name: SIXTY_CONFIG_FILE, value: ~/workspace/sixty/config.yaml }
-    - { name: PYTHONPATH, value: /home/ubuntu/workspace/sixty }
   roles:
     - git 
     - celery_worker
@@ -90,14 +88,12 @@
   remote_user: ubuntu
   vars:
     tag: latest
-    email: admin@sixtycapital.com
     repos:
     - { repo: sixty, branch: fake_celery }
     env:
     - { name: REDIS_DB, value: 1 }
     - { name: IS_CELERY_WORKER, value: 1 }
     - { name: SIXTY_CONFIG_FILE, value: ~/workspace/sixty/config.yaml }
-    - { name: PYTHONPATH, value: /home/ubuntu/workspace/sixty }
     etl_args: ""
   roles:
     - git

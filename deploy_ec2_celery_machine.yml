@@ -11,7 +11,6 @@
     name: celery
     class: dev
     count: 1
-    email: admin@sixtycapital.com
     
 
   tasks:

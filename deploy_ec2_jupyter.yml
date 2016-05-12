@@ -46,11 +46,9 @@
 - hosts: dev
   remote_user: ubuntu
   vars:
-    email: admin@sixtycapital.com
     repos:
     - { repo: sixty, branch: develop }
     - { repo: infrastructure, branch: master }
-
   roles:
     - git
     - jupyter_docker
