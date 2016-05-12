@@ -94,7 +94,7 @@
     - { name: REDIS_DB, value: 1 }
     - { name: IS_CELERY_WORKER, value: 1 }
     - { name: SIXTY_CONFIG_FILE, value: ~/workspace/sixty/config.yaml }
-    etl_args: ""
+    etl_start: "workspace/sixty/sixty/etl/start_etl.py"
   roles:
     - git
     - celery_flower
