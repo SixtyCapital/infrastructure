@@ -4,7 +4,7 @@ This is a quick guide on how to inteteract with the Docker written in a form of 
 ## What is ECR
 **ECR** is stands as EC2 Container Registry. Here we keep our container images. In terms of ECR, every container image is a **Repository**. In every repository we can keep one or more versions of some image. Every version has it own **tag**.
 
-So, name of every image can be written in the next form: `ECR name/repo:tag`, where ECR name every time is `491722570113.dkr.ecr.us-east-1.amazonaws.com`.
+So, name of every image can be written in the next form: `ECR name/repo:tag`, where ECR name is always `491722570113.dkr.ecr.us-east-1.amazonaws.com`.
 
 For example, latest version of our basic development image has a name: `491722570113.dkr.ecr.us-east-1.amazonaws.com/development:latest`
 
@@ -59,3 +59,11 @@ where **id** is a container id. This command just run a `bash` process inside a 
 ## How to get a container id
 
 `docker ps` shows a list of running containers. Add `-a` to also show stopped containers.
+
+## How to create a new container
+
+If you did some work inside container, and want to save it as another container:
+
+`docker commit <container_id> <image_name>`
+
+After that, you will be able to run a new container out of you new **image_name**.
