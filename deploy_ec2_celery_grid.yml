@@ -8,9 +8,13 @@
     keyname: alex
     sg: sg-4a28e12d
     vpc_subnet_id: subnet-64b0a04c
-    name: celery-grid
+    name: CeleryGrid
     class: dev
     count: 7
+    repos:
+      sixty: develop
+    env:
+      REDIS_DB: 1
 
   tasks:
   - name: launch worker instances
@@ -21,12 +25,13 @@
       group: "{{ sg }}"
       instance_type: "{{ type }}"
       vpc_subnet_id: "{{ vpc_subnet_id }}"
+      instance_profile_name: ecsInstanceRole
       image: "{{ image }}"
       wait: yes
       wait_timeout: 500
       count: "{{ count }}"
       instance_tags:
-          Name: "{{ name }}"
+          Name: "{{ name }}-{{ repos.sixty }}-db{{ env.REDIS_DB }}"
           class: "{{ class }}"
       wait: yes
       wait_timeout: 300
@@ -49,12 +54,13 @@
       group: "{{ sg }}"
       instance_type: "{{ type }}"
       vpc_subnet_id: "{{ vpc_subnet_id }}"
+      instance_profile_name: ecsInstanceRole
       image: "{{ image }}"
       wait: yes
       wait_timeout: 500
       count: 1
       instance_tags:
-          Name: "{{ name }}-master"
+          Name: "{{ name }}-{{ repos.sixty }}-db{{ env.REDIS_DB }}-master"
           class: "{{ class }}"
       wait: yes
       wait_timeout: 300
@@ -75,11 +81,11 @@
   vars:
     tag: latest
     repos:
-    - { repo: sixty, branch: fake_celery }
+      sixty: develop
     env:
-    - { name: REDIS_DB, value: 1 }
-    - { name: IS_CELERY_WORKER, value: 1 }
-    - { name: SIXTY_CONFIG_FILE, value: ~/workspace/sixty/config.yaml }
+      REDIS_DB: 1
+      IS_CELERY_WORKER: 1
+      SIXTY_CONFIG_FILE: "~/workspace/sixty/config.yaml"
   roles:
     - git 
     - celery_worker
@@ -89,12 +95,12 @@
   vars:
     tag: latest
     repos:
-    - { repo: sixty, branch: fake_celery }
+      sixty: develop
     env:
-    - { name: REDIS_DB, value: 1 }
-    - { name: IS_CELERY_WORKER, value: 1 }
-    - { name: SIXTY_CONFIG_FILE, value: ~/workspace/sixty/config.yaml }
-    etl_args: ""
+      REDIS_DB: 1
+      IS_CELERY_WORKER: 1
+      SIXTY_CONFIG_FILE: "~/workspace/sixty/config.yaml"
+    etl_start: "workspace/sixty/sixty/etl/start_etl.py"
   roles:
     - git
     - celery_flower
