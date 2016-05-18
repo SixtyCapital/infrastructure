@@ -1,62 +1,45 @@
-# Ansible cookbooks
+# Quick examples
+
+## How to start a development machine
+1. Use the Tower or command line to deploy an instance:
+	`ansible-playbook deploy_ec2_development_docker.yml`
+2. SSH to the instance, and start command shell in Docker container: `docker run -ti 491722570113.dkr.ecr.us-east-1.amazonaws.com/development /bin/bash`
+	
+### Variables to redefine:
+- `keyname`: SSH key name to use
+- `tag`: ECR image tag to use
+- `name`: tag name for a instance, default is "development"
+- `repos`: list of Git repos to clone, in a form of *dict*, default is `sixty: develop`
+
+	
+## How to start a Jupyter machine
+1. Use the Tower or command line to deploy an instance:
+	`ansible-playbook deploy_ec2_jupyter.yml`
+2. Point your browser to `https://x.x.x.x:8888`, where `x.x.x.x` is IP address of deployed machine.
+
+### Variables to redefine:
+- `keyname`: SSH key name to use
+- `tag`: ECR image tag to use
+- `name`: tag name for a instance, default is "notebook"
+- `repos`: list of Git repos to clone, in a form of *dict*, default is `sixty: develop`
+
+## How to start a Celery grid
+1. Use the Tower or command line to deploy a grid:
+	`ansible-playbook deploy_ec2_celery_grid.yml`
+2. Point your browser to `https://x.x.x.x:5555`, where `x.x.x.x` is IP address of a master machine.
+
+### Variables to redefine:
+- `keyname`: SSH key name to use
+- `tag`: ECR image tag to use
+- `name`: tag name for a grid, default is "CeleryGrid"
+- `count`: count of worker instances, default is 7
+- `repos`: list of Git repos to clone, in a form of *dict*, default is `sixty: develop`
+- `env`: list of environment variables to set in a form of *dict*
+- `etl_start`: line to be passed to ETL script start
 
 
-## Plain deployment cookbooks
+## More documentation:
 
-### `deploy_ec2_celery_machine.yml`
-
-Build & deploy Celery machine on EC2 instance
-
-### `deploy_ec2_development_machine.yml`
-
-Build & deploy Development machine on EC2 instance
-
-## Docker deployment cookbooks
-
-### `deploy_ec2_celery_docker.yml`
-
-Deploy Celery machine on EC2 using prebuilt Docker container
-
-### `deploy_ec2_celery_grid.yml`
-
-Deploy Celery grid (worker machines + flower machine) on EC2 using prebuilt Docker container
-
-### `deploy_ec2_development_docker.yml`
-
-Deploy Development machine on EC2 using prebuilt Docker container
-
-### `deploy_ec2_jupyter.yml`
-
-Deploy iPython Jupyter on EC2 using prebuilt Docker container
-
-## Build cookbooks
-
-###  `deploy_ec2_builder.yml`
-
-Deploy Builder machine which builds Docker container and pushes it to ECR. Must be supplied with one of following tags:
-
-#### `--tags development`
-
-Builds a basic Docker container (APT & PIP installs)
-
-#### `--tags celery`
-
-Builds a Docker container for Celery machine
-
-#### `--tags jupyter`
-
-Builds a Docker container for iPython jupyter
-
-## Other cookbooks
-
-### `docker_celery.yml`
-Used by `deploy_ec2_builder.yml --tags celery`
-### `docker_development.yml`
-Used by `deploy_ec2_builder.yml --tags development`
-### `docker_jupyter.yml`
-Used by `deploy_ec2_builder.yml --tags jupyter`
-
-
-
-
-
+- [Full list of Ansible playbooks](docs/Ansible playbooks.md)
+- [Docker how-to](docs/Docker howto.md)
+- [SSH agent how-to](docs/SSH agent howto.md)
