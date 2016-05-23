@@ -2,4 +2,5 @@
 - name: configure the container with ansible
   hosts: localhost
   roles:
+  - put-admin-key
   - development
