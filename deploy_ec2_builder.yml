@@ -48,7 +48,7 @@
   vars:
     tag: latest
     repos:
-    - { repo: infrastructure, branch: master }
+      infrastructure: master
   roles:
     - { role: docker, tags: always }
     - { role: git, tags: always }

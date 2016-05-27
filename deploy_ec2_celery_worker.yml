@@ -21,6 +21,7 @@
       group: "{{ sg }}"
       instance_type: "{{ type }}"
       vpc_subnet_id: "{{ vpc_subnet_id }}"
+      instance_profile_name: ecsInstanceRole
       image: "{{ image }}"
       wait: yes
       wait_timeout: 500
@@ -47,12 +48,12 @@
   vars:
     tag: latest
     repos:
-    - { repo: sixty, branch: develop }
+      sixty: develop
     env:
-    - { name: REDIS_DB, value: 1 }
-    - { name: IS_CELERY_WORKER, value: 1 }
-    - { name: SIXTY_CONFIG_FILE, value: ~/workspace/sixty/config.yaml }
-    - { name: PYTHONPATH, value: /home/ubuntu/workspace/sixty }
+      REDIS_DB: 1 
+      IS_CELERY_WORKER: 1
+      SIXTY_CONFIG_FILE: ~/workspace/sixty/config.yaml
+      PYTHONPATH: /home/ubuntu/workspace/sixty
   roles:
     - git 
     - celery_docker
