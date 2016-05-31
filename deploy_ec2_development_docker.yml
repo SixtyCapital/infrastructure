@@ -46,9 +46,9 @@
   remote_user: ubuntu
   vars:
     repos:
-    - { repo: sixty, branch: develop }
-    - { repo: infrastructure, branch: master }
+      sixty: develop
+      infrastructure: master
   roles:
     - development_docker
-#    - git
+    - git
 #    - atlas
