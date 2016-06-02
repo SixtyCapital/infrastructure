@@ -46,15 +46,15 @@
 - hosts: dev
   remote_user: ubuntu
   vars:
-    tag: latest
+    tag: test
     repos:
       sixty: develop
     env:
       REDIS_DB: 1 
       IS_CELERY_WORKER: 1
+      C_FORCE_ROOT: 1
       SIXTY_CONFIG_FILE: ~/workspace/sixty/config.yaml
-      PYTHONPATH: /home/ubuntu/workspace/sixty
   roles:
+    - put-admin-key
     - git 
-    - celery_docker
     - celery_worker

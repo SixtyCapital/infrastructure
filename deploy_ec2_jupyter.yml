@@ -46,9 +46,11 @@
 - hosts: dev
   remote_user: ubuntu
   vars:
+    tag: test
     repos:
       sixty: develop
       infrastructure: master
   roles:
+    - put-admin-key
     - git
     - jupyter_docker

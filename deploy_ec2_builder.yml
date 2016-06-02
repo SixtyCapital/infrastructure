@@ -46,9 +46,9 @@
 - hosts: dev
   remote_user: ubuntu
   vars:
-    tag: latest
+    tag: test
     repos:
-      infrastructure: master
+      infrastructure: docker_root
   roles:
     - { role: docker, tags: always }
     - { role: git, tags: always }

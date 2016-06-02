@@ -21,6 +21,7 @@
       group: "{{ sg }}"
       instance_type: "{{ type }}"
       vpc_subnet_id: "{{ vpc_subnet_id }}"
+      instance_profile_name: ecsInstanceRole
       image: "{{ image }}"
       wait: yes
       wait_timeout: 500
@@ -45,10 +46,12 @@
 - hosts: dev
   remote_user: ubuntu
   vars:
+    tag: test
     repos:
       sixty: develop
       infrastructure: master
   roles:
+    - put-admin-key
     - development_docker
     - git
 #    - atlas
