@@ -9,7 +9,6 @@
     sg: sg-4a28e12d
     vpc_subnet_id: subnet-64b0a04c
     name: CeleryGrid
-    class: dev
     count: 7
     repos:
       sixty: develop
@@ -32,7 +31,7 @@
       count: "{{ count }}"
       instance_tags:
           Name: "{{ name }}-{{ repos.sixty }}-db{{ env.REDIS_DB }}"
-          class: "{{ class }}"
+          class: "worker"
       wait: yes
       wait_timeout: 300
     register: ec2_workers
@@ -61,7 +60,7 @@
       count: 1
       instance_tags:
           Name: "{{ name }}-{{ repos.sixty }}-db{{ env.REDIS_DB }}-master"
-          class: "{{ class }}"
+          class: "master"
       wait: yes
       wait_timeout: 300
     register: ec2_master

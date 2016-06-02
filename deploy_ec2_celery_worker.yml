@@ -9,7 +9,7 @@
     sg: sg-4a28e12d
     vpc_subnet_id: subnet-64b0a04c
     name: celery
-    class: dev
+    class: worker
     count: 1
 
   tasks:
