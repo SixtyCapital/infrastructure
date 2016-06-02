@@ -1,4 +1,4 @@
-# SSH agent howto
+# SSH agent how-to
 
 ##GitHub keys.
 
@@ -19,7 +19,7 @@ http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html#how-to-gen
 Click on the wrench/screwdriver icon in the top right to access the settings menu.
 Upload your private SSH key into Credentials section - using 'ubuntu' for the username, and 'Machine' for the type.
 For 'Who owns this key' - select user - then admin. This restricts who can run playbooks with this key.
-Then to setup the ansible job - you can either modify an existing Job Template - e.g. https://52.6.98.70/#/job_templates/69 and select your key under (*Machine Credential*) - or you can copy an existing job and and modify the copied job.
+Then to setup the ansible job - you can either modify an existing Job Template - e.g. https://52.6.98.70/#/job_templates/69 and select your key under (*Machine Credential*) - or you can copy an existing job and modify the copied job.
 
 Lastly - provide keyname: *yourkeyname* in the extra_args section when you start a job. (Similar to how we provide instance types)
  
