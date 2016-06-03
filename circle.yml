@@ -1,0 +1,26 @@
+machine:
+  services:
+    - docker
+  environment:
+    ECR_BASE: 491722570113.dkr.ecr.us-east-1.amazonaws.com
+    ECR_ANSIBLE: ubuntu-ansible:16.04
+
+test:
+  override:
+  - eval "$(aws ecr get-login)"
+  - docker pull $ECR_BASE/$ECR_ANSIBLE
+  - docker run -v ~/infrastructure:/root/workspace --name development $ECR_BASE/$ECR_ANSIBLE ansible-playbook /root/workspace/docker_development.yml -c local:
+      timeout: 2400
+  - docker commit development $ECR_BASE/development:$CIRCLE_BRANCH
+  - docker run -v ~/infrastructure:/root/workspace --name celery $ECR_BASE/development:$CIRCLE_BRANCH ansible-playbook /root/workspace/docker_celery.yml -c local
+  - docker commit celery $ECR_BASE/celery:$CIRCLE_BRANCH
+  - docker run -v ~/infrastructure:/root/workspace --name jupyter $ECR_BASE/development:$CIRCLE_BRANCH ansible-playbook /root/workspace/docker_jupyter.yml -c local
+  - docker commit jupyter $ECR_BASE/jupyter:$CIRCLE_BRANCH
+
+deployment:
+  staging:
+    branch: [master, ci]
+    commands:
+      - docker push $ECR_BASE/development:$CIRCLE_BRANCH
+      - docker push $ECR_BASE/celery:$CIRCLE_BRANCH
+      - docker push $ECR_BASE/jupyter:$CIRCLE_BRANCH
