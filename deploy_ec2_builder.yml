@@ -48,7 +48,7 @@
   vars:
     tag: test
     repos:
-      infrastructure: docker_root
+      infrastructure: master
   roles:
     - { role: docker, tags: always }
     - { role: git, tags: always }
