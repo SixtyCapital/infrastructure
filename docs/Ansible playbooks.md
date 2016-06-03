@@ -1,19 +1,8 @@
 # Ansible playbooks
 
+## Deployment playbooks
 
-## Plain deployment playbooks
-
-### `deploy_ec2_celery_machine.yml`
-
-Build & deploy Celery machine on EC2 instance
-
-### `deploy_ec2_development_machine.yml`
-
-Build & deploy Development machine on EC2 instance
-
-## Docker deployment playbooks
-
-### `deploy_ec2_celery_docker.yml`
+### `deploy_ec2_celery_worker.yml`
 
 Deploy Celery machine on EC2 using prebuilt Docker container
 
@@ -33,7 +22,7 @@ Deploy iPython Jupyter on EC2 using prebuilt Docker container
 
 ###  `deploy_ec2_builder.yml`
 
-Deploy Builder machine, which builds Docker container and pushes it to ECR. Must be supplied with one of following tags:
+Deploy Builder machine, which builds Docker container and pushes it to ECR. Can be supplied with one of following tags (without tags builds all of them):
 
 #### `--tags development`
 
