@@ -50,6 +50,12 @@ If you want to run a container as a daemon (non-interactive), you have to swap `
 
 where **id** is a container id
 
+## How to restart container
+
+`docker restart <id>`
+
+where **id** is a container id
+
 ## How to enter running container
 
 `docker exec -it <id> /bin/bash`
