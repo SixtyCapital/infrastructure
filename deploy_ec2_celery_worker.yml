@@ -1,56 +1,22 @@
 ---
-
 - hosts: localhost
   vars:
-    region: us-east-1
-    image: ami-fce3c696
     type: t2.large
     keyname: alex
     sg: sg-785ac703
-    vpc_subnet_id: subnet-64b0a04c
     name: celery
     class: worker
-    count: 1
+  roles:
+  - { role: deploy_ec2, nodename: "{{ name }}",  number: "{{ count }}" }
 
-  tasks:
-  - name: launch temporary instance
-    ec2:
-      assign_public_ip: yes
-      region: "{{ region }}"
-      key_name: "{{ keyname }}"
-      group_id: "{{ sg }}"
-      instance_type: "{{ type }}"
-      vpc_subnet_id: "{{ vpc_subnet_id }}"
-      instance_profile_name: ecsInstanceRole
-      image: "{{ image }}"
-      wait: yes
-      wait_timeout: 500
-      count: "{{ count }}"
-      instance_tags:
-          Name: "{{ name }}"
-          class: "{{ class }}"
-      wait: yes
-      wait_timeout: 300
-    register: ec2 
-
-  - name: waiting for ssh to start
-    wait_for: port=22 host={{ item.public_dns_name }} timeout=300
-              search_regex=OpenSSH
-    with_items: ec2.instances
-
-  - name: add host to group
-    add_host: name={{ item.public_ip }} groups=dev
-    with_items: ec2.instances    
-
-
-- hosts: dev
+- hosts: worker
   remote_user: ubuntu
   vars:
-    tag: test
+    tag: latest
     repos:
       sixty: develop
     env:
-      REDIS_DB: 1 
+      REDIS_DB: 3
       IS_CELERY_WORKER: 1
       C_FORCE_ROOT: 1
       SIXTY_CONFIG_FILE: ~/workspace/sixty/config.yaml
