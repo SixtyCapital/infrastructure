@@ -4,7 +4,6 @@
   vars:
     region: us-east-1
     image: ami-fce3c696
-    root_size: 30
     type: t2.large
     keyname: alex
     sg: sg-4a28e12d
@@ -12,13 +11,42 @@
     name: development
     class: dev
     count: 1
-  roles:
-  - deploy_ec2
+
+  tasks:
+  - name: launch temporary instance
+    ec2:
+      assign_public_ip: yes
+      region: "{{ region }}"
+      key_name: "{{ keyname }}"
+      group_id: "{{ sg }}"
+      instance_type: "{{ type }}"
+      vpc_subnet_id: "{{ vpc_subnet_id }}"
+      instance_profile_name: ecsInstanceRole
+      image: "{{ image }}"
+      wait: yes
+      wait_timeout: 500
+      count: "{{ count }}"
+      instance_tags:
+          Name: "{{ name }}"
+          class: "{{ class }}"
+      wait: yes
+      wait_timeout: 300
+    register: ec2 
+
+  - name: waiting for ssh to start
+    wait_for: port=22 host={{ item.public_dns_name }} timeout=300
+              search_regex=OpenSSH
+    with_items: ec2.instances
+
+  - name: add host to group
+    add_host: name={{ item.public_ip }} groups=dev
+    with_items: ec2.instances    
+
 
 - hosts: dev
   remote_user: ubuntu
   vars:
-    tag: latest
+    tag: test
     repos:
       sixty: develop
       infrastructure: master
@@ -26,3 +54,4 @@
     - put-admin-key
     - development_docker
     - git
+#    - atlas
