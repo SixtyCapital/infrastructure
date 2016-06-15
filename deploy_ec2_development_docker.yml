@@ -18,7 +18,7 @@
       assign_public_ip: yes
       region: "{{ region }}"
       key_name: "{{ keyname }}"
-      group: "{{ sg }}"
+      group_id: "{{ sg }}"
       instance_type: "{{ type }}"
       vpc_subnet_id: "{{ vpc_subnet_id }}"
       instance_profile_name: ecsInstanceRole
