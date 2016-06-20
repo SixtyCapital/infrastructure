@@ -1,88 +1,27 @@
 ---
-
 - hosts: localhost
   vars:
-    region: us-east-1
-    image: ami-fce3c696
     type: m4.4xlarge
     keyname: alex
     sg: sg-785ac703
-    vpc_subnet_id: subnet-64b0a04c
-    name: CeleryGrid
+    name: "CeleryGrid-{{ repos.sixty }}-db{{ env.REDIS_DB }}"
     count: 7
     repos:
       sixty: develop
     env:
-      REDIS_DB: 1
+      REDIS_DB: 3
+  roles:
+  - { role: deploy_ec2, nodename: "{{ name }}-master", class: "master", number: 1 }
+  - { role: deploy_ec2, nodename: "{{ name }}", class: "worker", number: "{{ count }}" }
 
-  tasks:
-  - name: launch worker instances
-    ec2:
-      assign_public_ip: yes
-      region: "{{ region }}"
-      key_name: "{{ keyname }}"
-      group_id: "{{ sg }}"
-      instance_type: "{{ type }}"
-      vpc_subnet_id: "{{ vpc_subnet_id }}"
-      instance_profile_name: ecsInstanceRole
-      image: "{{ image }}"
-      wait: yes
-      wait_timeout: 500
-      count: "{{ count }}"
-      instance_tags:
-          Name: "{{ name }}-{{ repos.sixty }}-db{{ env.REDIS_DB }}"
-          class: "worker"
-      wait: yes
-      wait_timeout: 300
-    register: ec2_workers
-
-  - name: waiting for ssh to start
-    wait_for: port=22 host={{ item.public_dns_name }} timeout=300
-              search_regex=OpenSSH
-    with_items: ec2_workers.instances
-
-  - name: add host to group
-    add_host: name={{ item.public_ip }} groups=workers
-    with_items: ec2_workers.instances
-
-  - name: launch master instance
-    ec2:
-      assign_public_ip: yes
-      region: "{{ region }}"
-      key_name: "{{ keyname }}"
-      group: "{{ sg }}"
-      instance_type: "{{ type }}"
-      vpc_subnet_id: "{{ vpc_subnet_id }}"
-      instance_profile_name: ecsInstanceRole
-      image: "{{ image }}"
-      wait: yes
-      wait_timeout: 500
-      count: 1
-      instance_tags:
-          Name: "{{ name }}-{{ repos.sixty }}-db{{ env.REDIS_DB }}-master"
-          class: "master"
-      wait: yes
-      wait_timeout: 300
-    register: ec2_master
-
-
-  - name: waiting for ssh to start
-    wait_for: port=22 host={{ item.public_dns_name }} timeout=300
-              search_regex=OpenSSH
-    with_items: ec2_master.instances
-
-  - name: add host to group
-    add_host: name={{ item.public_ip }} groups=master
-    with_items: ec2_master.instances
-
-- hosts: workers
+- hosts: worker
   remote_user: ubuntu
   vars:
-    tag: test
+    tag: latest
     repos:
       sixty: develop
     env:
-      REDIS_DB: 1
+      REDIS_DB: 3
       IS_CELERY_WORKER: 1
       C_FORCE_ROOT: 1
       SIXTY_CONFIG_FILE: "~/workspace/sixty/config.yaml"
@@ -93,11 +32,11 @@
 - hosts: master
   remote_user: ubuntu
   vars:
-    tag: test
+    tag: latest
     repos:
       sixty: develop
     env:
-      REDIS_DB: 1
+      REDIS_DB: 3
       IS_CELERY_WORKER: 1
       SIXTY_CONFIG_FILE: "~/workspace/sixty/config.yaml"
     etl_start: "workspace/sixty/sixty/etl/start_etl.py"
@@ -114,5 +53,4 @@
       state: absent
       instance_ids: "{{ item.instance_ids }}"
     with_items:
-    - "{{ ec2_master }}"
-    - "{{ ec2_workers }}"
+    - "{{ ec2 }}"
