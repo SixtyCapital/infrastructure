@@ -6,7 +6,7 @@
     image: ami-fce3c696
     type: t2.large
     keyname: alex
-    sg: sg-4a28e12d
+    sg: sg-785ac703
     vpc_subnet_id: subnet-64b0a04c
     name: celery
     class: worker
@@ -18,7 +18,7 @@
       assign_public_ip: yes
       region: "{{ region }}"
       key_name: "{{ keyname }}"
-      group: "{{ sg }}"
+      group_id: "{{ sg }}"
       instance_type: "{{ type }}"
       vpc_subnet_id: "{{ vpc_subnet_id }}"
       instance_profile_name: ecsInstanceRole
