@@ -12,7 +12,7 @@
       REDIS_DB: 3
   roles:
   - { role: deploy_ec2, nodename: "{{ name }}-master", class: "master", number: 1 }
-  - { role: deploy_ec2, nodename: "{{ name }}", class: "worker", number: "{{ count }}" }
+  - { role: deploy_ec2_worker, nodename: "{{ name }}", class: "worker", number: "{{ count }}" }
 
 - hosts: worker
   remote_user: ubuntu
@@ -39,7 +39,7 @@
       REDIS_DB: 3
       IS_CELERY_WORKER: 1
       SIXTY_CONFIG_FILE: "~/workspace/sixty/config.yaml"
-    etl_start: "workspace/sixty/sixty/etl/start_etl.py"
+    etl_start: "workspace/sixty/sixty/etl/start_etl.py -d today"
   roles:
     - git
     - celery_flower
@@ -54,3 +54,4 @@
       instance_ids: "{{ item.instance_ids }}"
     with_items:
     - "{{ ec2 }}"
+    - "{{ ec2worker }}"
