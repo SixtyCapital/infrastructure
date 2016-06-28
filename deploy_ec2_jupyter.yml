@@ -19,4 +19,5 @@
   roles:
     - put-admin-key
     - git
-    - jupyter_docker
+    - docker
+    - docker_jupyter
