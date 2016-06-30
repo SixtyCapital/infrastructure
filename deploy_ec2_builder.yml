@@ -19,7 +19,7 @@
   roles:
     - { role: docker, tags: always }
     - { role: git, tags: always }
-    - build_container
+    - docker_build
 
 - hosts: localhost
   tasks:

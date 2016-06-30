@@ -27,6 +27,8 @@
       SIXTY_CONFIG_FILE: "~/workspace/sixty/config.yaml"
   roles:
     - git 
+    - docker
+    - docker_celery
     - celery_worker
 
 - hosts: master
@@ -42,6 +44,8 @@
     etl_start: "workspace/sixty/sixty/etl/start_etl.py -d today"
   roles:
     - git
+    - docker
+    - docker_celery
     - celery_flower
     - celery_etl
 

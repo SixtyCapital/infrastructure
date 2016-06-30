@@ -18,7 +18,7 @@ Deploy Development machine on EC2 using prebuilt Docker container
 
 Deploy iPython Jupyter on EC2 using prebuilt Docker container
 
-## Build playbooks
+## Build playbook
 
 ###  `deploy_ec2_builder.yml`
 
@@ -38,12 +38,11 @@ Builds a Docker container for iPython jupyter
 
 ## Other playbooks
 
-### `docker_celery.yml`
-Used by `deploy_ec2_builder.yml --tags celery`
-### `docker_development.yml`
-Used by `deploy_ec2_builder.yml --tags development`
-### `docker_jupyter.yml`
-Used by `deploy_ec2_builder.yml --tags jupyter`
+### `build_container.yml`
+Used by `deploy_ec2_builder.yml` to build containers
+### `update_workers.yml`
+Update Git repos on running workers and restart workers containers
+
 
 
 

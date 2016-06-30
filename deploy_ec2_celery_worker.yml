@@ -23,4 +23,6 @@
   roles:
     - put-admin-key
     - git 
+    - docker
+    - docker_celery
     - celery_worker

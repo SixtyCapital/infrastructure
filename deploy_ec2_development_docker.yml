@@ -18,5 +18,6 @@
       infrastructure: master
   roles:
     - put-admin-key
-    - development_docker
+    - docker
     - git
+    - docker_development
