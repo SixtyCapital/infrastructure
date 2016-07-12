@@ -1,6 +1,0 @@
----
-- name: configure the container with ansible
-  hosts: localhost
-  roles:
-  - development
-  become: true
