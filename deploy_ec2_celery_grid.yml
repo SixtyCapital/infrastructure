@@ -48,10 +48,6 @@
     - docker_celery
     - celery_flower
     - celery_etl
-  register: result
-  until: result.stdout.find("Could not open a connection to your authentication agent") == -1
-  retries: 3
-  delay: 30
 
 - hosts: localhost
   tasks:
