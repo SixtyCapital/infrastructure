@@ -17,16 +17,21 @@ test:
   - docker build -t $REGISTRY/jupyter jupyter/.
   - docker build -t $REGISTRY/celery-worker celery-worker/.
   - docker build -t $REGISTRY/celery-flower celery-flower/.
-  
+
+# TODO: add the other containers to deployment
 
 deployment:
-  # pushes to a) the hash & the branch, b) latest if on master, c) the tag if tagged
+  # pushes to a) the branch, b) latest if on master, c) the tag if tagged
   master:
     branch: master
     commands:
       - docker tag $REGISTRY/base $REGISTRY/base:$CIRCLE_BRANCH $REGISTRY/base:latest
       - docker push $REGISTRY/base:$CIRCLE_BRANCH
       - docker push $REGISTRY/base:latest
+
+      - docker tag $REGISTRY/jupyter $REGISTRY/jupyter:$CIRCLE_BRANCH $REGISTRY/jupyter:latest
+      - docker push $REGISTRY/jupyter:$CIRCLE_BRANCH
+      - docker push $REGISTRY/jupyter:latest
 
   other:
     branch: /.*/   # any other branch
