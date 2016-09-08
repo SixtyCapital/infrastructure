@@ -16,6 +16,8 @@ test:
   - docker build -t $REGISTRY/base base/.
   - docker build -t $REGISTRY/jupyter jupyter/.
   - docker build -t $REGISTRY/celery-worker celery-worker/.
+  - docker build -t $REGISTRY/celery-flower celery-flower/.
+  
 
 deployment:
   # pushes to a) the hash & the branch, b) latest if on master, c) the tag if tagged
