@@ -14,7 +14,7 @@ dependencies:
 test:
   override:
   - docker build -t $REGISTRY/base base/.
-  - docker build -t $REGISTRY/jupyter juyter/.
+  - docker build -t $REGISTRY/jupyter jupyter/.
   - docker build -t $REGISTRY/celery-worker celery-worker/.
 
 deployment:
