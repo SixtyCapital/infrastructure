@@ -1,27 +1,46 @@
+general:
+  build_dir: docker
+
 machine:
   services:
     - docker
   environment:
-    ECR_BASE: 491722570113.dkr.ecr.us-east-1.amazonaws.com
-    ECR_ANSIBLE: ubuntu-ansible:16.04
+    REGISTRY: 491722570113.dkr.ecr.us-east-1.amazonaws.com
+
+dependencies:
+  override:
+  - eval "$(aws ecr get-login)"
 
 test:
   override:
-  - eval "$(aws ecr get-login)"
-  - docker pull $ECR_BASE/$ECR_ANSIBLE
-  - docker run -v ~/infrastructure:/root/workspace --name development $ECR_BASE/$ECR_ANSIBLE ansible-playbook /root/workspace/build_container.yml -c local --tags development:
-      timeout: 2400
-  - docker commit development $ECR_BASE/development:$CIRCLE_BRANCH
-  - docker run -v ~/infrastructure:/root/workspace --name celery $ECR_BASE/development:$CIRCLE_BRANCH ansible-playbook /root/workspace/build_container.yml -c local --tags celery
-  - docker commit celery $ECR_BASE/celery:$CIRCLE_BRANCH
-  - docker run -v ~/infrastructure:/root/workspace --name jupyter $ECR_BASE/development:$CIRCLE_BRANCH ansible-playbook /root/workspace/build_container.yml -c local --tags jupyter
-  - docker commit jupyter $ECR_BASE/jupyter:$CIRCLE_BRANCH
+  - docker build -t $REGISTRY/base base/.
+  - docker build -t $REGISTRY/jupyter jupyter/.
+  - docker build -t $REGISTRY/celery-worker celery-worker/.
+  - docker build -t $REGISTRY/celery-flower celery-flower/.
 
+# TODO: add the other containers to deployment
 
 deployment:
-  staging:
-    branch: /^((?!test).)*$/
+  # pushes to a) the branch, b) latest if on master, c) the tag if tagged
+  master:
+    branch: master
     commands:
-      - docker push $ECR_BASE/development:$CIRCLE_BRANCH
-      - docker push $ECR_BASE/celery:$CIRCLE_BRANCH
-      - docker push $ECR_BASE/jupyter:$CIRCLE_BRANCH
+      - docker tag $REGISTRY/base $REGISTRY/base:$CIRCLE_BRANCH $REGISTRY/base:latest
+      - docker push $REGISTRY/base:$CIRCLE_BRANCH
+      - docker push $REGISTRY/base:latest
+
+      - docker tag $REGISTRY/jupyter $REGISTRY/jupyter:$CIRCLE_BRANCH $REGISTRY/jupyter:latest
+      - docker push $REGISTRY/jupyter:$CIRCLE_BRANCH
+      - docker push $REGISTRY/jupyter:latest
+
+  other:
+    branch: /.*/   # any other branch
+    commands:
+      - docker tag $REGISTRY/base $REGISTRY/base:$CIRCLE_BRANCH
+      - docker push $REGISTRY/base:$CIRCLE_BRANCH
+
+  # release:
+  #   tag: /.*/  # any tag
+  #   commands:
+  #     - docker tag $REGISTRY/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1 $REGISTRY/$CIRCLE_PROJECT_REPONAME:$CIRCLE_TAG
+  #     - docker push $REGISTRY/$CIRCLE_PROJECT_REPONAME:$CIRCLE_TAG

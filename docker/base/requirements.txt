@@ -1,0 +1,87 @@
+funcsigs # until Py3
+futures # until Py3
+lazy
+lru-dict
+passlib
+psutil
+pysftp
+python-dateutil
+pyslack-real
+pytz
+qualname # until py3
+requests==2.5.1
+six
+terminado # do we need this?
+urllib3[secure] # do we need this?
+watchdog
+xlwt
+toolz
+
+# pydata
+xarray==0.7.2
+scipy
+numpy
+sklearn
+pandas==0.18.1
+statsmodels
+bottleneck
+numexpr
+
+# data
+SQLAlchemy
+Quandl==2.8.9
+dill
+redis
+dogpile.cache==0.5.7
+mockredispy
+pyodbc
+
+# infrastructure
+ansible-tower-cli
+boto
+setuptools
+celery==3.1.23
+flower
+setuptools_git_version
+wheel
+versioneer
+
+# minerva / opt
+cvxopt
+
+# mercury / trading
+quickfix # doesn't work with Py3
+
+# dev tools
+git-up
+ipdbplugin # no longer needed when we move to py.test
+ipython
+nose
+jupyter
+ipdb
+flake8
+asv
+mock # until Py3
+pycallgraph
+pytest
+pytest-pycharm
+pdbpp
+
+# viz
+cufflinks
+matplotlib
+plotly
+seaborn
+
+# dev tools/profiling tools
+line_profiler
+memory_profiler
+snakeviz
+profilehooks
+git+https://github.com/joerick/pyinstrument.git#egg=pyinstrument
+
+# web
+flask_login
+flask-bootstrap
+flask-bower
+flask-wtf
