@@ -5,6 +5,8 @@ import subprocess
 import os
 import errno
 import stat
+from notebook.auth import passwd
+
 
 PEM_FILE = os.path.join(jupyter_data_dir(), 'notebook.pem')
 
@@ -33,10 +35,20 @@ if 'USE_HTTPS' in os.environ:
         os.chmod(PEM_FILE, stat.S_IRUSR | stat.S_IWUSR)
     c.NotebookApp.certfile = PEM_FILE
 
-# Set a password if PASSWORD is set
-if 'PASSWORD' in os.environ:
-    from IPython.lib import passwd
+# Set a password if PASSWORD is set (only second branch is in official jupter version)
+if 'PASSWORD_HASH' in os.environ:
+    c.NotebookApp.password = os.environ['PASSWORD_HASH']
+elif 'PASSWORD' in os.environ:
     c.NotebookApp.password = passwd(os.environ['PASSWORD'])
+    # not even sure if this deletes it from the shell env?
     del os.environ['PASSWORD']
 
-c.FileNotebookManager.notebook_dir = u'~/workspace/notebooks'
+# not from the link above
+notebook_dir = os.environ.get('NOTEBOOK_DIR')
+
+if notebook_dir:
+    try:
+        os.makedirs(notebook_dir)
+    except:
+        pass
+    c.NotebookApp.notebook_dir = notebook_dir

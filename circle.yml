@@ -2,10 +2,14 @@ general:
   build_dir: docker
 
 machine:
+  pre:
+    # needed to upgrade docker so build-arg works
+    - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
   services:
     - docker
   environment:
     REGISTRY: 491722570113.dkr.ecr.us-east-1.amazonaws.com
+
 
 dependencies:
   override:
@@ -16,7 +20,6 @@ test:
   - docker build -t $REGISTRY/base base/.
   - docker build -t $REGISTRY/jupyter jupyter/.
   - docker build -t $REGISTRY/celery-worker celery-worker/.
-  - docker build -t $REGISTRY/celery-flower celery-flower/.
 
 # TODO: add the other containers to deployment
 
@@ -25,19 +28,34 @@ deployment:
   master:
     branch: master
     commands:
-      - docker tag $REGISTRY/base $REGISTRY/base:$CIRCLE_BRANCH $REGISTRY/base:latest
+      - docker tag $REGISTRY/base $REGISTRY/base:$CIRCLE_BRANCH
+      - docker tag $REGISTRY/base $REGISTRY/base:latest
       - docker push $REGISTRY/base:$CIRCLE_BRANCH
       - docker push $REGISTRY/base:latest
 
-      - docker tag $REGISTRY/jupyter $REGISTRY/jupyter:$CIRCLE_BRANCH $REGISTRY/jupyter:latest
+      - docker tag $REGISTRY/jupyter $REGISTRY/jupyter:$CIRCLE_BRANCH
+      - docker tag $REGISTRY/jupyter $REGISTRY/jupyter:latest
       - docker push $REGISTRY/jupyter:$CIRCLE_BRANCH
       - docker push $REGISTRY/jupyter:latest
+
+      - docker tag $REGISTRY/celery-worker $REGISTRY/celery-worker:$CIRCLE_BRANCH
+      - docker tag $REGISTRY/celery-worker $REGISTRY/celery-worker:latest
+      - docker push $REGISTRY/celery-worker:$CIRCLE_BRANCH
+      - docker push $REGISTRY/celery-worker:latest
+
 
   other:
     branch: /.*/   # any other branch
     commands:
       - docker tag $REGISTRY/base $REGISTRY/base:$CIRCLE_BRANCH
       - docker push $REGISTRY/base:$CIRCLE_BRANCH
+
+      - docker tag $REGISTRY/jupyter $REGISTRY/jupyter:$CIRCLE_BRANCH
+      - docker push $REGISTRY/jupyter:$CIRCLE_BRANCH
+
+      - docker tag $REGISTRY/celery-worker $REGISTRY/celery-worker:$CIRCLE_BRANCH
+      - docker push $REGISTRY/celery-worker:$CIRCLE_BRANCH
+
 
   # release:
   #   tag: /.*/  # any tag
