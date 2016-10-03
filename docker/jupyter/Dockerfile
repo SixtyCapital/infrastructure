@@ -16,7 +16,7 @@ ENV USE_HTTPS='1'
 # standard sixty password. Can pass others with PASSWORD or
 # http://jupyter-notebook.readthedocs.io/en/latest/public_server.html#preparing-a-hashed-password
 ENV PASSWORD_HASH='sha1:e641696b1d4a:6fae0db560beb06450d7fb5af6d83ca627130d30'
-ENV NOTEBOOK_DIR='~/notebooks'
+ENV NOTEBOOK_DIR='/notebooks'
 
 EXPOSE 8888
 
