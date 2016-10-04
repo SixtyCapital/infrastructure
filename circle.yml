@@ -57,8 +57,14 @@ deployment:
       - docker push $REGISTRY/celery-worker:$CIRCLE_BRANCH
 
 
-  # release:
-  #   tag: /.*/  # any tag
-  #   commands:
-  #     - docker tag $REGISTRY/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1 $REGISTRY/$CIRCLE_PROJECT_REPONAME:$CIRCLE_TAG
-  #     - docker push $REGISTRY/$CIRCLE_PROJECT_REPONAME:$CIRCLE_TAG
+  release:
+    tag: /.*/  # any tag
+    commands:
+      - docker tag $REGISTRY/base $REGISTRY/base:$CIRCLE_TAG
+      - docker push $REGISTRY/base:$CIRCLE_TAG
+
+      - docker tag $REGISTRY/jupyter $REGISTRY/jupyter:$CIRCLE_TAG
+      - docker push $REGISTRY/jupyter:$CIRCLE_TAG
+
+      - docker tag $REGISTRY/celery-worker $REGISTRY/celery-worker:$CIRCLE_TAG
+      - docker push $REGISTRY/celery-worker:$CIRCLE_TAG
