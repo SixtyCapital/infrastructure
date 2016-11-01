@@ -36,12 +36,12 @@ if 'USE_HTTPS' in os.environ:
     c.NotebookApp.certfile = PEM_FILE
 
 # Set a password if PASSWORD is set (only second branch is in official jupter version)
-if 'PASSWORD_HASH' in os.environ:
-    c.NotebookApp.password = os.environ['PASSWORD_HASH']
-elif 'PASSWORD' in os.environ:
+if 'PASSWORD' in os.environ:
     c.NotebookApp.password = passwd(os.environ['PASSWORD'])
     # not even sure if this deletes it from the shell env?
     del os.environ['PASSWORD']
+elif 'PASSWORD_HASH' in os.environ:
+    c.NotebookApp.password = os.environ['PASSWORD_HASH']
 
 # not from the link above
 notebook_dir = os.environ.get('NOTEBOOK_DIR')
