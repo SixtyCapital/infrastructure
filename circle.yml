@@ -5,11 +5,13 @@ machine:
   pre:
     # needed to upgrade docker so build-arg works
     - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
+    - sudo pip install docker-compose
   services:
     - docker
   environment:
+    AWS_DEFAULT_REGION: us-east-1
     REGISTRY: 491722570113.dkr.ecr.us-east-1.amazonaws.com
-
+    IMAGE_TAG: $REGISTRY/base
 
 dependencies:
   override:
@@ -17,54 +19,26 @@ dependencies:
 
 test:
   override:
-  - docker build -t $REGISTRY/base base/.
-  - docker build -t $REGISTRY/jupyter jupyter/.
-  - docker build -t $REGISTRY/celery-worker celery-worker/.
-
-# TODO: add the other containers to deployment
+  - docker build -t $IMAGE_TAG .
 
 deployment:
   # pushes to a) the branch, b) latest if on master, c) the tag if tagged
   master:
     branch: master
     commands:
-      - docker tag $REGISTRY/base $REGISTRY/base:$CIRCLE_BRANCH
-      - docker tag $REGISTRY/base $REGISTRY/base:latest
-      - docker push $REGISTRY/base:$CIRCLE_BRANCH
-      - docker push $REGISTRY/base:latest
-
-      - docker tag $REGISTRY/jupyter $REGISTRY/jupyter:$CIRCLE_BRANCH
-      - docker tag $REGISTRY/jupyter $REGISTRY/jupyter:latest
-      - docker push $REGISTRY/jupyter:$CIRCLE_BRANCH
-      - docker push $REGISTRY/jupyter:latest
-
-      - docker tag $REGISTRY/celery-worker $REGISTRY/celery-worker:$CIRCLE_BRANCH
-      - docker tag $REGISTRY/celery-worker $REGISTRY/celery-worker:latest
-      - docker push $REGISTRY/celery-worker:$CIRCLE_BRANCH
-      - docker push $REGISTRY/celery-worker:latest
-
+      - docker tag $IMAGE_TAG $IMAGE_TAG:$CIRCLE_BRANCH
+      - docker tag $IMAGE_TAG $IMAGE_TAG:latest
+      - docker push $IMAGE_TAG:$CIRCLE_BRANCH
+      - docker push $IMAGE_TAG:latest
 
   other:
     branch: /.*/   # any other branch
     commands:
-      - docker tag $REGISTRY/base $REGISTRY/base:$CIRCLE_BRANCH
-      - docker push $REGISTRY/base:$CIRCLE_BRANCH
-
-      - docker tag $REGISTRY/jupyter $REGISTRY/jupyter:$CIRCLE_BRANCH
-      - docker push $REGISTRY/jupyter:$CIRCLE_BRANCH
-
-      - docker tag $REGISTRY/celery-worker $REGISTRY/celery-worker:$CIRCLE_BRANCH
-      - docker push $REGISTRY/celery-worker:$CIRCLE_BRANCH
-
+      - docker tag $IMAGE_TAG $IMAGE_TAG:$CIRCLE_BRANCH
+      - docker push $IMAGE_TAG:$CIRCLE_BRANCH
 
   release:
     tag: /.*/  # any tag
     commands:
-      - docker tag $REGISTRY/base $REGISTRY/base:$CIRCLE_TAG
-      - docker push $REGISTRY/base:$CIRCLE_TAG
-
-      - docker tag $REGISTRY/jupyter $REGISTRY/jupyter:$CIRCLE_TAG
-      - docker push $REGISTRY/jupyter:$CIRCLE_TAG
-
-      - docker tag $REGISTRY/celery-worker $REGISTRY/celery-worker:$CIRCLE_TAG
-      - docker push $REGISTRY/celery-worker:$CIRCLE_TAG
+      - docker tag $IMAGE_TAG $IMAGE_TAG:$CIRCLE_TAG
+      - docker push $IMAGE_TAG:$CIRCLE_TAG
