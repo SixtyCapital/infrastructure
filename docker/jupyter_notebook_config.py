@@ -16,7 +16,7 @@ c.NotebookApp.port = 8888
 c.NotebookApp.open_browser = False
 
 # Set a certificate if USE_HTTPS is set to any value
-if 'USE_HTTPS' in os.environ:
+if 'JUPYTER_USE_HTTPS' in os.environ:
     if not os.path.isfile(PEM_FILE):
         # Ensure PEM_FILE directory exists
         dir_name = os.path.dirname(PEM_FILE)
@@ -36,15 +36,15 @@ if 'USE_HTTPS' in os.environ:
     c.NotebookApp.certfile = PEM_FILE
 
 # Set a password if PASSWORD is set (only second branch is in official jupter version)
-if 'PASSWORD' in os.environ:
-    c.NotebookApp.password = passwd(os.environ['PASSWORD'])
+if 'JUPYTER_PASSWORD' in os.environ:
+    c.NotebookApp.password = passwd(os.environ['JUPYTER_PASSWORD'])
     # not even sure if this deletes it from the shell env?
-    del os.environ['PASSWORD']
-elif 'PASSWORD_HASH' in os.environ:
-    c.NotebookApp.password = os.environ['PASSWORD_HASH']
+    del os.environ['JUPYTER_PASSWORD']
+elif 'JUPYTER_PASSWORD_HASH' in os.environ:
+    c.NotebookApp.password = os.environ['JUPYTER_PASSWORD_HASH']
 
 # not from the link above
-notebook_dir = os.environ.get('NOTEBOOK_DIR')
+notebook_dir = os.environ.get('JUPYTER_NOTEBOOK_DIR')
 
 if notebook_dir:
     try:

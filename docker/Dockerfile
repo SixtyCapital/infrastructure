@@ -23,6 +23,7 @@ RUN apt-get update && apt-get install -y \
   vim
 
 COPY requirements.txt /
+RUN pip install pip --upgrade
 RUN pip install -r requirements.txt
 RUN rm requirements.txt
 
@@ -38,6 +39,7 @@ RUN chmod +x /tini
 ENV USE_HTTPS='1'
 # standard sixty password. Can pass others with PASSWORD or
 # http://jupyter-notebook.readthedocs.io/en/latest/public_server.html#preparing-a-hashed-password
+# potentially don't need this default here as defaulted in docker-compose already
 ENV PASSWORD_HASH='sha1:e641696b1d4a:6fae0db560beb06450d7fb5af6d83ca627130d30'
 ENV NOTEBOOK_DIR='/notebooks'
 
