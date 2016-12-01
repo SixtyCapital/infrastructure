@@ -36,12 +36,12 @@ RUN mv .jupyter $HOME/.jupyter
 ARG TINI_VERSION=v0.10.0
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
 RUN chmod +x /tini
-ENV USE_HTTPS='1'
-# standard sixty password. Can pass others with PASSWORD or
+ENV JUPYTER_USE_HTTPS='1'
+# Can pass a password with either JUPYTER_PASSWORD or JUPYTER_PASSWORD_HASH
 # http://jupyter-notebook.readthedocs.io/en/latest/public_server.html#preparing-a-hashed-password
-# potentially don't need this default here as defaulted in docker-compose already
-ENV PASSWORD_HASH='sha1:e641696b1d4a:6fae0db560beb06450d7fb5af6d83ca627130d30'
-ENV NOTEBOOK_DIR='/notebooks'
+
+ENV JUPYTER_NOTEBOOK_DIR='/notebooks'
+
 
 # Celery
 ENV C_FORCE_ROOT=1

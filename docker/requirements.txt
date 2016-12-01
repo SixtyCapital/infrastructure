@@ -49,16 +49,14 @@ gcloud
 google-api-python-client
 
 # minerva / opt
-cvxopt
+cvxopt==1.1.8   # https://github.com/cvxopt/cvxopt/issues/79
 
 # mercury / trading
 quickfix # doesn't work with Py3
 
 # dev tools
 git-up
-ipdbplugin # no longer needed when we move to py.test
 ipython
-nose
 jupyter
 ipdb
 flake8

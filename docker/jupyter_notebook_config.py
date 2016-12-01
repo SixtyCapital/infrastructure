@@ -7,7 +7,6 @@ import errno
 import stat
 from notebook.auth import passwd
 
-
 PEM_FILE = os.path.join(jupyter_data_dir(), 'notebook.pem')
 
 c = get_config()
@@ -22,28 +21,29 @@ if 'JUPYTER_USE_HTTPS' in os.environ:
         dir_name = os.path.dirname(PEM_FILE)
         try:
             os.makedirs(dir_name)
-        except OSError as exc: # Python >2.5
+        except OSError as exc:  # Python >2.5
             if exc.errno == errno.EEXIST and os.path.isdir(dir_name):
                 pass
-            else: raise
+            else:
+                raise
         # Generate a certificate if one doesn't exist on disk
-        subprocess.check_call(['openssl', 'req', '-new',
-            '-newkey', 'rsa:2048', '-days', '365', '-nodes', '-x509',
-            '-subj', '/C=XX/ST=XX/L=XX/O=generated/CN=generated',
-            '-keyout', PEM_FILE, '-out', PEM_FILE])
+        subprocess.check_call([
+            'openssl', 'req', '-new', '-newkey', 'rsa:2048', '-days', '365', '-nodes', '-x509', '-subj',
+            '/C=XX/ST=XX/L=XX/O=generated/CN=generated', '-keyout', PEM_FILE, '-out', PEM_FILE
+        ])
         # Restrict access to PEM_FILE
         os.chmod(PEM_FILE, stat.S_IRUSR | stat.S_IWUSR)
     c.NotebookApp.certfile = PEM_FILE
 
 # Set a password if PASSWORD is set (only second branch is in official jupter version)
-if 'JUPYTER_PASSWORD' in os.environ:
+if os.environ.get('JUPYTER_PASSWORD'):
     c.NotebookApp.password = passwd(os.environ['JUPYTER_PASSWORD'])
     # not even sure if this deletes it from the shell env?
     del os.environ['JUPYTER_PASSWORD']
-elif 'JUPYTER_PASSWORD_HASH' in os.environ:
+elif os.environ.get('JUPYTER_PASSWORD_HASH'):
     c.NotebookApp.password = os.environ['JUPYTER_PASSWORD_HASH']
 
-# not from the link above
+# our code - not copied from the link at top
 notebook_dir = os.environ.get('JUPYTER_NOTEBOOK_DIR')
 
 if notebook_dir:
