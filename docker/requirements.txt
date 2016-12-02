@@ -66,6 +66,7 @@ mock # until Py3
 pycallgraph
 pytest
 pytest-pycharm
+pytest-xdist
 pdbpp
 
 # viz
