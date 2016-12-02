@@ -45,3 +45,8 @@ ENV JUPYTER_NOTEBOOK_DIR='/notebooks'
 
 # Celery
 ENV C_FORCE_ROOT=1
+
+
+# Kernel-gateway
+RUN pip install jupyter_kernel_gateway
+ENV KG_LIST_KERNELS=True

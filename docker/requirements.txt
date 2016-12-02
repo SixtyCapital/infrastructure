@@ -9,7 +9,7 @@ python-dateutil
 pyslack-real
 pytz
 qualname # until py3
-requests==2.5.1
+requests
 six
 terminado # do we need this?
 urllib3[secure] # do we need this?
@@ -58,6 +58,7 @@ quickfix # doesn't work with Py3
 git-up
 ipython
 jupyter
+jupyter_kernel_gateway
 ipdb
 flake8
 asv
