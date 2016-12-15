@@ -19,5 +19,3 @@
   roles:
     - put-admin-key
     - docker
-    - git
-    - docker_development
