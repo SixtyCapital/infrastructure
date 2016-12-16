@@ -67,6 +67,8 @@ pycallgraph
 pytest
 pytest-pycharm
 pytest-xdist
+pytest-watch
+pytest-testmon
 pdbpp
 
 # viz
