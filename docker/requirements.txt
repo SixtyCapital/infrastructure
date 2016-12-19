@@ -18,7 +18,8 @@ xlwt
 toolz
 
 # pydata
-xarray==0.8.2
+# xarray==0.8.2 # short term fix until this is released: https://github.com/pydata/xarray/pull/1157 
+git+https://github.com/SixtyCapital/xarray#egg=xarray
 scipy
 numpy
 sklearn
