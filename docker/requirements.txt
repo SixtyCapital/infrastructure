@@ -18,12 +18,11 @@ xlwt
 toolz
 
 # pydata
-# xarray==0.8.2 # short term fix until this is released: https://github.com/pydata/xarray/pull/1157 
-git+https://github.com/SixtyCapital/xarray#egg=xarray
+xarray==0.8.2
 scipy
 numpy
 sklearn
-pandas==0.19.1
+pandas==0.19.2
 statsmodels
 bottleneck
 numexpr
