@@ -5,7 +5,7 @@
     keyname: alex
     sg: sg-785ac703
     name: celery
-    class: worker
+    deploy_env: worker
   roles:
   - { role: deploy_ec2, nodename: "{{ name }}",  number: "{{ count }}" }
 
@@ -22,7 +22,7 @@
       SIXTY_CONFIG_FILE: ~/workspace/sixty/config.yaml
   roles:
     - put-admin-key
-    - git 
+    - git
     - docker
     - docker_celery
     - celery_worker

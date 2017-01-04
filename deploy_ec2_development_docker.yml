@@ -5,7 +5,7 @@
     keyname: infrastructure-shared
     sg: sg-4a28e12d
     name: development
-    class: dev
+    deploy_env: dev
   roles:
   - { role: deploy_ec2, nodename: "{{ name }}",  number: "{{ count }}" }
 

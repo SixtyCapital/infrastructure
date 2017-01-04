@@ -5,7 +5,7 @@
     keyname: alex
     sg: sg-8258c5f9
     name: notebook
-    class: dev
+    deploy_env: dev
   roles:
   - { role: deploy_ec2, nodename: "{{ name }}",  number: "{{ count }}" }
 

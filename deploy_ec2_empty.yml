@@ -5,17 +5,12 @@
     keyname: infrastructure-shared
     sg: sg-4a28e12d
     name: development
-    class: dev
+    deploy_env: dev
   roles:
   - { role: deploy_ec2, nodename: "{{ name }}",  number: "{{ count }}" }
 
 - hosts: dev
   remote_user: ubuntu
-  vars:
-    tag: latest
-    repos:
-      sixty: develop
-      infrastructure: master
   roles:
     - put-admin-key
     - docker
