@@ -26,6 +26,7 @@ pandas==0.19.2
 statsmodels
 bottleneck
 numexpr
+cython
 
 # data
 SQLAlchemy
@@ -76,6 +77,7 @@ cufflinks
 matplotlib
 plotly
 seaborn
+altair
 
 # dev tools/profiling tools
 line_profiler
