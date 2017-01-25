@@ -1,9 +1,13 @@
-FROM python:2
+FROM ubuntu
+
+RUN locale-gen "en_US.UTF-8" && locale-gen "en_US.UTF-8"
 
 RUN apt-get update && apt-get install -y \
+  apt-transport-https \
+  apt-utils \
   bash-completion \
-  freetds-bin \
-  freetds-dev \
+  curl \
+  dialog \
   freetype* \
   g++ \
   gfortran \
@@ -14,32 +18,45 @@ RUN apt-get update && apt-get install -y \
   libssl-dev \
   libxft-dev \
   libyaml-dev \
-  # python-dev
-  # python3-dev
-  # python3-setuptools
-  # python-setuptools
-  tdsodbc \
+  python-pip \
+  unixodbc \
   unixodbc-dev \
-  vim
+  vim \
+  wget
 
+# install mssql drivers https://msdn.microsoft.com/en-us/library/hh568454(v=sql.110).aspx
+
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+RUN curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
+
+RUN apt-get update && ACCEPT_EULA=Y apt-get install  -y \
+  msodbcsql \
+  mssql-tools
+
+RUN ln -sfn /opt/mssql-tools/bin/sqlcmd-13.0.1.0 /usr/bin/sqlcmd
+RUN ln -sfn /opt/mssql-tools/bin/bcp-13.0.1.0 /usr/bin/bcp
+
+
+# Tini for Jupyter
+ARG TINI_VERSION=v0.10.0
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
+RUN chmod +x /tini
+
+
+# standard requirements
 COPY requirements.txt /
 RUN pip install pip --upgrade
 RUN pip install -r requirements.txt
 RUN rm requirements.txt
 
-# Jupyter
 
+# Jupyter
 RUN jupyter nbextension enable --py widgetsnbextension --sys-prefix
 COPY jupyter_notebook_config.py .jupyter/jupyter_notebook_config.py
 RUN mv .jupyter $HOME/.jupyter
-# needed because of spawning, according to Jupyter
-ARG TINI_VERSION=v0.10.0
-ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
-RUN chmod +x /tini
 ENV JUPYTER_USE_HTTPS='1'
 # Can pass a password with either JUPYTER_PASSWORD or JUPYTER_PASSWORD_HASH
 # http://jupyter-notebook.readthedocs.io/en/latest/public_server.html#preparing-a-hashed-password
-
 ENV JUPYTER_NOTEBOOK_DIR='/notebooks'
 
 
@@ -48,5 +65,4 @@ ENV C_FORCE_ROOT=1
 
 
 # Kernel-gateway
-RUN pip install jupyter_kernel_gateway
 ENV KG_LIST_KERNELS=True
