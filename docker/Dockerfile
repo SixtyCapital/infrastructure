@@ -44,8 +44,8 @@ RUN chmod +x /tini
 
 
 # standard requirements
-COPY requirements.txt /
 RUN pip install pip --upgrade
+COPY requirements.txt /
 RUN pip install -r requirements.txt
 RUN rm requirements.txt
 
