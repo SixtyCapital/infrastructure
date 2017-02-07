@@ -9,7 +9,6 @@ Three levels:
 
 Each have a group on AWS.
 
-TODO: align GitHub with these
 
 ### Strategy access
 

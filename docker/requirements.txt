@@ -18,7 +18,7 @@ xlwt
 toolz
 
 # pydata
-xarray==0.8.2
+xarray==0.9.1
 scipy
 numpy
 sklearn
