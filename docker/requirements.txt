@@ -71,7 +71,7 @@ pytest-pycharm
 pytest-xdist
 pytest-watch
 pytest-testmon
-pytest-sugar
+# pytest-sugar https://github.com/Frozenball/pytest-sugar/pull/49
 pdbpp
 
 # viz
