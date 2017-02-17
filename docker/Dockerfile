@@ -66,3 +66,13 @@ ENV C_FORCE_ROOT=1
 
 # Kernel-gateway
 ENV KG_LIST_KERNELS=True
+
+
+# gcloud
+# from https://cloud.google.com/sdk/docs/#deb
+# from https://code.google.com/p/google-cloud-sdk/issues/detail?id=691
+RUN export CLOUD_SDK_REPO="cloud-sdk-xenial"
+# RUN apt-get install lsb-release
+RUN echo "deb https://packages.cloud.google.com/apt cloud-sdk-xenial main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+RUN apt-get update && apt-get install -y google-cloud-sdk
