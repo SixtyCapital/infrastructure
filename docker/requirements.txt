@@ -30,10 +30,10 @@ cython
 
 # data
 SQLAlchemy
-Quandl==2.8.9
+quandl
 dill
 redis
-dogpile.cache==0.5.7
+dogpile.cache
 mockredispy
 # because of unicode issues
 pyodbc==3.1.1
@@ -71,6 +71,7 @@ pytest-pycharm
 pytest-xdist
 pytest-watch
 pytest-testmon
+pytest-sugar
 pdbpp
 
 # viz
