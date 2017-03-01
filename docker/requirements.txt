@@ -23,6 +23,7 @@ scipy
 numpy
 sklearn
 pandas==0.19.2
+pandas-gbq
 statsmodels
 bottleneck
 numexpr
