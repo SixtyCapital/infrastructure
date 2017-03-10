@@ -76,3 +76,15 @@ RUN export CLOUD_SDK_REPO="cloud-sdk-xenial"
 RUN echo "deb https://packages.cloud.google.com/apt cloud-sdk-xenial main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
 RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 RUN apt-get update && apt-get install -y google-cloud-sdk
+
+
+# Mosek binary
+ENV MOSEK_VERSION 8.0.0.59
+ENV MOSEK_PATH /mosek/8/tools/platform/linux64x86
+ENV MOSEKLM_LICENSE_FILE /mosek.lic
+ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:$MOSEK_PATH/bin
+RUN curl http://download.mosek.com/stable/8.0.0.59/mosektoolslinux64x86.tar.bz2 > mosek.tar.bz2
+RUN tar xf mosek.tar.bz2 && ln -s $MOSEK_PATH/bin/mosek /usr/bin/mosek && mosek -f
+RUN cd $MOSEK_PATH/python/2 && python setup.py install --user && \
+	python -c '__import__("mosek").Env()'
+COPY mosek.lic /mosek.lic
