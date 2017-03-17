@@ -55,8 +55,6 @@ RUN jupyter nbextension enable --py widgetsnbextension --sys-prefix
 COPY jupyter_notebook_config.py .jupyter/jupyter_notebook_config.py
 RUN mv .jupyter $HOME/.jupyter
 ENV JUPYTER_USE_HTTPS='1'
-# Can pass a password with either JUPYTER_PASSWORD or JUPYTER_PASSWORD_HASH
-# http://jupyter-notebook.readthedocs.io/en/latest/public_server.html#preparing-a-hashed-password
 ENV JUPYTER_NOTEBOOK_DIR='/notebooks'
 
 
