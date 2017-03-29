@@ -95,3 +95,6 @@ flask_login
 flask-bootstrap
 flask-bower
 flask-wtf
+
+
+iso3166 # country mappings
