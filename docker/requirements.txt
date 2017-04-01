@@ -48,7 +48,6 @@ flower
 setuptools_git_version
 wheel
 versioneer
-gcloud
 google-cloud
 google-api-python-client
 
