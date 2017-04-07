@@ -15,9 +15,7 @@ machine:
     # this is also in .env. We could have a separate dc file for circle. Reassess on next
     # version of circle, which supports containers natively
     REGISTRY: 491722570113.dkr.ecr.us-east-1.amazonaws.com
-    REGISTRY_GCLOUD: gcr.io/$PROJECT_ID
     IMAGE_TAG: $REGISTRY/base
-    IMAGE_TAG_GCLOUD: $REGISTRY_GCLOUD/base
 
 dependencies:
   override:
@@ -42,26 +40,14 @@ deployment:
       - docker push $IMAGE_TAG:$CIRCLE_BRANCH
       - docker push $IMAGE_TAG:latest
 
-      - docker tag $IMAGE_TAG $IMAGE_TAG_GCLOUD:$CIRCLE_BRANCH
-      - docker tag $IMAGE_TAG $IMAGE_TAG_GCLOUD:latest
-      - docker push $IMAGE_TAG_GCLOUD:$CIRCLE_BRANCH
-      - docker push $IMAGE_TAG_GCLOUD:latest
-
   other:
     branch: /.*/   # any other branch
     commands:
       - docker tag $IMAGE_TAG $IMAGE_TAG:$CIRCLE_BRANCH
       - docker push $IMAGE_TAG:$CIRCLE_BRANCH
 
-      - docker tag $IMAGE_TAG $IMAGE_TAG_GCLOUD:$CIRCLE_BRANCH
-      - docker push $IMAGE_TAG_GCLOUD:$CIRCLE_BRANCH
-
-
   release:
     tag: /.*/  # any tag
     commands:
       - docker tag $IMAGE_TAG $IMAGE_TAG:$CIRCLE_TAG
       - docker push $IMAGE_TAG:$CIRCLE_TAG
-
-      - docker tag $IMAGE_TAG $IMAGE_TAG_GCLOUD:$CIRCLE_TAG
-      - docker push $IMAGE_TAG_GCLOUD:$CIRCLE_TAG
