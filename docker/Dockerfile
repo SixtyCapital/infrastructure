@@ -1,6 +1,9 @@
 FROM ubuntu
 
-RUN locale-gen "en_US.UTF-8" && locale-gen "en_US.UTF-8"
+RUN apt-get update && apt-get install -y --no-install-recommends \
+ locales \
+ && rm -rf /var/lib/apt/lists/* \
+ && locale-gen "en_US.UTF-8" && locale-gen "en_US.UTF-8"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
   apt-transport-https \
@@ -65,7 +68,10 @@ RUN echo "deb https://packages.cloud.google.com/apt cloud-sdk-xenial main" | tee
  && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - \
  && apt-get update && apt-get install -y --no-install-recommends \
  google-cloud-sdk \
- && rm -rf /var/lib/apt/lists/*
+ && rm -rf /var/lib/apt/lists/* \
+ && git config --global credential.helper gcloud.sh
+# if we use this image in cloud builder, it'll map the permissions in
+ENV PATH=$PATH:/builder/google-cloud-sdk/bin/
 
 # Mosek binary
 ENV MOSEK_VERSION=8.0.0.59 MOSEK_PATH=/mosek/8/tools/platform/linux64x86 MOSEKLM_LICENSE_FILE=/mosek.lic
