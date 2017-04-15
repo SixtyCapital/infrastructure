@@ -16,6 +16,7 @@ urllib3[secure] # do we need this?
 watchdog
 xlwt
 toolz
+iso3166 # country mappings
 
 # pydata
 xarray==0.9.2 # until next version we need a patch:
@@ -36,8 +37,7 @@ dill
 redis
 dogpile.cache
 mockredispy
-# because of unicode issues
-pyodbc==3.1.1
+pyodbc==3.1.1 # because of unicode issues
 
 # infrastructure
 boto
@@ -50,6 +50,7 @@ versioneer
 google-cloud
 google-api-python-client
 apache_beam[gcp]
+cookiecutter
 
 # minerva / opt
 cvxopt==1.1.8   # https://github.com/cvxopt/cvxopt/issues/79
@@ -74,6 +75,11 @@ pytest-watch
 pytest-testmon
 # pytest-sugar https://github.com/Frozenball/pytest-sugar/pull/49
 pdbpp
+line_profiler
+memory_profiler
+snakeviz
+profilehooks
+git+https://github.com/joerick/pyinstrument.git#egg=pyinstrument
 
 # viz
 cufflinks
@@ -82,18 +88,9 @@ plotly
 seaborn
 altair
 
-# dev tools/profiling tools
-line_profiler
-memory_profiler
-snakeviz
-profilehooks
-git+https://github.com/joerick/pyinstrument.git#egg=pyinstrument
 
 # web
 flask_login
 flask-bootstrap
 flask-bower
 flask-wtf
-
-
-iso3166 # country mappings
