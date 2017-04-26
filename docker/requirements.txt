@@ -17,6 +17,7 @@ watchdog
 xlwt
 toolz
 iso3166 # country mappings
+lxml
 
 # pydata
 xarray==0.9.2 # until next version we need a patch:
@@ -49,6 +50,7 @@ wheel
 versioneer
 google-cloud
 google-api-python-client
+google-apitools
 apache_beam[gcp]
 cookiecutter
 
