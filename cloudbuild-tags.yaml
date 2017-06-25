@@ -1,9 +1,0 @@
-steps:
-- name: gcr.io/cloud-builders/docker
-  args: [build, -t, 'gcr.io/sixty-capital/base:$TAG_NAME', .]
-  dir: docker
-
-images:
-  - gcr.io/sixty-capital/base:$TAG_NAME
-
-timeout: 3600s
