@@ -53,6 +53,7 @@ google-api-python-client
 google-apitools
 apache_beam[gcp]
 cookiecutter
+docker-compose
 
 # minerva / opt
 cvxopt==1.1.8   # https://github.com/cvxopt/cvxopt/issues/79
