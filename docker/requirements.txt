@@ -1,5 +1,5 @@
-funcsigs # until Py3
-futures # until Py3
+funcsigs  # until Py3
+futures  # until Py3
 lazy
 lru-dict
 passlib
@@ -8,11 +8,11 @@ pysftp
 python-dateutil
 pyslack-real
 pytz
-qualname # until py3
+qualname  # until py3
 requests
 six
-terminado # do we need this?
-urllib3[secure] # do we need this?
+terminado  # do we need this?
+urllib3[secure]  # do we need this?
 watchdog
 xlwt
 toolz
@@ -20,12 +20,12 @@ iso3166 # country mappings
 lxml
 
 # pydata
-xarray==0.9.2 # until next version we need a patch:
+xarray==0.9.6
+pandas==0.20.2
+pandas-gbq
 scipy
 numpy
 sklearn
-pandas==0.19.2
-pandas-gbq
 statsmodels
 bottleneck
 numexpr
@@ -45,7 +45,9 @@ boto
 setuptools
 celery==3.1.23
 flower
+# deprecate - remove 2017-09
 setuptools_git_version
+setuptools_scm
 wheel
 versioneer
 google-cloud
@@ -85,7 +87,7 @@ profilehooks
 git+https://github.com/joerick/pyinstrument.git#egg=pyinstrument
 
 # viz
-cufflinks
+cufflinks==0.8.2  # otherwise requires ta-lib, which is a pain to install
 matplotlib
 plotly
 seaborn
