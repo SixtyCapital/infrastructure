@@ -1,0 +1,74 @@
+version: '2'
+services:
+  airflow:
+    build:
+      context: .
+    entrypoint: airflow-entry.sh
+    environment:
+      - POSTGRES_HOST=postgres
+      - POSTGRES_USER=airflow
+      - POSTGRES_DB=airflow
+      - POSTGRES_PASSWORD=airflow
+      - REDIS_HOST=redis
+      - EXECUTOR=Celery
+      - LOAD_EX=n
+      - FERNET_KEY=Yd02MB6W0KXvklEG1FPxOJt_A-V3ARvnvp1TMfdPivc=
+    volumes:
+      - gcloud-creds:/root/.config/gcloud
+
+  webserver:
+    extends: airflow
+    command: webserver
+    links:
+      - postgres
+      - redis
+    ports:
+      - "8080:8080"
+
+  gcloud-auth:
+    extends: airflow
+    command: gcloud auth application-default login
+
+  postgres:
+    image: postgres:9.6
+    environment:
+      - POSTGRES_USER=airflow
+      - POSTGRES_PASSWORD=airflow
+      - POSTGRES_DB=airflow
+
+  redis:
+    image: 'redis:3.2.7'
+
+  flower:
+    extends: airflow
+    command: flower
+    links:
+      - redis
+    ports:
+      - "5555:5555"
+
+  scheduler:
+    extends: airflow
+    command: scheduler
+    links:
+      - redis
+      - postgres
+    depends_on:
+      - webserver
+    # volumes:
+        # - ~/docker-airflow/dags:/usr/local/airflow/dags
+
+  worker:
+    extends: airflow
+    command: worker
+    links:
+      - redis
+      - postgres
+    depends_on:
+      - scheduler
+      - webserver
+    # volumes:
+        # - ~/docker-airflow/dags:/usr/local/airflow/dags
+
+volumes:
+  gcloud-creds:

@@ -27,6 +27,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   unixodbc-dev \
   vim \
   wget \
+  netcat \
+  dnsutils \
   && rm -rf /var/lib/apt/lists/*
 
 # install mssql drivers https://msdn.microsoft.com/en-us/library/hh568454(v=sql.110).aspx
@@ -81,3 +83,13 @@ RUN curl http://download.mosek.com/stable/8.0.0.59/mosektoolslinux64x86.tar.bz2 
  && cd $MOSEK_PATH/python/2 && python setup.py install --user \
  && python -c '__import__("mosek").Env()'
 COPY mosek.lic /mosek.lic
+
+# Airflow
+# check for netcat
+RUN which nc
+ENV AIRFLOW_HOME=/usr/local/airflow
+RUN pip install apache-airflow[celery,mssql,postgres,crypto,s3,gcp_api]==1.8.1
+RUN pip install --upgrade --upgrade-strategy only-if-needed git+https://github.com/apache/incubator-airflow@1.8.2rc2
+COPY airflow/airflow.cfg ${AIRFLOW_HOME}/airflow.cfg
+COPY airflow/airflow_setup.py ${AIRFLOW_HOME}/airflow_setup.py
+COPY airflow/airflow-entry.sh /usr/local/bin/airflow-entry.sh

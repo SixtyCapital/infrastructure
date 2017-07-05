@@ -92,10 +92,3 @@ matplotlib
 plotly
 seaborn
 altair
-
-
-# web
-flask_login
-flask-bootstrap
-flask-bower
-flask-wtf
