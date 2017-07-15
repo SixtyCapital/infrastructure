@@ -86,7 +86,6 @@ COPY mosek.lic /mosek.lic
 
 # Airflow
 ENV AIRFLOW_HOME=/usr/local/airflow
-RUN pip install apache-airflow[celery,mssql,postgres,crypto,s3,gcp_api]==1.8.1 \
- && pip install --upgrade --upgrade-strategy only-if-needed git+https://github.com/apache/incubator-airflow@1.8.2rc2
+RUN pip install --upgrade --upgrade-strategy only-if-needed git+https://github.com/apache/incubator-airflow@1.8.2rc2
 COPY airflow/airflow.cfg airflow/airflow_setup.py ${AIRFLOW_HOME}/
 COPY airflow/airflow-entry.sh /usr/local/bin/airflow-entry.sh

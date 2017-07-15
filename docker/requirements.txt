@@ -92,3 +92,12 @@ matplotlib
 plotly
 seaborn
 altair
+
+# needs to be above the other flask installs
+apache-airflow[celery,mssql,postgres,crypto,s3,gcp_api]==1.8.1
+
+# web
+flask_login
+flask-bootstrap
+flask-bower
+flask-wtf
