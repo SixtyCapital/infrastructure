@@ -29,8 +29,11 @@ if [ "$1" = "webserver" ] || [ "$1" = "worker" ] || [ "$1" = "scheduler" ] ; the
         exit 1
       fi
     fi
-    sleep 10
+    sleep 5
   done
+  echo "Initialize database..."
+  $CMD initdb
+  python ${AIRFLOW_HOME}/airflow_setup.py
 fi
 
 # Wait for Redis
@@ -47,8 +50,15 @@ if [ "$1" = "webserver" ] || [ "$1" = "worker" ] || [ "$1" = "scheduler" ] || [ 
   done
 fi
 
-echo "Initialize database..."
-$CMD initdb
-python ${AIRFLOW_HOME}/airflow_setup.py
-
-$CMD "$@"
+# avoid triggering CrashLoopBackOff in kubernetes sched with --num_runs
+if [ "$1" = "scheduler" ] ; then
+  while true; do
+    $CMD "$@"
+    ret=$?
+    if [ $ret -ne 0 ]; then
+      exit $?
+    fi
+  done
+else
+  $CMD "$@"
+fi

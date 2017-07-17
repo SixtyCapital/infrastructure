@@ -48,11 +48,13 @@ spec:
         emptyDir: {}
       containers:
       - name: airflow-web
-        image: gcr.io/sixty-capital/base:airflow
+        image: gcr.io/sixty-capital/sixty:airflow-etl
         command:
-        - airflow
+        - /usr/local/bin/airflow-entry.sh
         - webserver
         env:
+        - name: DAGS_FOLDER
+          value: /src/sixty/production
         - name: EXECUTOR
           value: Celery
         - name: FERNET_KEY
@@ -77,6 +79,11 @@ spec:
         ports:
         - containerPort: 8080
           protocol: TCP
+        resources:
+          limits:
+            memory: 1Gi
+          requests:
+            memory: 1Gi
       - image: gcr.io/cloudsql-docker/gce-proxy:1.09
         name: cloudsql-proxy
         command: ["/cloud_sql_proxy", "--dir=/cloudsql",
@@ -91,6 +98,9 @@ spec:
           - name: cloudsql
             mountPath: /cloudsql
       restartPolicy: Always
+      # nodeSelector: !cloud.google.com/gke-preemptible
+      nodeSelector:
+        cloud.google.com/gke-nodepool: airflow-small
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -126,11 +136,16 @@ spec:
         emptyDir: {}
       containers:
       - name: airflow-scheduler
-        image: gcr.io/sixty-capital/base:airflow
+        image: gcr.io/sixty-capital/sixty:airflow-etl
         command:
-        - airflow
+        - /usr/local/bin/airflow-entry.sh
         - scheduler
+        # suggested to let this restart after X runs for reliability
+        # https://medium.com/handy-tech/airflow-tips-tricks-and-pitfalls-9ba53fba14eb
+        - --num_runs=200
         env:
+        - name: DAGS_FOLDER
+          value: /src/sixty/production
         - name: EXECUTOR
           value: Celery
         - name: FERNET_KEY
@@ -155,6 +170,11 @@ spec:
         ports:
         - containerPort: 8080
           protocol: TCP
+        resources:
+          limits:
+            memory: 2Gi
+          requests:
+            memory: 2Gi
       - image: gcr.io/cloudsql-docker/gce-proxy:1.09
         name: cloudsql-proxy
         command: ["/cloud_sql_proxy", "--dir=/cloudsql",
@@ -204,11 +224,13 @@ spec:
         emptyDir: {}
       containers:
       - name: airflow-worker
-        image: gcr.io/sixty-capital/base:airflow
+        image: gcr.io/sixty-capital/sixty:airflow-etl
         command:
-        - airflow
+        - /usr/local/bin/airflow-entry.sh
         - worker
         env:
+        - name: DAGS_FOLDER
+          value: /src/sixty/production
         - name: EXECUTOR
           value: Celery
         - name: FERNET_KEY
@@ -233,6 +255,11 @@ spec:
         ports:
         - containerPort: 8080
           protocol: TCP
+        resources:
+          limits:
+            memory: 7Gi
+          requests:
+            memory: 7Gi
       - image: gcr.io/cloudsql-docker/gce-proxy:1.09
         name: cloudsql-proxy
         command: ["/cloud_sql_proxy", "--dir=/cloudsql",
@@ -247,6 +274,8 @@ spec:
           - name: cloudsql
             mountPath: /cloudsql
       restartPolicy: Always
+      nodeSelector:
+        cloud.google.com/gke-nodepool: airflow-worker
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -278,13 +307,14 @@ spec:
     spec:
       containers:
       - name: master
-        image: gcr.io/google_containers/redis:e2e  # or just image: redis
-        resources:
-          requests:
-            # cpu: 100m
-            # memory: 100Mi
+        image: gcr.io/google_containers/redis:e2e
         ports:
         - containerPort: 6379
+        resources:
+          requests:
+            memory: 2Gi
+      nodeSelector:
+        cloud.google.com/gke-nodepool: airflow-small
 ---
 apiVersion: v1
 kind: Service
