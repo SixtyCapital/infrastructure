@@ -3,9 +3,6 @@
 __pycache__/
 *.py[cod]
 
-*.swp
-~*
-
 # C extensions
 *.so
 
@@ -45,6 +42,8 @@ htmlcov/
 nosetests.xml
 coverage.xml
 *.retry
+.testmondata
+.tmontmp
 
 # Translations
 *.mo
@@ -84,4 +83,4 @@ SLAvailability*
 
 # Mac / Dropbox files
 .DS_Store
-Icon
+Icon*

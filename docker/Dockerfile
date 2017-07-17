@@ -85,11 +85,7 @@ RUN curl http://download.mosek.com/stable/8.0.0.59/mosektoolslinux64x86.tar.bz2 
 COPY mosek.lic /mosek.lic
 
 # Airflow
-# check for netcat
-RUN which nc
 ENV AIRFLOW_HOME=/usr/local/airflow
-RUN pip install apache-airflow[celery,mssql,postgres,crypto,s3,gcp_api]==1.8.1
 RUN pip install --upgrade --upgrade-strategy only-if-needed git+https://github.com/apache/incubator-airflow@1.8.2rc2
-COPY airflow/airflow.cfg ${AIRFLOW_HOME}/airflow.cfg
-COPY airflow/airflow_setup.py ${AIRFLOW_HOME}/airflow_setup.py
+COPY airflow/airflow.cfg airflow/airflow_setup.py ${AIRFLOW_HOME}/
 COPY airflow/airflow-entry.sh /usr/local/bin/airflow-entry.sh
