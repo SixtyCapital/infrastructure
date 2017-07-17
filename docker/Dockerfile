@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   apt-transport-https \
   apt-utils \
   bash-completion \
+  ca-certificates \
   curl \
   dialog \
   freetype* \
@@ -21,8 +22,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   libssl-dev \
   libxft-dev \
   libyaml-dev \
+  linux-image-extra-virtual \
   python-pip \
   python-dev \
+  software-properties-common \
   unixodbc \
   unixodbc-dev \
   vim \
@@ -44,6 +47,14 @@ RUN ln -sfn /opt/mssql-tools/bin/sqlcmd-13.0.1.0 /usr/bin/sqlcmd \
 # Tini for Jupyter
 ADD https://github.com/krallin/tini/releases/download/v0.14.0/tini /tini
 RUN chmod +x /tini
+
+# docker, from https://docs.docker.com/engine/installation/linux/ubuntu
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg |  apt-key add - \
+  && add-apt-repository \
+  "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" \
+  && apt-get update && apt-get install -y --no-install-recommends \
+  docker-ce \
+  && rm -rf /var/lib/apt/lists/*
 
 # standard requirements
 COPY requirements.txt /
