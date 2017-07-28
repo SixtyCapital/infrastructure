@@ -97,3 +97,7 @@ COPY mosek.lic /mosek.lic
 
 # Airflow
 RUN pip install --upgrade --upgrade-strategy only-if-needed git+https://github.com/apache/incubator-airflow@1.8.2rc2
+ENV AIRFLOW_HOME=/usr/local/airflow
+COPY airflow/airflow.cfg airflow/airflow_setup.py ${AIRFLOW_HOME}/
+COPY airflow/airflow-entry.sh /usr/local/bin/airflow-entry.sh
+COPY airflow/dags.py ${AIRFLOW_HOME}/dags/
