@@ -53,12 +53,8 @@ spec:
         - /usr/local/bin/airflow-entry.sh
         - webserver
         env:
-        - name: DAGS_FOLDER
-          value: /usr/local/airflow/dags
         - name: AIRFLOW_GCS_LOGS_URL
           value: gs://sixty-capital/logs/airflow
-        - name: EXECUTOR
-          value: Celery
         - name: FERNET_KEY
           value: Yd02MB6W0KXvklEG1FPxOJt_A-V3ARvnvp1TMfdPivc=
         - name: REDIS_HOST
@@ -146,12 +142,8 @@ spec:
         # https://medium.com/handy-tech/airflow-tips-tricks-and-pitfalls-9ba53fba14eb
         - --num_runs=200
         env:
-        - name: DAGS_FOLDER
-          value: /usr/local/airflow/dags
         - name: AIRFLOW_GCS_LOGS_URL
           value: gs://sixty-capital/logs/airflow
-        - name: EXECUTOR
-          value: Celery
         - name: FERNET_KEY
           value: Yd02MB6W0KXvklEG1FPxOJt_A-V3ARvnvp1TMfdPivc=
         - name: REDIS_HOST
@@ -233,12 +225,8 @@ spec:
         - /usr/local/bin/airflow-entry.sh
         - worker
         env:
-        - name: DAGS_FOLDER
-          value: /usr/local/airflow/dags
         - name: AIRFLOW_GCS_LOGS_URL
           value: gs://sixty-capital/logs/airflow
-        - name: EXECUTOR
-          value: Celery
         - name: FERNET_KEY
           value: Yd02MB6W0KXvklEG1FPxOJt_A-V3ARvnvp1TMfdPivc=
         - name: REDIS_HOST

@@ -58,6 +58,7 @@ if [ "$1" = "scheduler" ] ; then
     if [ $ret -ne 0 ]; then
       exit $?
     fi
+    sleep 3
   done
 else
   $CMD "$@"
