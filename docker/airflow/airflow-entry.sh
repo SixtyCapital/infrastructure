@@ -37,17 +37,22 @@ if [ "$1" = "webserver" ] || [ "$1" = "worker" ] || [ "$1" = "scheduler" ] ; the
 fi
 
 # Wait for Redis
-if [ "$1" = "webserver" ] || [ "$1" = "worker" ] || [ "$1" = "scheduler" ] || [ "$1" = "flower" ] ; then
-  j=0
-  while ! nc -z $REDIS_HOST $REDIS_PORT >/dev/null 2>&1 < /dev/null; do
-    j=$((j+1))
-    if [ $j -ge $TRY_LOOP ]; then
-      echo "$(date) - $REDIS_HOST still not reachable, giving up"
-      exit 1
-    fi
-    echo "$(date) - waiting for Redis... $j/$TRY_LOOP"
-    sleep 5
-  done
+
+# don't wait for redis if you don't need to (this is dependent on executor being set with an env. Possible to set with
+# other config settings, and then this process won't recognize)
+if [ $AIRFLOW__CORE__EXECUTOR != "LocalExecutor" ] ; then
+  if [ "$1" = "webserver" ] || [ "$1" = "worker" ] || [ "$1" = "scheduler" ] || [ "$1" = "flower" ] ; then
+    j=0
+    while ! nc -z $REDIS_HOST $REDIS_PORT >/dev/null 2>&1 < /dev/null; do
+      j=$((j+1))
+      if [ $j -ge $TRY_LOOP ]; then
+        echo "$(date) - $REDIS_HOST still not reachable, giving up"
+        exit 1
+      fi
+      echo "$(date) - waiting for Redis... $j/$TRY_LOOP"
+      sleep 5
+    done
+  fi
 fi
 
 # avoid triggering CrashLoopBackOff in kubernetes sched with --num_runs
