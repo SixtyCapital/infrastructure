@@ -53,7 +53,11 @@ spec:
         - /usr/local/bin/airflow-entry.sh
         - webserver
         env:
-        - name: AIRFLOW_GCS_LOGS_URL
+        - name: SIXTY_CONFIG_FILE
+          value: config_airflow.yaml
+        - name: AIRFLOW__CORE__REMOTE_LOG_CONN_ID
+          value: sixty_gcp
+        - name: AIRFLOW__CORE__REMOTE_BASE_LOG_FOLDER
           value: gs://sixty-capital/logs/airflow
         - name: FERNET_KEY
           value: Yd02MB6W0KXvklEG1FPxOJt_A-V3ARvnvp1TMfdPivc=
@@ -142,7 +146,11 @@ spec:
         # https://medium.com/handy-tech/airflow-tips-tricks-and-pitfalls-9ba53fba14eb
         - --num_runs=200
         env:
-        - name: AIRFLOW_GCS_LOGS_URL
+        - name: SIXTY_CONFIG_FILE
+          value: config_airflow.yaml
+        - name: AIRFLOW__CORE__REMOTE_LOG_CONN_ID
+          value: sixty_gcp
+        - name: AIRFLOW__CORE__REMOTE_BASE_LOG_FOLDER
           value: gs://sixty-capital/logs/airflow
         - name: FERNET_KEY
           value: Yd02MB6W0KXvklEG1FPxOJt_A-V3ARvnvp1TMfdPivc=
@@ -225,7 +233,11 @@ spec:
         - /usr/local/bin/airflow-entry.sh
         - worker
         env:
-        - name: AIRFLOW_GCS_LOGS_URL
+        - name: SIXTY_CONFIG_FILE
+          value: config_airflow.yaml
+        - name: AIRFLOW__CORE__REMOTE_LOG_CONN_ID
+          value: sixty_gcp
+        - name: AIRFLOW__CORE__REMOTE_BASE_LOG_FOLDER
           value: gs://sixty-capital/logs/airflow
         - name: FERNET_KEY
           value: Yd02MB6W0KXvklEG1FPxOJt_A-V3ARvnvp1TMfdPivc=
