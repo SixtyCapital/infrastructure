@@ -1,61 +1,59 @@
 funcsigs  # until Py3
 futures  # until Py3
+iso3166 # country mappings
 lazy
 lru-dict
+lxml
 passlib
 psutil
 pysftp
-python-dateutil
 pyslack-real
+python-dateutil
 pytz
 qualname  # until py3
 requests
 six
 terminado  # do we need this?
+toolz
 urllib3[secure]  # do we need this?
 watchdog
 xlwt
-toolz
-iso3166 # country mappings
-lxml
 
 # pydata
-xarray==0.9.6
-pandas==0.20.3
-pandas-gbq
-scipy
+bottleneck
+cython
+numexpr
 numpy
+pandas-gbq
+pandas==0.20.3
+scipy
 sklearn
 statsmodels
-bottleneck
-numexpr
-cython
+xarray==0.9.6
 
 # data
-SQLAlchemy
-quandl
 dill
-redis
 dogpile.cache
 mockredispy
 pyodbc==3.1.1 # because of unicode issues
+quandl
+redis
+SQLAlchemy
 
 # infrastructure
-boto
-setuptools
-celery==3.1.23
-flower
-# deprecate - remove 2017-09
-setuptools_git_version
-setuptools_scm
-wheel
-versioneer
-google-cloud
-google-api-python-client
-google-apitools
 apache_beam[gcp]
+boto
+celery==3.1.23
 cookiecutter
 docker-compose
+flower
+google-api-python-client
+google-apitools
+google-cloud
+setuptools
+setuptools_scm
+versioneer
+wheel
 
 # minerva / opt
 cvxopt==1.1.8   # https://github.com/cvxopt/cvxopt/issues/79
@@ -64,37 +62,38 @@ cvxopt==1.1.8   # https://github.com/cvxopt/cvxopt/issues/79
 quickfix # doesn't work with Py3
 
 # dev tools
+# pytest-sugar https://github.com/Frozenball/pytest-sugar/pull/49
+asv
+# datalab https://github.com/googledatalab/datalab/issues/1641
+flake8
 git-up
+git+https://github.com/joerick/pyinstrument.git#egg=pyinstrument
+ipdb
 ipython
 jupyter
 jupyter_kernel_gateway
-ipdb
-flake8
-asv
+line_profiler
+memory_profiler
 mock # until Py3
+pdbpp
+profilehooks
 pycallgraph
 pytest
 pytest-pycharm
-pytest-xdist
-pytest-watch
 pytest-testmon
-# pytest-sugar https://github.com/Frozenball/pytest-sugar/pull/49
-pdbpp
-line_profiler
-memory_profiler
+pytest-watch
+pytest-xdist
 snakeviz
-profilehooks
-git+https://github.com/joerick/pyinstrument.git#egg=pyinstrument
 
 # viz
+altair
 cufflinks==0.8.2  # otherwise requires ta-lib, which is a pain to install
 matplotlib
 plotly
 seaborn
-altair
 
 # needs to be above the other flask installs
-apache-airflow[celery,mssql,postgres,crypto,s3,gcp_api]==1.8.1
+apache-airflow[celery,mssql,postgres,crypto,s3,gcp_api]==1.8.2
 
 # web
 flask_login
