@@ -96,7 +96,6 @@ RUN curl http://download.mosek.com/stable/8.0.0.59/mosektoolslinux64x86.tar.bz2 
 COPY mosek.lic /mosek.lic
 
 # Airflow
-RUN pip install --upgrade --upgrade-strategy only-if-needed git+https://github.com/apache/incubator-airflow@1.8.2rc2
 ENV AIRFLOW_HOME=/usr/local/airflow
 COPY airflow/airflow.cfg airflow/airflow_setup.py ${AIRFLOW_HOME}/
 COPY airflow/airflow-entry.sh /usr/local/bin/
