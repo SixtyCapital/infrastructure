@@ -18,7 +18,7 @@ TRY_LOOP="20"
 # : ${FERNET_KEY:=$(python -c "from cryptography.fernet import Fernet; FERNET_KEY = Fernet.generate_key().decode(); print(FERNET_KEY)")}
 
 # Wait for Postresql
-if [ "$1" = "initdb" ] || "$1" = "webserver" ] || [ "$1" = "worker" ] || [ "$1" = "scheduler" ] ; then
+if [ "$1" = "initdb" ] || [ "$1" = "webserver" ] || [ "$1" = "worker" ] || [ "$1" = "scheduler" ] ; then
   i=0
   while ! nc -z $POSTGRES_HOST $POSTGRES_PORT >/dev/null 2>&1 < /dev/null; do
     i=$((i+1))

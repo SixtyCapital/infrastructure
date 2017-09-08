@@ -28,26 +28,26 @@ dependencies:
 test:
   override:
   - docker build -t $IMAGE_TAG .
-
+  
 deployment:
   # pushes to a) the branch, b) latest if on master, c) the tag if tagged
-  # does this for both AWS & GCloud
+  # gcloud is done in `cloudbuild.yaml`
   master:
     branch: master
     commands:
       - docker tag $IMAGE_TAG $IMAGE_TAG:$CIRCLE_BRANCH
       - docker tag $IMAGE_TAG $IMAGE_TAG:latest
-      - docker push $IMAGE_TAG:$CIRCLE_BRANCH
-      - docker push $IMAGE_TAG:latest
+      - docker push $IMAGE_TAG:$CIRCLE_BRANCH | tee
+      - docker push $IMAGE_TAG:latest | tee
 
   other:
     branch: /.*/   # any other branch
     commands:
       - docker tag $IMAGE_TAG $IMAGE_TAG:$CIRCLE_BRANCH
-      - docker push $IMAGE_TAG:$CIRCLE_BRANCH
+      - docker push $IMAGE_TAG:$CIRCLE_BRANCH | tee
 
   release:
     tag: /.*/  # any tag
     commands:
       - docker tag $IMAGE_TAG $IMAGE_TAG:$CIRCLE_TAG
-      - docker push $IMAGE_TAG:$CIRCLE_TAG
+      - docker push $IMAGE_TAG:$CIRCLE_TAG | tee
