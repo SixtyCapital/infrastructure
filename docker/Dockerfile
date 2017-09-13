@@ -63,7 +63,10 @@ RUN pip install pip --upgrade \
  && pip install -r requirements.txt \
  && rm requirements.txt
 #installed here rather than requirements to ensure dependency versions work
-RUN pip install apache-airflow[celery,mssql,postgres,crypto,s3,gcp_api]==1.8.2
+# don't install gcp_api here because it downgrades the version
+RUN pip install apache-airflow[celery,mssql,postgres,crypto,s3]==1.8.2 \
+  # imperfect test to ensure it loads
+  && airflow list_dags
 
 # Jupyter & kernel gateway
 RUN jupyter nbextension enable --py widgetsnbextension --sys-prefix
