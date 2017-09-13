@@ -62,6 +62,8 @@ RUN pip install pip --upgrade \
  && pip install setuptools \
  && pip install -r requirements.txt \
  && rm requirements.txt
+#installed here rather than requirements to ensure dependency versions work
+RUN pip install apache-airflow[celery,mssql,postgres,crypto,s3,gcp_api]==1.8.2
 
 # Jupyter & kernel gateway
 RUN jupyter nbextension enable --py widgetsnbextension --sys-prefix

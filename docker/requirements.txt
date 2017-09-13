@@ -93,7 +93,7 @@ plotly
 seaborn
 
 # needs to be above the other flask installs
-apache-airflow[celery,mssql,postgres,crypto,s3,gcp_api]==1.8.2
+# apache-airflow[celery,mssql,postgres,crypto,s3,gcp_api]==1.8.2 # installed outside requirements as it's fussy about versions
 
 # web
 flask_login
