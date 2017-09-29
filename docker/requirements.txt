@@ -91,6 +91,7 @@ cufflinks==0.8.2  # otherwise requires ta-lib, which is a pain to install
 matplotlib
 plotly
 seaborn
+qgrid
 
 # needs to be above the other flask installs
 # apache-airflow[celery,mssql,postgres,crypto,s3]==1.8.2 # installed outside requirements as it's fussy about versions
