@@ -41,8 +41,7 @@ RUN apt-get update && ACCEPT_EULA=Y apt-get install -y --no-install-recommends \
   msodbcsql \
   mssql-tools \
   && rm -rf /var/lib/apt/lists/*
-RUN ln -sfn /opt/mssql-tools/bin/sqlcmd-13.0.1.0 /usr/bin/sqlcmd \
- && ln -sfn /opt/mssql-tools/bin/bcp-13.0.1.0 /usr/bin/bcp
+RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
 
 # Tini for Jupyter
 ADD https://github.com/krallin/tini/releases/download/v0.14.0/tini /tini
