@@ -25,7 +25,7 @@ cython
 numexpr
 numpy
 pandas-gbq
-pandas==0.20.3
+pandas==0.21.0
 scipy
 sklearn
 statsmodels
