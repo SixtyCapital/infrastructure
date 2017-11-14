@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 AIRFLOW_HOME="/usr/local/airflow"
 CMD="/usr/local/bin/airflow"
 TRY_LOOP="20"
