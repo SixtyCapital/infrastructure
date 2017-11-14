@@ -21,7 +21,7 @@ logger = getLogger(__name__)
 
 def run(project_id):
     billing_account = 'sixty-invoice-billing'
-    db_instance_name = 'airflow-db'
+    db_instance_name = 'airflow-postgres'
     db_name = 'airflow'
     cluster_name = project_id
 
@@ -50,7 +50,7 @@ def run(project_id):
         sleep(3)
     grant_bucket_access(project_id)
     create_namespaces(project_id, cluster_name)
-    create_airflow_secrets(project_id, cluster_name)
+    create_airflow_secrets(project_id, cluster_name, db_instance_name)
 
 
 def test():

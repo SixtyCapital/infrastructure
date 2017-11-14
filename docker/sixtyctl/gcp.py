@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 from googleapiclient.discovery import build
 from sixtyctl.util import getLogger
+from sixtyctl.config import SCRATCH_PROJECTS, STRATEGY_PROJECTS
 
 logger = getLogger(__name__)
 REGION = 'us-east4'
@@ -165,7 +166,7 @@ def create_db(project_id, db_instance_name, db_name):
 def describe_db_instance(project_id, db_instance_name):
     svc = build('sqladmin', 'v1beta4')
     return svc.instances().get(
-        project='sixty-capital-test', instance='airflow-db').execute()
+        project=project_id, instance=db_instance_name).execute()
 
 
 def update_default_db_password(project_id, db_instance_name):
@@ -326,8 +327,9 @@ def create_project_buckets(project_id):
 def grant_bucket_access(project_id):
     svc_email = describe_default_compute_service_account(project_id)['email']
     # grant access to GCR buckets
-    gcr_projects = [
-        'sixty-capital', 'sixty-commodity', 'sixty-capital-similarity']
+    gcr_projects = SCRATCH_PROJECTS
+    if project_id not in SCRATCH_PROJECTS:
+        gcr_projects += STRATEGY_PROJECTS
     svc = build('storage', 'v1')
     member = 'serviceAccount:{}'.format(svc_email)
     role_name = 'roles/storage.objectViewer'

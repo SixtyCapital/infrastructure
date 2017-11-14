@@ -73,10 +73,10 @@ def create_namespaces(project_id, cluster_name):
         logger.info('Created namespace {}'.format(namespace))
 
 
-def create_airflow_secrets(project_id, cluster_name):
+def create_airflow_secrets(project_id, cluster_name, db_instance_name):
     namespace = 'airflow'
     secrets_name = 'airflow-secrets'
-    db_info = describe_db_instance(project_id, 'airflow-db')
+    db_info = describe_db_instance(project_id, db_instance_name)
     secrets = {
         'db-connection-name': db_info['connectionName'],
         'db-user': 'postgres',
