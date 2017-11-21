@@ -29,7 +29,7 @@ pandas==0.21.0
 scipy
 sklearn
 statsmodels
-xarray==0.9.6
+xarray==0.10.0
 
 # data
 dill
