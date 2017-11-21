@@ -71,7 +71,7 @@ RUN pip install apache-airflow[celery,mssql,postgres,crypto,s3]==1.8.2 \
 RUN jupyter nbextension enable --py widgetsnbextension --sys-prefix
 COPY jupyter_notebook_config.py .jupyter/jupyter_notebook_config.py
 RUN mv .jupyter $HOME/.jupyter
-ENV JUPYTER_USE_HTTPS='1' JUPYTER_NOTEBOOK_DIR='/notebooks' KG_LIST_KERNELS=True
+ENV JUPYTER_USE_HTTPS='1' JUPYTER_NOTEBOOK_DIR='/notebooks'
 
 # Celery
 ENV C_FORCE_ROOT=1

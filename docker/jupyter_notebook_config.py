@@ -13,8 +13,8 @@ c.NotebookApp.ip = '*'
 c.NotebookApp.port = 8888
 c.NotebookApp.open_browser = False
 
-# Set a certificate if USE_HTTPS is set to any value
-if 'JUPYTER_USE_HTTPS' in os.environ:
+# Set a certificate if USE_HTTPS is set to something truthy
+if os.environ.get('JUPYTER_USE_HTTPS', None):
     if not os.path.isfile(PEM_FILE):
         # Ensure PEM_FILE directory exists
         dir_name = os.path.dirname(PEM_FILE)
