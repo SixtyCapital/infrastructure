@@ -43,7 +43,7 @@ SQLAlchemy
 # infrastructure
 # apache_beam[gcp] # currently installs old version of google-bigquery
 boto
-celery==3.1.23
+celery
 cookiecutter
 docker-compose
 flower

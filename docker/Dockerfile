@@ -61,9 +61,11 @@ RUN pip install pip --upgrade \
  && pip install setuptools \
  && pip install -r requirements.txt \
  && rm requirements.txt
-#installed here rather than requirements to ensure dependency versions work
+# installed here rather than requirements to ensure dependency versions work
 # don't install gcp_api here because it downgrades the version
 RUN pip install apache-airflow[celery,mssql,postgres,crypto,s3]==1.8.2 \
+  && pip install --upgrade-strategy=only-if-needed \
+                 git+https://github.com/apache/incubator-airflow.git@1.9.0rc4 \
   # imperfect test to ensure it loads
   && airflow list_dags
 
