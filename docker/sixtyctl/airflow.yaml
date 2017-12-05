@@ -51,6 +51,8 @@ spec:
               key: project-id
         - name: SIXTY_CONFIG_FILE
           value: config_airflow.yaml
+        - name: AIRFLOW__CORE__LOGGING_CONFIG_CLASS
+          value: sixty.production.airflow_config.logging_config.LOGGING_CONFIG
         - name: AIRFLOW__CORE__REMOTE_LOG_CONN_ID
           value: sixty_gcp
         - name: AIRFLOW__CORE__REMOTE_BASE_LOG_FOLDER
@@ -142,6 +144,8 @@ spec:
               key: project-id
         - name: SIXTY_CONFIG_FILE
           value: config_airflow.yaml
+        - name: AIRFLOW__CORE__LOGGING_CONFIG_CLASS
+          value: sixty.production.airflow_config.logging_config.LOGGING_CONFIG
         - name: AIRFLOW__CORE__REMOTE_LOG_CONN_ID
           value: sixty_gcp
         - name: AIRFLOW__CORE__REMOTE_BASE_LOG_FOLDER
@@ -199,15 +203,15 @@ metadata:
     tier: worker
   name: airflow-worker
 spec:
-  replicas: 2
+  replicas: 32
   selector:
     matchLabels:
       app: airflow-worker
-  strategy:
-    rollingUpdate:
-      maxSurge: 2
-      maxUnavailable: 2
-    type: RollingUpdate
+  # strategy:
+  #   rollingUpdate:
+  #     maxSurge: 2
+  #     maxUnavailable: 2
+  #   type: RollingUpdate
   template:
     metadata:
       creationTimestamp: null
@@ -220,6 +224,7 @@ spec:
         command:
         - /usr/local/bin/airflow-entry.sh
         - worker
+        - --concurrency=1
         env:
         - name: GOOGLE_CLOUD_PROJECT
           valueFrom:
@@ -228,6 +233,8 @@ spec:
               key: project-id
         - name: SIXTY_CONFIG_FILE
           value: config_airflow.yaml
+        - name: AIRFLOW__CORE__LOGGING_CONFIG_CLASS
+          value: sixty.production.airflow_config.logging_config.LOGGING_CONFIG
         - name: AIRFLOW__CORE__REMOTE_LOG_CONN_ID
           value: sixty_gcp
         - name: AIRFLOW__CORE__REMOTE_BASE_LOG_FOLDER
@@ -262,9 +269,11 @@ spec:
           protocol: TCP
         resources:
           limits:
-            memory: 14Gi
+            memory: 4Gi
+            cpu: 1000m
           requests:
-            memory: 7Gi
+            memory: 1Gi
+            cpu: 300m
       - image: gcr.io/cloudsql-docker/gce-proxy:1.11
         name: cloudsql-proxy
         command: ["/cloud_sql_proxy"]
