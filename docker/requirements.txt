@@ -53,14 +53,11 @@ google-cloud==0.27.0
 google-cloud-bigquery==0.26.0
 setuptools
 setuptools_scm
-versioneer
 wheel
 
 # minerva / opt
 cvxopt==1.1.8   # https://github.com/cvxopt/cvxopt/issues/79
 
-# mercury / trading
-quickfix # doesn't work with Py3
 
 # dev tools
 # pytest-sugar https://github.com/Frozenball/pytest-sugar/pull/49
@@ -96,9 +93,3 @@ qgrid
 
 # needs to be above the other flask installs
 # apache-airflow[celery,mssql,postgres,crypto,s3]==1.8.2 # installed outside requirements as it's fussy about versions
-
-# web
-flask_login
-flask-bootstrap
-flask-bower
-flask-wtf
