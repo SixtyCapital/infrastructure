@@ -1,5 +1,8 @@
 FROM ubuntu
 
+# https://github.com/phusion/baseimage-docker/issues/58
+ARG DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
  locales \
  && rm -rf /var/lib/apt/lists/* \
@@ -47,13 +50,8 @@ RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
 ADD https://github.com/krallin/tini/releases/download/v0.14.0/tini /tini
 RUN chmod +x /tini
 
-# docker, from https://docs.docker.com/engine/installation/linux/ubuntu
-RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg |  apt-key add - \
-  && add-apt-repository \
-  "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" \
-  && apt-get update && apt-get install -y --no-install-recommends \
-  docker-ce \
-  && rm -rf /var/lib/apt/lists/*
+# docker (simple version), from https://docs.docker.com/engine/installation/linux/ubuntu
+RUN curl -fsSL get.docker.com | sh
 
 # standard requirements
 COPY requirements.txt /
@@ -63,10 +61,9 @@ RUN pip install pip --upgrade \
  && rm requirements.txt
 # installed here rather than requirements to ensure dependency versions work
 # don't install gcp_api here because it downgrades the version
+# includes imperfect test to ensure it loads
 RUN pip install apache-airflow[celery,mssql,postgres,crypto,s3]==1.8.2 \
-  && pip install --upgrade-strategy=only-if-needed \
-                 git+https://github.com/apache/incubator-airflow.git@1.9.0rc4 \
-  # imperfect test to ensure it loads
+  && pip install --upgrade-strategy=only-if-needed git+https://github.com/apache/incubator-airflow.git@1.9.0rc4 \
   && airflow list_dags
 
 # Jupyter & kernel gateway
