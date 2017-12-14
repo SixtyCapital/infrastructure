@@ -63,7 +63,7 @@ RUN pip install pip --upgrade \
 # don't install gcp_api here because it downgrades the version
 # includes imperfect test to ensure it loads
 RUN pip install apache-airflow[celery,mssql,postgres,crypto,s3]==1.8.2 \
-  && pip install --upgrade-strategy=only-if-needed git+https://github.com/apache/incubator-airflow.git@1.9.0rc4 \
+  && pip install --upgrade-strategy=only-if-needed git+https://github.com/apache/incubator-airflow.git@1.9.0rc6 \
   && airflow list_dags
 
 # Jupyter & kernel gateway
