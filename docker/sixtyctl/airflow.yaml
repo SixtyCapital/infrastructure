@@ -39,7 +39,7 @@ spec:
     spec:
       containers:
       - name: airflow-web
-        image: gcr.io/sixty-capital/sixty:develop
+        image: gcr.io/sixty-capital/investment:develop
         command:
         - /usr/local/bin/airflow-entry.sh
         - webserver
@@ -129,7 +129,7 @@ spec:
     spec:
       containers:
       - name: airflow-scheduler
-        image: gcr.io/sixty-capital/sixty:develop
+        image: gcr.io/sixty-capital/investment:develop
         command:
         - /usr/local/bin/airflow-entry.sh
         - scheduler
@@ -220,7 +220,7 @@ spec:
     spec:
       containers:
       - name: airflow-worker
-        image: gcr.io/sixty-capital/sixty:develop
+        image: gcr.io/sixty-capital/investment:develop
         command:
         - /usr/local/bin/airflow-entry.sh
         - worker
