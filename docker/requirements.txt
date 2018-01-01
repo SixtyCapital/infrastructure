@@ -26,7 +26,7 @@ numba
 numexpr
 numpy
 pandas-gbq
-pandas==0.21.1
+pandas==0.22.0
 scipy
 sklearn
 statsmodels
@@ -92,5 +92,5 @@ plotly
 seaborn
 qgrid
 
-# needs to be above the other flask installs
-# apache-airflow[celery,mssql,postgres,crypto,s3]==1.8.2 # installed outside requirements as it's fussy about versions
+# installed outside requirements as it's fussy about versions
+# apache-airflow[celery,mssql,postgres,crypto,s3]==1.8.2
