@@ -22,6 +22,7 @@ xlwt
 # pydata
 bottleneck
 cython
+numba
 numexpr
 numpy
 pandas-gbq
