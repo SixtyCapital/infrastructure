@@ -92,7 +92,7 @@ ENV PATH=$PATH:/builder/google-cloud-sdk/bin/
 # Mosek binary
 ENV MOSEK_VERSION=8.0.0.59 MOSEK_PATH=/mosek/8/tools/platform/linux64x86 MOSEKLM_LICENSE_FILE=/mosek.lic
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MOSEK_PATH/bin
-RUN curl http://download.mosek.com/stable/8.0.0.59/mosektoolslinux64x86.tar.bz2 > mosek.tar.bz2 \
+RUN curl https://download.mosek.com/stable/$MOSEK_VERSION/mosektoolslinux64x86.tar.bz2 > mosek.tar.bz2 \
  && tar xf mosek.tar.bz2 && ln -s $MOSEK_PATH/bin/mosek /usr/bin/mosek && mosek -f \
  && cd $MOSEK_PATH/python/2 && python setup.py install --user \
  && python -c '__import__("mosek").Env()'
