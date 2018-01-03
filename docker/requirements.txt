@@ -1,44 +1,40 @@
+
+# python
+dill
 funcsigs  # until Py3
 futures  # until Py3
-iso3166 # country mappings
 lazy
-lru-dict
-lxml
-passlib
-psutil
-pysftp
-pyslack-real
-python-dateutil
-pytz
 qualname  # until py3
-requests
 six
-terminado  # do we need this?
 toolz
-urllib3[secure]  # do we need this?
-watchdog
-xlwt
 
 # pydata
 bottleneck
 cython
+iso3166 # country mappings
 numba
 numexpr
 numpy
 pandas-gbq
 pandas==0.22.0
+python-dateutil
+pytz
 scipy
 sklearn
 statsmodels
 xarray==0.10.0
+xlwt
 
 # data
-dill
 dogpile.cache
-mockredispy
+lru-dict
+lxml
 pyodbc==3.1.1 # because of unicode issues
+pysftp
+pyslack-real
 quandl
 redis
+requests
 SQLAlchemy
 
 # infrastructure
@@ -50,13 +46,14 @@ docker-compose
 flower
 google-api-python-client
 google-apitools
-google-cloud==0.27.0
-google-cloud-bigquery==0.26.0
+google-cloud
+google-cloud-bigquery
+psutil
 setuptools
 setuptools_scm
 wheel
 
-# minerva / opt
+# minerva / opt (remove after move to mosek is complete)
 cvxopt==1.1.8   # https://github.com/cvxopt/cvxopt/issues/79
 
 
@@ -82,6 +79,7 @@ pytest-pycharm
 pytest-testmon
 pytest-watch
 pytest-xdist
+mockredispy
 snakeviz
 
 # viz
