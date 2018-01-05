@@ -84,7 +84,7 @@ snakeviz
 
 # viz
 altair
-cufflinks==0.8.2  # otherwise requires ta-lib, which is a pain to install
+cufflinks
 matplotlib
 plotly
 seaborn
