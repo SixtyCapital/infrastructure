@@ -103,3 +103,5 @@ ENV AIRFLOW_HOME=/usr/local/airflow
 COPY airflow/airflow.cfg airflow/airflow_setup.py ${AIRFLOW_HOME}/
 COPY airflow/airflow-entry.sh /usr/local/bin/
 COPY airflow/dags.py ${AIRFLOW_HOME}/dags/
+
+CMD /bin/bash
