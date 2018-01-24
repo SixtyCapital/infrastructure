@@ -4,5 +4,8 @@ SCRATCH_PROJECTS = [
 STRATEGY_PROJECTS = [
     'sixty-commodity',
     'sixty-capital-similarity',
-    'sixty-capital-nursery'
+    'sixty-capital-nursery',
+    ]
+EXTERNAL_PROJECTS = [
+    'sixty-capital-ext',
     ]

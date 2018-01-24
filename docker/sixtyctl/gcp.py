@@ -2,7 +2,11 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 from googleapiclient.discovery import build
 from sixtyctl.util import getLogger
-from sixtyctl.config import SCRATCH_PROJECTS, STRATEGY_PROJECTS
+from sixtyctl.config import (
+    SCRATCH_PROJECTS,
+    STRATEGY_PROJECTS,
+    EXTERNAL_PROJECTS,
+    )
 
 logger = getLogger(__name__)
 REGION = 'us-east4'
@@ -333,10 +337,13 @@ def grant_bucket_access(project_id):
     svc = build('storage', 'v1')
     member = 'serviceAccount:{}'.format(svc_email)
     role_name = 'roles/storage.objectViewer'
-    for gcr_project in gcr_projects:
-        gcr_bucket = 'artifacts.{}.appspot.com'.format(gcr_project)
+    buckets = [
+        # GCR buckets
+        'artifacts.{}.appspot.com'.format(p) for p in gcr_projects]
+    buckets += EXTERNAL_PROJECTS
+    for bucket in buckets:
         iam_bindings = svc.buckets().getIamPolicy(
-            bucket=gcr_bucket).execute()['bindings']
+            bucket=bucket).execute()['bindings']
         role = next(
             (x for x in iam_bindings
              if x['role'] == role_name),
@@ -345,11 +352,39 @@ def grant_bucket_access(project_id):
             role = {'role': role_name, 'members': []}
             iam_bindings.append(role)
         if member in role['members']:
-            logger.warn('{} already has access to GCR for {}'.format(
-                member, gcr_project))
+            logger.warn('{} already has access to bucket: {}'.format(
+                member, bucket))
         else:
             role['members'].append(member)
             svc.buckets().setIamPolicy(
-                bucket=gcr_bucket, body={'bindings': iam_bindings}).execute()
+                bucket=bucket, body={'bindings': iam_bindings}).execute()
             logger.info('{} granted access to GCR for {}'.format(
-                member, gcr_project))
+                member, bucket))
+
+
+def grant_bigquery_access(project_id):
+    for ext_project in EXTERNAL_PROJECTS:
+        member = 'serviceAccount:{}'.format(
+            describe_default_compute_service_account(project_id)['email'])
+        svc = build('cloudresourcemanager', 'v1')
+        policy_bindings = svc.projects().getIamPolicy(
+            resource=ext_project, body={}).execute()['bindings']
+        role_name = 'roles/bigquery.admin'
+        role = next(
+            (x for x in policy_bindings
+             if x['role'] == role_name),
+            None)
+        if not role:
+            role = {'role': role_name, 'members': []}
+            policy_bindings.append(role)
+        if member in role['members']:
+            logger.warn('{} already has bigquery access to {}'.format(
+                member, ext_project))
+        else:
+            role['members'].append(member)
+            # return policy_bindings
+            svc.projects().setIamPolicy(
+                resource=ext_project,
+                body={'policy': {'bindings': policy_bindings}}).execute()
+            logger.info('{} granted bigquery access to {}'.format(
+                member, ext_project))
