@@ -66,6 +66,8 @@ git-up
 git+https://github.com/joerick/pyinstrument.git#egg=pyinstrument
 ipdb
 ipython
+isort
+jedi
 jupyter
 jupyter_kernel_gateway
 line_profiler

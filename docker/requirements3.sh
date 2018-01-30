@@ -1,1 +1,1 @@
- sudo -H cat requirements.txt | grep -v '#' | xargs -n 1 sudo pip3 install --upgrade
+ sudo -H cat requirements.txt | grep -v '#' | xargs -n 1 sudo -H pip3 install --upgrade
