@@ -63,6 +63,7 @@ asv
 # datalab https://github.com/googledatalab/datalab/issues/1641
 docformatter
 flake8
+flake8-isort
 git-up
 git+https://github.com/joerick/pyinstrument.git#egg=pyinstrument
 ipdb
