@@ -65,7 +65,7 @@ spec:
         - name: FERNET_KEY
           value: Yd02MB6W0KXvklEG1FPxOJt_A-V3ARvnvp1TMfdPivc=
         - name: REDIS_HOST
-          value: redis-master
+          value: celery-redis
         - name: POSTGRES_DB
           valueFrom:
             secretKeyRef:
@@ -160,7 +160,7 @@ spec:
         - name: FERNET_KEY
           value: Yd02MB6W0KXvklEG1FPxOJt_A-V3ARvnvp1TMfdPivc=
         - name: REDIS_HOST
-          value: redis-master
+          value: celery-redis
         - name: POSTGRES_DB
           valueFrom:
             secretKeyRef:
@@ -251,7 +251,7 @@ spec:
         - name: FERNET_KEY
           value: Yd02MB6W0KXvklEG1FPxOJt_A-V3ARvnvp1TMfdPivc=
         - name: REDIS_HOST
-          value: redis-master
+          value: celery-redis
         - name: POSTGRES_DB
           valueFrom:
             secretKeyRef:
@@ -297,7 +297,7 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: redis-master
+  name: celery-redis
   # these labels can be applied automatically
   # from the labels in the pod template if not set
   # labels:
@@ -318,27 +318,49 @@ spec:
   template:
     metadata:
       labels:
-        app: redis
+        app: celery-redis
         role: master
         tier: backend
     spec:
       containers:
-      - name: master
-        image: gcr.io/google_containers/redis:e2e
+      - name: celery-redis
+        image: launcher.gcr.io/google/redis4
+        args: [
+          "--maxmemory", "2gb",
+          "--maxmemory-policy", "allkeys-lru",
+          "--timeout", "10800",  # 3 hours
+          "--tcp-backlog", "10000"]
         ports:
         - containerPort: 6379
         resources:
           requests:
             memory: 2Gi
+      volumes:
+      - name: celery-redis-data
+        persistentVolumeClaim:
+          claimName: celery-redis-data
       nodeSelector:
         cloud.google.com/gke-nodepool: small
+---
+# Request a persistent volume from the cluster using a Persistent Volume Claim.
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: celery-redis-data
+  annotations:
+    volume.alpha.kubernetes.io/storage-class: default
+spec:
+  accessModes: [ReadWriteOnce]
+  resources:
+    requests:
+      storage: 10Gi
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: redis-master
+  name: celery-redis
   labels:
-    app: redis
+    app: celery-redis
     role: master
     tier: backend
 spec:
@@ -347,6 +369,6 @@ spec:
   - port: 6379
     targetPort: 6379
   selector:
-    app: redis
+    app: celery-redis
     role: master
     tier: backend
