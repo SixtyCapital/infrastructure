@@ -1,6 +1,12 @@
 steps:
 - name: gcr.io/cloud-builders/docker
-  args: [build, -t, 'gcr.io/sixty-capital/base:${TAG_NAME}${BRANCH_NAME}', .]
+  args:
+    - build
+    - -t
+    - 'gcr.io/sixty-capital/base:${TAG_NAME}${BRANCH_NAME}'
+    - .
+    - --cache-from
+    - 'gcr.io/${PROJECT_ID}/base:master'
   dir: docker
 
 images:

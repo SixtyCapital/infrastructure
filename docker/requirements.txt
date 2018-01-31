@@ -61,6 +61,7 @@ cvxopt==1.1.8   # https://github.com/cvxopt/cvxopt/issues/79
 # pytest-sugar https://github.com/Frozenball/pytest-sugar/pull/49
 asv
 # datalab https://github.com/googledatalab/datalab/issues/1641
+docformatter
 flake8
 git-up
 git+https://github.com/joerick/pyinstrument.git#egg=pyinstrument
@@ -76,6 +77,7 @@ mock # until Py3
 pdbpp
 profilehooks
 pycallgraph
+pydocstyle
 pytest
 pytest-pycharm
 pytest-testmon
