@@ -43,7 +43,7 @@ RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
 RUN apt-get update && ACCEPT_EULA=Y apt-get install -y --no-install-recommends \
   # breaking without version tag
   msodbcsql=13.1.9.2-1 \
-  mssql-tools \
+  mssql-tools=14.0.6.0-1 \
   && rm -rf /var/lib/apt/lists/*
 RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
 
