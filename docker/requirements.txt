@@ -35,6 +35,7 @@ pyslack-real
 quandl
 redis
 requests
+slackclient
 SQLAlchemy
 
 # infrastructure

@@ -6,7 +6,7 @@ from sixtyctl.config import (
     SCRATCH_PROJECTS,
     STRATEGY_PROJECTS,
     EXTERNAL_PROJECTS,
-    )
+)
 
 logger = getLogger(__name__)
 REGION = 'us-east4'
@@ -47,7 +47,7 @@ def attach_billing(project_id, billing_account):
             'billingEnabled': True,
             'name': 'projects/{}/billingInfo'.format(project_id),
             'projectId': project_id}
-        ).execute()
+    ).execute()
 
 
 def enable_services(project_id):
@@ -160,7 +160,7 @@ def create_db(project_id, db_instance_name, db_name):
         project=project_id,
         instance=db_instance_name,
         body=dict(instance=db_instance_name, name=db_name, project=project_id)
-        ).execute()['status']
+    ).execute()['status']
     if status == 'DONE':
         return True
     else:

@@ -13,7 +13,7 @@ from sixtyctl.gcp import (
     grant_bucket_access)
 from sixtyctl.kubernetes import (
     create_namespaces,
-    create_airflow_secrets)
+    create_airflow_configmap)
 from sixtyctl.util import getLogger
 
 logger = getLogger(__name__)
@@ -50,7 +50,7 @@ def run(project_id):
         sleep(3)
     grant_bucket_access(project_id)
     create_namespaces(project_id, cluster_name)
-    create_airflow_secrets(project_id, cluster_name, db_instance_name)
+    create_airflow_configmap(project_id, cluster_name, db_instance_name)
 
 
 def test():
