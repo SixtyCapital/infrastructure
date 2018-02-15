@@ -10,7 +10,8 @@ from sixtyctl.gcp import (
     create_db,
     create_container_cluster,
     update_default_db_password,
-    grant_bucket_access)
+    grant_bucket_access,
+    grant_bigquery_access)
 from sixtyctl.kubernetes import (
     create_namespaces,
     create_airflow_configmap)
@@ -49,11 +50,13 @@ def run(project_id):
         logger.info('Waiting for cluster to launch...')
         sleep(3)
     grant_bucket_access(project_id)
+    grant_bigquery_access(project_id)
     create_namespaces(project_id, cluster_name)
     create_airflow_configmap(project_id, cluster_name, db_instance_name)
 
 
 def test():
     import random
-    project_id = 'sixty-captial-test-%x' % random.getrandbits(32)
+    project_id = 'integration-test-%x' % random.getrandbits(32)
+    logger.info('Integration run started for {}'.format(project_id))
     run(project_id)

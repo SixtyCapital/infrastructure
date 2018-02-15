@@ -363,6 +363,9 @@ def grant_bucket_access(project_id):
 
 
 def grant_bigquery_access(project_id):
+    if project_id in SCRATCH_PROJECTS:
+        logger.info('Access not granted to ext data: {} is a scratch project')
+        return
     for ext_project in EXTERNAL_PROJECTS:
         member = 'serviceAccount:{}'.format(
             describe_default_compute_service_account(project_id)['email'])

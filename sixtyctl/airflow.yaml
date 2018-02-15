@@ -45,7 +45,7 @@ spec:
     spec:
       containers:
       - name: airflow-web
-        image: gcr.io/sixty-secure/conductor:commodity-in-conductor
+        image: gcr.io/sixty-secure/conductor:master
         command:
         - /usr/local/bin/airflow-entry.sh
         - webserver
@@ -100,7 +100,7 @@ spec:
     spec:
       containers:
       - name: airflow-scheduler
-        image: gcr.io/sixty-secure/conductor:commodity-in-conductor
+        image: gcr.io/sixty-secure/conductor:master
         command:
         - /usr/local/bin/airflow-entry.sh
         - scheduler
@@ -137,7 +137,7 @@ metadata:
     stack: airflow
   name: airflow-worker
 spec:
-  replicas: 16
+  replicas: 32
   selector:
     matchLabels:
       app: airflow-worker
@@ -156,7 +156,7 @@ spec:
     spec:
       containers:
       - name: airflow-worker
-        image: gcr.io/sixty-secure/conductor:commodity-in-conductor
+        image: gcr.io/sixty-secure/conductor:master
         command:
         - /usr/local/bin/airflow-entry.sh
         - worker
@@ -173,7 +173,7 @@ spec:
             memory: 8Gi
             cpu: 1000m
           requests:
-            memory: 2Gi
+            memory: 1Gi
             cpu: 300m
       - image: gcr.io/cloudsql-docker/gce-proxy:1.11
         name: cloudsql-proxy
@@ -190,23 +190,8 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: celery-redis
-  # these labels can be applied automatically
-  # from the labels in the pod template if not set
-  # labels:
-  #   app: redis
-  #   role: master
-  #   tier: backend
 spec:
-  # this replicas value is default
-  # modify it according to your case
   replicas: 1
-  # selector can be applied automatically
-  # from the labels in the pod template if not set
-  # selector:
-  #   matchLabels:
-  #     app: guestbook
-  #     role: master
-  #     tier: backend
   template:
     metadata:
       labels:
