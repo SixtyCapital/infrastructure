@@ -187,6 +187,51 @@ def update_default_db_password(project_id, db_instance_name):
         host='').execute()
 
 
+def delete_default_subnetworks(project_id):
+    svc = build('compute', 'v1')
+    logger.info('Deleting default subnetworks in project {}'.format(project_id))
+
+    # Switch network to custom mode so we can delete default subnets
+    svc.networks().switchToCustomMode(project=project_id, network='default').execute()
+
+    subnetworks_map = svc.subnetworks().aggregatedList(project=project_id).execute()['items']
+
+    for region in subnetworks_map:
+        for subnetwork in subnetworks_map[region]['subnetworks']:
+            region_name = region.split('/')[1]
+            svc.subnetworks().delete(project=project_id, region=region_name, subnetwork='default').execute()
+
+    def check_status():
+        subnetworks = svc.subnetworks().aggregatedList(project=project_id).execute()['items']
+        for region in subnetworks.keys():
+            if 'subnetworks' in subnetworks[region]:
+                return False
+        return True
+
+    return check_status
+
+
+def add_vpc_peering_to_trading(project_id):
+    svc = build('compute', 'v1')
+    logger.info('Adding VPC peering for trading to project {}'.format(project_id))
+
+    # TODO:  I WILL ADD THE PRODUCTION TRADING CONNECTION HERE, BUT FOR NOW, I DON'T WANT ANY CHANCE
+    # OF CONNECTING UP TO THAT UNTIL I'M A BIT MORE COMFORTABLE WITH THIS SETUP
+    body_external = {
+        'peerNetwork': 'https://www.googleapis.com/compute/v1/projects/sixty-trading-test/global/networks/default',
+        'name': 'trading-link-' + project_id,
+        'autoCreateRoutes': True
+    }
+    svc.networks().addPeering(project=project_id, network='default', body=body_external).execute()
+
+    body_current = {
+        'peerNetwork': 'https://www.googleapis.com/compute/v1/projects/' + project_id + '/global/networks/default',
+        'name': 'trading-link-' + project_id,
+        'autoCreateRoutes': True
+    }
+    svc.networks().addPeering(project='sixty-trading-test', network='default', body=body_current).execute()
+
+
 def create_container_cluster(project_id, cluster_name, zone=None):
     if not zone:
         zone = ZONE
@@ -237,7 +282,11 @@ def create_container_cluster(project_id, cluster_name, zone=None):
                 'machineType': 'n1-standard-8',
                 'oauthScopes': node_oauth_scopes,
                 'preemptible': True},
-            'initialNodeCount': 1}]}
+            'initialNodeCount': 1}],
+        'ipAllocationPolicy': {
+            'useIpAliases': True,
+            'createSubnetwork': True
+        }}
     operation = svc.projects().zones().clusters().create(
         projectId=project_id, zone=ZONE, body={'cluster': body}).execute()
 

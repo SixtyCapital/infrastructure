@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 from time import sleep
 from sixtyctl.gcp import (
+    add_vpc_peering_to_trading,
     create_project,
     attach_billing,
     enable_services,
@@ -9,6 +10,7 @@ from sixtyctl.gcp import (
     create_db_instance,
     create_db,
     create_container_cluster,
+    delete_default_subnetworks,
     update_default_db_password,
     grant_bucket_access,
     grant_bigquery_access)
@@ -37,6 +39,14 @@ def run(project_id):
         logger.info('Waiting for services to be enabled')
         sleep(3)
     create_project_buckets(project_id)
+
+    is_subnetworks_ready = delete_default_subnetworks(project_id)
+    while not is_subnetworks_ready():
+        logger.info('Waiting for subnetworks to be deleted...')
+        sleep(3)
+
+    add_vpc_peering_to_trading(project_id)
+
     is_db_ready = create_db_instance(project_id, db_instance_name)
     is_cluster_ready = create_container_cluster(project_id, cluster_name)
     while not is_db_ready():
