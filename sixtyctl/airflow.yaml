@@ -17,7 +17,7 @@ spec:
       targetPort: airflow-web
       nodePort: 32080
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
   labels:
@@ -31,10 +31,7 @@ spec:
     matchLabels:
       app: airflow-web
   strategy:
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
-    type: RollingUpdate
+    type: Recreate
   template:
     metadata:
       creationTimestamp: null
@@ -44,7 +41,7 @@ spec:
         stack: airflow
     spec:
       containers:
-      - name: airflow-web
+      - name: airflow
         image: gcr.io/sixty-secure/conductor:master
         command:
         - /usr/local/bin/airflow-entry.sh
@@ -72,7 +69,7 @@ spec:
       nodeSelector:
         cloud.google.com/gke-nodepool: small
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
   labels:
@@ -86,10 +83,7 @@ spec:
     matchLabels:
       app: airflow-scheduler
   strategy:
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
-    type: RollingUpdate
+    type: Recreate
   template:
     metadata:
       creationTimestamp: null
@@ -99,7 +93,7 @@ spec:
         stack: airflow
     spec:
       containers:
-      - name: airflow-scheduler
+      - name: airflow
         image: gcr.io/sixty-secure/conductor:master
         command:
         - /usr/local/bin/airflow-entry.sh
@@ -128,7 +122,7 @@ spec:
             name: airflow-env
       restartPolicy: Always
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
   labels:
@@ -141,11 +135,8 @@ spec:
   selector:
     matchLabels:
       app: airflow-worker
-  # strategy:
-  #   rollingUpdate:
-  #     maxSurge: 2
-  #     maxUnavailable: 2
-  #   type: RollingUpdate
+  strategy:
+    type: Recreate
   template:
     metadata:
       creationTimestamp: null
@@ -155,7 +146,7 @@ spec:
         stack: airflow
     spec:
       containers:
-      - name: airflow-worker
+      - name: airflow
         image: gcr.io/sixty-secure/conductor:master
         command:
         - /usr/local/bin/airflow-entry.sh
@@ -186,11 +177,19 @@ spec:
       nodeSelector:
         cloud.google.com/gke-nodepool: large-preemptible
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
   name: celery-redis
+  labels:
+    app: celery-redis
+    role: master
+    tier: backend
+    db: redis
 spec:
+  selector:
+    matchLabels:
+      app: celery-redis
   replicas: 1
   template:
     metadata:
