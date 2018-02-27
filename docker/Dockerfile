@@ -63,8 +63,7 @@ RUN pip install pip --upgrade \
 # installed here rather than requirements to ensure dependency versions work
 # don't install gcp_api here because it downgrades the version
 # includes imperfect test to ensure it loads
-RUN pip install apache-airflow[celery,mssql,postgres,crypto,s3]==1.8.2 \
-  && pip install --upgrade-strategy=only-if-needed git+https://github.com/apache/incubator-airflow.git@1.9.0rc6 \
+RUN pip install apache-airflow[celery,postgres,crypto,s3]==1.9.0 \
   && airflow list_dags
 
 # Jupyter & kernel gateway
@@ -104,5 +103,7 @@ ENV AIRFLOW_HOME=/usr/local/airflow
 COPY airflow/airflow.cfg airflow/airflow_setup.py ${AIRFLOW_HOME}/
 COPY airflow/airflow-entry.sh /usr/local/bin/
 COPY airflow/dags.py ${AIRFLOW_HOME}/dags/
+COPY airflow/airflow_local_settings.py ${AIRFLOW_HOME}/settings/
+ENV PYTHONPATH="${AIRFLOW_HOME}/settings:${PYTHONPATH}"
 
 CMD /bin/bash

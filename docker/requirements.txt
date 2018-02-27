@@ -49,6 +49,7 @@ google-api-python-client
 google-apitools
 google-cloud
 google-cloud-bigquery
+kubernetes
 psutil
 setuptools
 setuptools_scm
@@ -97,4 +98,4 @@ seaborn
 qgrid
 
 # installed outside requirements as it's fussy about versions
-# apache-airflow[celery,mssql,postgres,crypto,s3]==1.8.2
+# apache-airflow[celery,postgres,crypto,s3]==1.9.0
