@@ -22,7 +22,7 @@ pytz
 scipy
 sklearn
 statsmodels
-xarray==0.10.0
+xarray==0.10.1
 xlwt
 
 # data
