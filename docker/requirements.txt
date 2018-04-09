@@ -87,6 +87,7 @@ pytest-pycharm
 pytest-testmon
 pytest-watch
 pytest-xdist
+python-language-server
 mockredispy
 snakeviz
 
