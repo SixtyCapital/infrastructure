@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM ubuntu:17.10
 
 # https://github.com/phusion/baseimage-docker/issues/58
 ARG DEBIAN_FRONTEND=noninteractive
@@ -6,7 +6,9 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends \
  locales \
  && rm -rf /var/lib/apt/lists/* \
- && locale-gen "en_US.UTF-8" && locale-gen "en_US.UTF-8"
+ && locale-gen "en_US.UTF-8"
+
+ENV LC_ALL="en_US.UTF-8"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
   apt-transport-https \
@@ -39,11 +41,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # install mssql drivers https://msdn.microsoft.com/en-us/library/hh568454(v=sql.110).aspx
 RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
- && curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
+&& curl https://packages.microsoft.com/config/ubuntu/17.10/prod.list > /etc/apt/sources.list.d/mssql-release.list
 RUN apt-get update && ACCEPT_EULA=Y apt-get install -y --no-install-recommends \
-  # breaking without version tag
-  msodbcsql=13.1.9.2-1 \
-  mssql-tools=14.0.6.0-1 \
+  msodbcsql17 \
+  mssql-tools \
   && rm -rf /var/lib/apt/lists/*
 RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
 
@@ -85,7 +86,7 @@ RUN echo "deb https://packages.cloud.google.com/apt cloud-sdk-xenial main" | tee
  && apt-get update && apt-get install -y --no-install-recommends \
  google-cloud-sdk \
  && rm -rf /var/lib/apt/lists/* \
- && git config --global credential.helper gcloud.sh
+ && git config --global credential.'https://source.developers.google.com'.helper gcloud.sh
 # if we use this image in cloud builder, it'll map the permissions in
 ENV PATH=$PATH:/builder/google-cloud-sdk/bin/
 
