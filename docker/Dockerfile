@@ -66,6 +66,8 @@ RUN pip install pip --upgrade \
 # includes imperfect test to ensure it loads
 RUN pip install apache-airflow[celery,postgres,crypto,s3]==1.9.0 \
   && airflow list_dags
+# FIXME: always return true until google-cloud conflicts are resolved
+RUN pip check || true
 
 # Jupyter & kernel gateway
 RUN jupyter nbextension enable --py widgetsnbextension --sys-prefix
