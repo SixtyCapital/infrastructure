@@ -15,6 +15,7 @@ iso3166 # country mappings
 numba
 numexpr
 numpy
+pandas-datareader
 pandas-gbq
 pandas==0.22.0
 python-dateutil

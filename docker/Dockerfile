@@ -57,8 +57,7 @@ RUN curl -fsSL get.docker.com | sh
 
 # standard requirements
 COPY requirements.txt /
-RUN pip install pip --upgrade \
- && pip install setuptools \
+RUN (curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | python) \
  && pip install -r requirements.txt \
  && rm requirements.txt
 # installed here rather than requirements to ensure dependency versions work
