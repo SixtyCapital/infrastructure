@@ -88,6 +88,7 @@ pydocstyle
 pyinstrument
 pytest
 pytest-pycharm
+pytest-regtest
 pytest-testmon
 pytest-watch
 pytest-xdist
