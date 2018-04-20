@@ -62,15 +62,14 @@ cvxopt==1.1.8   # https://github.com/cvxopt/cvxopt/issues/79
 
 
 # dev tools
+# datalab https://github.com/googledatalab/datalab/issues/1641
 # pytest-sugar https://github.com/Frozenball/pytest-sugar/pull/49
 asv
 autopep8
-# datalab https://github.com/googledatalab/datalab/issues/1641
 docformatter
 flake8
 flake8-isort
 git-up
-git+https://github.com/joerick/pyinstrument.git#egg=pyinstrument
 ipdb
 ipython
 isort
@@ -80,18 +79,19 @@ jupyter_kernel_gateway
 line_profiler
 memory_profiler
 mock # until Py3
+mockredispy
 pdbpp
 profilehooks
 pycallgraph
 pycodestyle==2.3.1
 pydocstyle
+pyinstrument
 pytest
 pytest-pycharm
 pytest-testmon
 pytest-watch
 pytest-xdist
 python-language-server
-mockredispy
 snakeviz
 
 # viz
