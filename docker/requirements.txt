@@ -94,6 +94,7 @@ pytest-watch
 pytest-xdist
 python-language-server
 snakeviz
+tqdm
 
 # viz
 altair
