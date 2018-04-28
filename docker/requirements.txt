@@ -97,12 +97,13 @@ snakeviz
 tqdm
 
 # viz
-altair
+git+https://github.com/altair-viz/altair@9424a5b0076dfa12849f066965464f337ba6855a
 cufflinks
 matplotlib
 plotly
-seaborn
 qgrid
+seaborn
+vega3
 
 # installed outside requirements as it's fussy about versions
 # apache-airflow[celery,postgres,crypto,s3]==1.9.0
