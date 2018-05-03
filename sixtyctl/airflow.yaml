@@ -55,9 +55,10 @@ spec:
           protocol: TCP
         resources:
           limits:
-            memory: 1Gi
+            memory: 2Gi
           requests:
             memory: 1Gi
+            cpu: 1000m
       - image: gcr.io/cloudsql-docker/gce-proxy:1.11
         name: cloudsql-proxy
         command: ["/cloud_sql_proxy"]
@@ -67,7 +68,7 @@ spec:
             name: airflow-env
       restartPolicy: Always
       nodeSelector:
-        cloud.google.com/gke-nodepool: small
+        cloud.google.com/gke-nodepool: large-preemptible
 ---
 apiVersion: apps/v1beta2
 kind: Deployment
