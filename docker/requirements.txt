@@ -23,7 +23,7 @@ pytz
 scipy
 sklearn
 statsmodels
-xarray==0.10.2
+xarray==0.10.3
 xlwt
 
 # data
@@ -97,7 +97,7 @@ snakeviz
 tqdm
 
 # viz
-git+https://github.com/altair-viz/altair@9424a5b0076dfa12849f066965464f337ba6855a
+altair
 cufflinks
 matplotlib
 plotly
