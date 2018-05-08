@@ -25,6 +25,7 @@ sklearn
 statsmodels
 xarray==0.10.3
 xlwt
+networkx
 
 # data
 dogpile.cache
@@ -104,6 +105,8 @@ plotly
 qgrid
 seaborn
 vega3
+pygraphviz
+pydot
 
 # installed outside requirements as it's fussy about versions
 # apache-airflow[celery,postgres,crypto,s3]==1.9.0
