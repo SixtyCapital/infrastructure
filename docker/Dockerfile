@@ -92,14 +92,9 @@ RUN echo "deb https://packages.cloud.google.com/apt cloud-sdk-xenial main" | tee
 # if we use this image in cloud builder, it'll map the permissions in
 ENV PATH=$PATH:/builder/google-cloud-sdk/bin/
 
-# Mosek binary
-ENV MOSEK_VERSION=8.0.0.59 MOSEK_PATH=/mosek/8/tools/platform/linux64x86 MOSEKLM_LICENSE_FILE=/mosek.lic
-ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MOSEK_PATH/bin
-RUN curl https://download.mosek.com/stable/$MOSEK_VERSION/mosektoolslinux64x86.tar.bz2 > mosek.tar.bz2 \
- && tar xf mosek.tar.bz2 && ln -s $MOSEK_PATH/bin/mosek /usr/bin/mosek && mosek -f \
- && cd $MOSEK_PATH/python/2 && python setup.py install --user \
+# Mosek
+RUN pip install -f https://download.mosek.com/stable/wheel/index.html Mosek \
  && python -c '__import__("mosek").Env()'
-COPY mosek.lic /mosek.lic
 
 # Airflow
 ENV AIRFLOW_HOME=/usr/local/airflow
