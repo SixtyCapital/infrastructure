@@ -4,11 +4,11 @@ FROM ubuntu:17.10
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
- locales \
- && rm -rf /var/lib/apt/lists/* \
- && locale-gen "en_US.UTF-8"
+  locales \
+  && rm -rf /var/lib/apt/lists/* \
+  && locale-gen "en_US.UTF-8"
 
-ENV LC_ALL="en_US.UTF-8"
+ENV LC_ALL="en_US.UTF-8" LANG="en_US.utf8"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
   apt-transport-https \
@@ -42,38 +42,35 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # install mssql drivers https://msdn.microsoft.com/en-us/library/hh568454(v=sql.110).aspx
 RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
-&& curl https://packages.microsoft.com/config/ubuntu/17.10/prod.list > /etc/apt/sources.list.d/mssql-release.list
+  && curl https://packages.microsoft.com/config/ubuntu/17.10/prod.list > /etc/apt/sources.list.d/mssql-release.list
 RUN apt-get update && ACCEPT_EULA=Y apt-get install -y --no-install-recommends \
   msodbcsql17 \
   mssql-tools \
   && rm -rf /var/lib/apt/lists/*
 RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
 
-# Tini for Jupyter
-ADD https://github.com/krallin/tini/releases/download/v0.14.0/tini /tini
-RUN chmod +x /tini
-
 # docker (simple version), from https://docs.docker.com/engine/installation/linux/ubuntu
 RUN curl -fsSL get.docker.com | sh
 
 # standard requirements
 COPY requirements.txt /
-RUN (curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | python) \
- && pip install -r requirements.txt \
- && rm requirements.txt
+RUN curl https://bootstrap.pypa.io/get-pip.py | python \
+  && pip install -r requirements.txt
+
 # installed here rather than requirements to ensure dependency versions work
 # don't install gcp_api here because it downgrades the version
 # includes imperfect test to ensure it loads
 RUN pip install apache-airflow[celery,postgres,crypto,s3]==1.9.0 \
-  && airflow list_dags
-# FIXME: always return true until google-cloud conflicts are resolved
-RUN pip check || true
+  && airflow list_dags \
+  # TODO: always return true until google-cloud conflicts are resolved
+  && pip check || true
 
 # Jupyter & kernel gateway
-RUN jupyter nbextension enable --py widgetsnbextension --sys-prefix
-COPY jupyter_notebook_config.py .jupyter/jupyter_notebook_config.py
-RUN mv .jupyter $HOME/.jupyter
 ENV JUPYTER_USE_HTTPS='1' JUPYTER_NOTEBOOK_DIR='/notebooks'
+# can't use env vars in `COPY`, so use two steps
+COPY jupyter_notebook_config.py .jupyter/
+RUN mv .jupyter $HOME/.jupyter
+RUN jupyter notebook list
 
 # Celery
 ENV C_FORCE_ROOT=1
@@ -84,11 +81,12 @@ ENV C_FORCE_ROOT=1
 ARG CLOUD_SDK_REPO="cloud-sdk-xenial"
 # RUN apt-get install lsb-release
 RUN echo "deb https://packages.cloud.google.com/apt cloud-sdk-xenial main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list \
- && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - \
- && apt-get update && apt-get install -y --no-install-recommends \
- google-cloud-sdk \
- && rm -rf /var/lib/apt/lists/* \
- && git config --global credential.'https://source.developers.google.com'.helper gcloud.sh
+  && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - \
+  && apt-get update && apt-get install -y --no-install-recommends \
+  google-cloud-sdk \
+  && rm -rf /var/lib/apt/lists/* \
+  && git config --global credential.'https://source.developers.google.com'.helper gcloud.sh \
+  && gcloud version
 # if we use this image in cloud builder, it'll map the permissions in
 ENV PATH=$PATH:/builder/google-cloud-sdk/bin/
 
