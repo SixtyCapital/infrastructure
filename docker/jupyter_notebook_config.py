@@ -9,9 +9,10 @@ import stat
 PEM_FILE = os.path.join(jupyter_data_dir(), 'notebook.pem')
 
 c = get_config()
-c.NotebookApp.ip = '*'
+c.NotebookApp.ip = "*"
 c.NotebookApp.port = 8888
 c.NotebookApp.open_browser = False
+c.NotebookApp.allow_root = True
 
 # Set a certificate if USE_HTTPS is set to something truthy
 if os.environ.get('JUPYTER_USE_HTTPS', None):
