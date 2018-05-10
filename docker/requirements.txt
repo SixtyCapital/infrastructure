@@ -47,10 +47,10 @@ celery
 cookiecutter
 docker-compose
 flower
-google-api-python-client==1.6.5
-google-apitools==0.5.21
-google-cloud==0.32.0
+google-api-python-client
+google-apitools
 google-cloud-bigquery==0.30.0
+google-cloud-storage
 kubernetes
 oauth2client==3.0.0
 psutil
