@@ -38,6 +38,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   netcat \
   dnsutils \
   libgraphviz-dev \
+  graphviz \
   && rm -rf /var/lib/apt/lists/*
 
 # install mssql drivers https://msdn.microsoft.com/en-us/library/hh568454(v=sql.110).aspx
