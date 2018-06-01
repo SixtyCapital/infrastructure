@@ -17,13 +17,13 @@ numexpr
 numpy
 pandas-datareader
 pandas-gbq
-pandas==0.22.0
+pandas==0.23.0
 python-dateutil
 pytz
 scipy
 sklearn
 statsmodels
-xarray==0.10.3
+xarray==0.10.6
 xlwt
 networkx
 
