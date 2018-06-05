@@ -159,7 +159,7 @@ spec:
           protocol: TCP
         resources:
           limits:
-            memory: 8Gi
+            memory: 12Gi
             cpu: 1000m
           requests:
             memory: 1Gi
