@@ -26,6 +26,7 @@ statsmodels
 xarray==0.10.6
 xlwt
 networkx
+fuzzywuzzy[speedup]
 
 # data
 dogpile.cache
