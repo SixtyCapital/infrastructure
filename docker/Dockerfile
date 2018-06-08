@@ -39,6 +39,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   dnsutils \
   libgraphviz-dev \
   graphviz \
+  proj-bin \
+  libproj-dev \
+  libgeos-dev \
   && rm -rf /var/lib/apt/lists/*
 
 # install mssql drivers https://msdn.microsoft.com/en-us/library/hh568454(v=sql.110).aspx
@@ -65,6 +68,10 @@ RUN pip install apache-airflow[celery,postgres,crypto,s3]==1.9.0 \
   && airflow list_dags \
   # TODO: always return true until google-cloud conflicts are resolved
   && pip check || true
+
+# installed here rather than requirements because it doesn't list cython as a dependency, but fails
+# if it doesn't have it
+RUN pip install cartopy
 
 # Jupyter & kernel gateway
 ENV JUPYTER_USE_HTTPS='1' JUPYTER_NOTEBOOK_DIR='/notebooks'
