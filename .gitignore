@@ -73,6 +73,7 @@ authtoken.p
 
 # Dogpile
 dogpile_cache*
+*.cache
 
 # Domino
 .domino*
