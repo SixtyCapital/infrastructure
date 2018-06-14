@@ -87,6 +87,10 @@ def create_airflow_configmap(project_id, cluster_name, db_instance_name):
         AIRFLOW__CORE__REMOTE_LOG_CONN_ID='sixty_gcp',
         AIRFLOW__CORE__REMOTE_BASE_LOG_FOLDER=''
         'gs://{}/logs/airflow'.format(project_id),
+        AIRFLOW_CONN_GOOGLE_CLOUD_DEFAULT=''
+        ';?extra__google_cloud_platform__project={}'.format(project_id),
+        AIRFLOW_CONN_BIGQUERY_DEFAULT=''
+        ';?extra__google_cloud_platform__project={}'.format(project_id),
         AIRFLOW__CORE__TASK_LOG_READER='gcs.task',
         FERNET_KEY='Yd02MB6W0KXvklEG1FPxOJt_A-V3ARvnvp1TMfdPivc=',
         REDIS_HOST='celery-redis',
