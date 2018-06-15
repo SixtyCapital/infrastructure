@@ -4,6 +4,8 @@ from tempfile import mkstemp
 from os import unlink
 from kubernetes.config.kube_config import new_client_from_config
 from kubernetes.client import CoreV1Api
+from sixtyctl.config import (
+    DEFAULT_CONFIG, PRODUCTION_CONFIG, PRODUCTION_PROJECT)
 from sixtyctl.gcp import (
     describe_container_cluster,
     describe_db_instance,
@@ -81,7 +83,9 @@ def create_airflow_configmap(project_id, cluster_name, db_instance_name):
     db_info = describe_db_instance(project_id, db_instance_name)
     data = dict(
         GOOGLE_CLOUD_PROJECT=project_id,
-        SIXTY_CONFIG_FILE='config_airflow.yaml',
+        SIXTY_CONFIG_FILE=(
+            PRODUCTION_CONFIG if project_id == PRODUCTION_PROJECT
+            else DEFAULT_CONFIG),
         AIRFLOW__CORE__LOGGING_CONFIG_CLASS=''
         'sixty.production.airflow_config.logging_config.LOGGING_CONFIG',
         AIRFLOW__CORE__REMOTE_LOG_CONN_ID='sixty_gcp',

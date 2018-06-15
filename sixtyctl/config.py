@@ -10,3 +10,6 @@ STRATEGY_PROJECTS = [
 EXTERNAL_PROJECTS = [
     'sixty-capital-ext',
     ]
+PRODUCTION_PROJECT = 'sixty-capital-prod'
+DEFAULT_CONFIG = 'config_airflow.yaml'
+PRODUCTION_CONFIG = 'config_airflow_production.yaml'
