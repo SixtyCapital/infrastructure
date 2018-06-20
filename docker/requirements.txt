@@ -32,7 +32,7 @@ fuzzywuzzy[speedup]
 dogpile.cache
 lru-dict
 lxml
-pyodbc==3.1.1 # because of unicode issues
+pyodbc
 pysftp
 pyslack-real
 quandl
