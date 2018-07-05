@@ -27,6 +27,7 @@ xarray==0.10.6
 xlwt
 networkx
 fuzzywuzzy[speedup]
+bs4
 
 # data
 dogpile.cache
