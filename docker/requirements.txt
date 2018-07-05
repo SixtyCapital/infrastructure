@@ -19,7 +19,7 @@ pandas-datareader
 pandas-gbq
 pandas==0.23.0
 python-dateutil
-pytz
+pytz==2018.4
 scipy
 sklearn
 statsmodels
