@@ -99,7 +99,7 @@ tqdm
 
 # viz
 altair
-cufflinks
+cufflinks==0.12.1
 matplotlib
 plotly
 qgrid
