@@ -19,7 +19,7 @@ pandas-datareader
 pandas-gbq
 pandas==0.23.0
 python-dateutil
-pytz==2018.4
+pytz
 scipy
 sklearn
 statsmodels
@@ -99,9 +99,9 @@ tqdm
 
 # viz
 altair
-cufflinks==0.12.1
+cufflinks
 matplotlib
-plotly
+plotly==2.7.0
 qgrid
 seaborn
 vega3
