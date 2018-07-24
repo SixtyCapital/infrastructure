@@ -65,7 +65,6 @@ wheel
 # pytest-sugar https://github.com/Frozenball/pytest-sugar/pull/49
 asv
 autopep8
-black
 docformatter
 flake8
 flake8-isort
