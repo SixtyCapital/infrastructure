@@ -24,6 +24,7 @@ scipy
 sklearn
 statsmodels
 xarray==0.10.6
+xlrd
 xlwt
 networkx
 fuzzywuzzy[speedup]
