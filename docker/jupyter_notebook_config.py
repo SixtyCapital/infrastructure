@@ -13,6 +13,8 @@ c.NotebookApp.ip = "*"
 c.NotebookApp.port = 8888
 c.NotebookApp.open_browser = False
 c.NotebookApp.allow_root = True
+# default for running inside a container, with auth
+c.NotebookApp.custom_display_url = 'https://localhost:8888/'
 
 # Set a certificate if USE_HTTPS is set to something truthy
 if os.environ.get('JUPYTER_USE_HTTPS', None):
