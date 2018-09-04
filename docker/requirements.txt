@@ -16,8 +16,10 @@ numba
 numexpr
 numpy
 pandas-datareader
-pandas-gbq
 pandas==0.23.4
+# pandas-gbq
+# faster & reduced latency. Upgrade to 0.7.0 when available
+git+https://github.com/pydata/pandas-gbq@d98c62105af6629e33e4205c1c6b09fc3fb11868
 python-dateutil
 pytz
 scipy
