@@ -135,7 +135,7 @@ def create_db_instance(project_id, db_instance_name):
             'pricingPlan': 'PER_USE',
             'storageAutoResize': True,
             'storageAutoResizeLimit': '0',
-            'tier': 'db-custom-1-3840'}}
+            'tier': 'db-custom-2-7680'}}
     operation = svc.instances().insert(project=project_id, body=body).execute()
 
     def check_status():
