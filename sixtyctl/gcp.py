@@ -122,7 +122,6 @@ def create_db_instance(project_id, db_instance_name):
         'settings': {
             'activationPolicy': 'ALWAYS',
             'backupConfiguration': {
-                'binaryLogEnabled': True,
                 'enabled': True,
                 'startTime': '23:00'},
             'dataDiskSizeGb': '10',
