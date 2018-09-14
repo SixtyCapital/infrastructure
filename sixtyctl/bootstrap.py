@@ -24,7 +24,7 @@ logger = getLogger(__name__)
 
 def run(project_id):
     billing_account = 'sixty-invoice-billing'
-    db_instance_name = 'airflow-postgres'
+    db_instance_name = 'airflow-postgres-119'
     db_name = 'airflow'
     cluster_name = project_id
 
