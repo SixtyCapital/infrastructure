@@ -55,11 +55,9 @@ cookiecutter
 docker-compose
 flower
 google-api-python-client
-google-apitools
 google-cloud-bigquery
 google-cloud-storage
 kubernetes
-oauth2client==3.0.0
 psutil
 setuptools
 setuptools_scm
