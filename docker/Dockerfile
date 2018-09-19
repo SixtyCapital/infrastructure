@@ -42,6 +42,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   proj-bin \
   libproj-dev \
   libgeos-dev \
+  unzip \
   && rm -rf /var/lib/apt/lists/*
 
 # install mssql drivers https://msdn.microsoft.com/en-us/library/hh568454(v=sql.110).aspx
