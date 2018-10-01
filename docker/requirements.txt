@@ -25,7 +25,7 @@ pytz
 scipy
 sklearn
 statsmodels
-xarray==0.10.6
+xarray==0.10.9
 xlrd
 xlwt
 networkx
