@@ -92,6 +92,7 @@ pyinstrument
 pytest
 pytest-pycharm
 pytest-regtest
+pytest-sugar
 pytest-testmon
 pytest-watch
 pytest-xdist
