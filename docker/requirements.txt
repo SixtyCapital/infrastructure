@@ -19,7 +19,7 @@ pandas-datareader
 pandas==0.23.4
 # pandas-gbq
 # faster & reduced latency. Upgrade to 0.7.0 when available
-git+https://github.com/pydata/pandas-gbq@d98c62105af6629e33e4205c1c6b09fc3fb11868
+git+https://github.com/pydata/pandas-gbq@0dd2d5ea4eaa9b0778d06844590746c5e3352fda
 python-dateutil
 pytz
 scipy
@@ -65,7 +65,6 @@ wheel
 
 # dev tools
 # datalab https://github.com/googledatalab/datalab/issues/1641
-# pytest-sugar https://github.com/Frozenball/pytest-sugar/pull/49
 asv
 autopep8
 docformatter
