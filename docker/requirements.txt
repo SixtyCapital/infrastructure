@@ -25,7 +25,9 @@ pytz
 scipy
 sklearn
 statsmodels
-xarray==0.10.9
+# https://github.com/pydata/xarray/issues/2440 Upgrade to 0.10.10
+git+https://github.com/pydata/xarray@4bad455a801e91b329794895afa0040c868ff128
+# xarray==0.10.9
 xlrd
 xlwt
 networkx
