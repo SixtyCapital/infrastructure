@@ -107,8 +107,6 @@ RUN pip install apache-airflow[celery,postgres,crypto,s3]==1.10.0 \
   && airflow list_dags \
   # TODO: always return true until conflicts are resolved
   && pip check || true
-# TODO: check if needed
-RUN pip install google-auth-httplib2
 
 ENV AIRFLOW_HOME=/usr/local/airflow
 COPY airflow/airflow.cfg airflow/airflow_setup.py ${AIRFLOW_HOME}/
