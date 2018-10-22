@@ -1,3 +1,6 @@
+""" remove after moving to next_ds / next_ds_nodash """
+
+
 def gen_run_date(execution_date, next_execution_date, run_id):
     date = execution_date
     if next_execution_date and run_id and run_id.startswith('scheduled__'):
@@ -5,7 +8,6 @@ def gen_run_date(execution_date, next_execution_date, run_id):
     return date
 
 
-# Do we use this anywhere?
 def sixty_pre_execute(context):
     """
     With the inclusion of the 'run_date' family of macros, our templates now
@@ -16,7 +18,6 @@ def sixty_pre_execute(context):
     context['ti'].render_templates()
 
 
-# Do we use this anywhere?
 def policy(task):
     """
     Manipulate tasks as they are loaded:
