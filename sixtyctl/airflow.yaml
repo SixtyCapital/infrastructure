@@ -108,9 +108,9 @@ spec:
         imagePullPolicy: Always
         resources:
           limits:
-            memory: 2Gi
+            memory: 1Gi
           requests:
-            memory: 2Gi
+            memory: 500Mi
       - image: gcr.io/cloudsql-docker/gce-proxy:1.11
         name: cloudsql-proxy
         command: ["/cloud_sql_proxy"]
@@ -119,6 +119,8 @@ spec:
         - configMapRef:
             name: airflow-env
       restartPolicy: Always
+      nodeSelector:
+        cloud.google.com/gke-nodepool: small
 ---
 apiVersion: apps/v1beta2
 kind: Deployment
@@ -201,7 +203,7 @@ spec:
       - name: celery-redis
         image: launcher.gcr.io/google/redis4
         args: [
-          "--maxmemory", "2gb",
+          "--maxmemory", "300Mi",
           "--maxmemory-policy", "allkeys-lru",
           "--timeout", "10800",  # 3 hours
           "--tcp-backlog", "10000"]
@@ -209,7 +211,7 @@ spec:
         - containerPort: 6379
         resources:
           requests:
-            memory: 2Gi
+            memory: 300Mi
       volumes:
       - name: celery-redis-data
         persistentVolumeClaim:
