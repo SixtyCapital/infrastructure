@@ -12,6 +12,10 @@ logger = getLogger(__name__)
 REGION = 'us-east4'
 ZONE = '{}-c'.format(REGION)
 
+# by default, the quota for CPUs is 24 for a new project so we cannot
+# add the third region.
+BACKUP_ZONES = ['{}-a'.format(REGION)]
+
 
 def create_project(project_id):
     logger.info('Creating project {}'.format(project_id))
@@ -258,8 +262,12 @@ def create_container_cluster(project_id, cluster_name, zone=None):
         'https://www.googleapis.com/auth/logging.write',
         'https://www.googleapis.com/auth/monitoring',
         'https://www.googleapis.com/auth/sqlservice.admin']
+
+    zones = [ZONE]
+    zones.extend(BACKUP_ZONES)
+
     body = {
-        'locations': [ZONE],
+        'locations': zones,
         'loggingService': 'logging.googleapis.com',
         'monitoringService': 'monitoring.googleapis.com',
         'name': cluster_name,
