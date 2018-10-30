@@ -362,15 +362,6 @@ def create_project_buckets(project_id):
                     'type': 'Delete'
                 },
                 'condition': {'age': 14}
-            }, {
-                # downgrade storage class after 3 days
-                'action': {
-                    'type': 'SetStorageClass',
-                    'storageClass': 'NEARLINE'
-                },
-                'condition': {
-                    'age': 3
-                }
             }]
         }
     }]
