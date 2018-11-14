@@ -17,7 +17,7 @@ spec:
       targetPort: airflow-web
       nodePort: 32080
 ---
-apiVersion: apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
@@ -70,7 +70,7 @@ spec:
       nodeSelector:
         cloud.google.com/gke-nodepool: large-preemptible
 ---
-apiVersion: apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
@@ -85,6 +85,7 @@ spec:
       app: airflow-scheduler
   strategy:
     type: Recreate
+    rollingUpdate: null
   template:
     metadata:
       creationTimestamp: null
@@ -122,7 +123,7 @@ spec:
       nodeSelector:
         cloud.google.com/gke-nodepool: small
 ---
-apiVersion: apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
@@ -151,7 +152,6 @@ spec:
         command:
         - /usr/local/bin/airflow-entry.sh
         - worker
-        - --concurrency=1
         envFrom:
         - configMapRef:
             name: airflow-env
@@ -177,7 +177,7 @@ spec:
       nodeSelector:
         cloud.google.com/gke-nodepool: large-preemptible
 ---
-apiVersion: apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: celery-redis
