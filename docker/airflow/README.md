@@ -23,7 +23,7 @@ function get-pod {
 }
 
 # to access the kubernetes web ui
-kubectl port-forward $(get-pod airflow-web) 8080
+kubectl port-forward svc/airflow-web 8080
 
 gcloud container node-pools create airflow-worker \
   --num-nodes=2 --scopes=https://www.googleapis.com/auth/bigquery,https://www.googleapis.com/auth/compute,https://www.googleapis.com/auth/devstorage.read_write,https://www.googleapis.com/auth/service.management.readonly,https://www.googleapis.com/auth/servicecontrol,https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring \

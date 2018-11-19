@@ -11,10 +11,8 @@ spec:
   selector:
     app: airflow-web
   ports:
-    - name: airflow-web
-      protocol: TCP
+    - protocol: TCP
       port: 8080
-      targetPort: airflow-web
       nodePort: 32080
 ---
 apiVersion: apps/v1
@@ -34,7 +32,6 @@ spec:
     type: Recreate
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: airflow-web
         tier: web
@@ -88,7 +85,6 @@ spec:
     rollingUpdate: null
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: airflow-scheduler
         tier: scheduler
@@ -140,7 +136,6 @@ spec:
     type: Recreate
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: airflow-worker
         tier: worker
@@ -206,7 +201,8 @@ spec:
           "--maxmemory", "300Mi",
           "--maxmemory-policy", "allkeys-lru",
           "--timeout", "10800",  # 3 hours
-          "--tcp-backlog", "10000"]
+          "--tcp-backlog", "10000"
+          ]
         ports:
         - containerPort: 6379
         resources:
