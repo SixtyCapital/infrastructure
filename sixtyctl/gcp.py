@@ -277,9 +277,13 @@ def create_container_cluster(project_id, cluster_name, zone=None):
                 'enabled': True,
                 'maxNodeCount': 20,
                 'minNodeCount': 0},
+            'management': {
+                "autoUpgrade": True,
+                "autoRepair": True,
+            },
             'config': {
                 'diskSizeGb': 100,
-                'imageType': 'ubuntu',
+                'imageType': 'cos',
                 'machineType': 'n1-standard-1',
                 'oauthScopes': node_oauth_scopes},
             'initialNodeCount': 1
@@ -289,9 +293,13 @@ def create_container_cluster(project_id, cluster_name, zone=None):
                 'enabled': True,
                 'maxNodeCount': 20,
                 'minNodeCount': 0},
+            'management': {
+                "autoUpgrade": True,
+                "autoRepair": True,
+            },
             'config': {
                 'diskSizeGb': 300,
-                'imageType': 'ubuntu',
+                'imageType': 'cos',
                 'machineType': 'n1-standard-8',
                 'oauthScopes': node_oauth_scopes,
                 'preemptible': True},

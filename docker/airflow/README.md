@@ -1,7 +1,7 @@
 ## Airflow Infrastructure Setup
 
 ```sh
-gcloud container clusters get-credentials airflow
+gcloud container clusters get-credentials $GOOGLE_CLOUD_PROJECT
 
 kubectl config set-context $(kubectl config current-context) --namespace airflow
 
