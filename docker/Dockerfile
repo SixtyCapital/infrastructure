@@ -21,6 +21,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   g++ \
   gfortran \
   git-core \
+  less \
   libblas-dev \
   libffi-dev \
   liblapack-dev \
