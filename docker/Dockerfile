@@ -98,6 +98,11 @@ ENV PATH=$PATH:/builder/google-cloud-sdk/bin/
 RUN pip install -f https://download.mosek.com/stable/wheel/index.html Mosek \
   && python -c '__import__("mosek").Env()'
 
+# sops
+RUN curl -L https://github.com/mozilla/sops/releases/download/3.2.0/sops_3.2.0_amd64.deb --output sops.deb \
+  && dpkg -i sops.deb \
+  && rm sops.deb
+
 # Airflow
 # installed here rather than requirements to ensure dependency versions work
 # don't install gcp_api here because it downgrades the version
