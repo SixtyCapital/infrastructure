@@ -86,8 +86,7 @@ pycallgraph
 pycodestyle
 pydocstyle
 pyinstrument
-# https://github.com/tarpas/pytest-testmon/issues/117
-pytest==3.10.1
+pytest
 pytest-pycharm
 pytest-regtest
 pytest-sugar
