@@ -40,7 +40,7 @@ pyodbc==3.1.1 # because of unicode issues
 pysftp
 pyslack-real
 quandl
-redis
+redis==2.10.6 # to work with celery 4.1.1
 requests
 slackclient
 SQLAlchemy
