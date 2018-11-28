@@ -6,6 +6,7 @@ from sixtyctl.config import (
     SCRATCH_PROJECTS,
     STRATEGY_PROJECTS,
     EXTERNAL_PROJECTS,
+    KMS_PROJECT,
 )
 
 logger = getLogger(__name__)
@@ -452,3 +453,32 @@ def grant_bigquery_access(project_id):
                 body={'policy': {'bindings': policy_bindings}}).execute()
             logger.info('{} granted bigquery access to {}'.format(
                 member, ext_project))
+
+
+def grant_kms_access(project_id):
+    svc_email = describe_default_compute_service_account(project_id)['email']
+
+    member = 'serviceAccount:{}'.format(svc_email)
+    svc = build('cloudresourcemanager', 'v1')
+
+    policy_bindings = svc.projects().getIamPolicy(
+        resource=KMS_PROJECT, body={}).execute()['bindings']
+    role_name = 'roles/cloudkms.cryptoKeyEncrypterDecrypter'
+    role = next(
+        (x for x in policy_bindings
+         if x['role'] == role_name),
+        None)
+    if not role:
+        role = {'role': role_name, 'members': []}
+        policy_bindings.append(role)
+    if member in role['members']:
+        logger.warn('{} already has KMS access to {}'.format(
+            member, KMS_PROJECT))
+    else:
+        role['members'].append(member)
+        # return policy_bindings
+        svc.projects().setIamPolicy(
+            resource=KMS_PROJECT,
+            body={'policy': {'bindings': policy_bindings}}).execute()
+        logger.info('{} granted KMS access to {}'.format(
+            member, KMS_PROJECT))

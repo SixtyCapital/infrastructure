@@ -13,7 +13,8 @@ from sixtyctl.gcp import (
     delete_default_subnetworks,
     update_default_db_password,
     grant_bucket_access,
-    grant_bigquery_access)
+    grant_bigquery_access,
+    grant_kms_access)
 from sixtyctl.kubernetes import (
     create_namespaces,
     create_airflow_configmap)
@@ -61,6 +62,7 @@ def run(project_id):
         sleep(3)
     grant_bucket_access(project_id)
     grant_bigquery_access(project_id)
+    grant_kms_access(project_id)
     create_namespaces(project_id, cluster_name)
     create_airflow_configmap(project_id, cluster_name, db_instance_name)
 
