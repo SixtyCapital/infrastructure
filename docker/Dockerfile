@@ -22,6 +22,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   g++ \
   gfortran \
   git-core \
+  gnupg \
   gpg-agent \
   graphviz \
   less \
@@ -35,6 +36,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   libxft-dev \
   libyaml-dev \
   netcat \
+  pkg-config \
   proj-bin \
   unixodbc \
   unixodbc-dev \
