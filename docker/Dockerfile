@@ -1,4 +1,4 @@
-FROM ubuntu:17.10
+FROM python:2.7-stretch
 
 # https://github.com/phusion/baseimage-docker/issues/58
 ARG DEBIAN_FRONTEND=noninteractive
@@ -6,7 +6,8 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends \
   locales \
   && rm -rf /var/lib/apt/lists/* \
-  && locale-gen "en_US.UTF-8"
+  && locale-gen "en_US.UTF-8" \
+  && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 
 ENV LC_ALL="en_US.UTF-8" LANG="en_US.utf8"
 
@@ -16,41 +17,36 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   bash-completion \
   ca-certificates \
   curl \
-  dialog \
+  dnsutils \
   freetype* \
   g++ \
   gfortran \
   git-core \
+  gpg-agent \
+  graphviz \
   less \
   libblas-dev \
   libffi-dev \
+  libgeos-dev \
+  libgraphviz-dev \
   liblapack-dev \
+  libproj-dev \
   libssl-dev \
   libxft-dev \
   libyaml-dev \
-  linux-image-extra-virtual \
-  python-pip \
-  python-dev \
-  software-properties-common \
+  netcat \
+  proj-bin \
   unixodbc \
   unixodbc-dev \
+  unzip \
   vim \
   wget \
-  netcat \
-  dnsutils \
-  libgraphviz-dev \
-  graphviz \
-  proj-bin \
-  libproj-dev \
-  libgeos-dev \
-  unzip \
   && rm -rf /var/lib/apt/lists/*
 
 # install mssql drivers https://msdn.microsoft.com/en-us/library/hh568454(v=sql.110).aspx
 RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
-  && curl https://packages.microsoft.com/config/ubuntu/17.10/prod.list > /etc/apt/sources.list.d/mssql-release.list
+  && curl https://packages.microsoft.com/config/debian/9/prod.list > /etc/apt/sources.list.d/mssql-release.list
 RUN apt-get update && ACCEPT_EULA=Y apt-get install -y --no-install-recommends \
-  libcurl3 \
   msodbcsql17 \
   mssql-tools \
   && rm -rf /var/lib/apt/lists/*
@@ -61,11 +57,8 @@ RUN curl -fsSL get.docker.com | sh
 
 # standard requirements
 COPY requirements.txt /
-RUN curl https://bootstrap.pypa.io/get-pip.py | python \
+RUN pip install pip --upgrade \
   && pip install -r requirements.txt
-
-
-
 # installed here rather than requirements because it doesn't list cython as a dependency, but fails
 # if it doesn't have it
 RUN pip install cartopy
@@ -83,9 +76,7 @@ ENV C_FORCE_ROOT=1
 # gcloud
 # from https://cloud.google.com/sdk/docs/#deb
 # from https://code.google.com/p/google-cloud-sdk/issues/detail?id=691
-ARG CLOUD_SDK_REPO="cloud-sdk-xenial"
-# RUN apt-get install lsb-release
-RUN echo "deb https://packages.cloud.google.com/apt cloud-sdk-xenial main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list \
+RUN echo "deb https://packages.cloud.google.com/apt cloud-sdk-stretch main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list \
   && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - \
   && apt-get update && apt-get install -y --no-install-recommends \
   google-cloud-sdk \
