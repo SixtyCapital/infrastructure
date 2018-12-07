@@ -257,6 +257,7 @@ def create_container_cluster(project_id, cluster_name, zone=None):
         return lambda: True  # short circuit if cluster exists
     node_oauth_scopes = [
         'https://www.googleapis.com/auth/bigquery',
+        'https://www.googleapis.com/auth/cloud-platform',
         'https://www.googleapis.com/auth/compute',
         'https://www.googleapis.com/auth/devstorage.read_write',
         'https://www.googleapis.com/auth/service.management.readonly',
