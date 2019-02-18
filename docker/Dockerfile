@@ -103,7 +103,7 @@ RUN curl -L https://github.com/mozilla/sops/releases/download/3.2.0/sops_3.2.0_a
 # includes imperfect test to ensure it loads
 # https://github.com/un33k/python-slugify/issues/52
 ARG SLUGIFY_USES_TEXT_UNIDECODE=yes
-RUN pip install apache-airflow[celery,postgres,crypto,s3]==1.10.0 \
+RUN pip install apache-airflow[celery,postgres,crypto,s3]==1.10.2 \
   && airflow list_dags \
   # TODO: always return true until conflicts are resolved
   && pip check || true
