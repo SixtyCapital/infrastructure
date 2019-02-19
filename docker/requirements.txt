@@ -95,7 +95,7 @@ pytest-watch
 pytest-xdist
 python-language-server
 snakeviz
-tqdm
+tqdm==4.28.1  # attempt at https://issues.apache.org/jira/browse/AIRFLOW-3921  Not needed at Py3
 
 # viz
 altair
