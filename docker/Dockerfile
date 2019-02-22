@@ -55,6 +55,9 @@ RUN pip install pip --upgrade \
 # installed here rather than requirements because it doesn't list cython as a dependency, but fails
 # if it doesn't have it
 RUN pip install cartopy
+# https://github.com/antocuni/pdb/issues/58
+# remove at Py3
+RUN pip uninstall -y pyrepl
 
 # Jupyter & kernel gateway
 ENV JUPYTER_USE_HTTPS='1' JUPYTER_NOTEBOOK_DIR='/notebooks'
