@@ -10,25 +10,27 @@ toolz
 
 # pydata
 bottleneck
+bs4
 cython
+fuzzywuzzy[speedup]
 iso3166 # country mappings
+networkx
 numba
 numexpr
 numpy
 pandas-datareader
-pandas==0.24.1
 pandas-gbq
+pandas==0.24.1
 python-dateutil
 pytz
 scipy
 sklearn
 statsmodels
+tensorflow
+tensorflow-gpu
 xarray==0.11.3
 xlrd
 xlwt
-networkx
-fuzzywuzzy[speedup]
-bs4
 
 # data
 crcmod
@@ -101,11 +103,11 @@ tqdm==4.28.1  # attempt at https://issues.apache.org/jira/browse/AIRFLOW-3921  N
 altair
 cufflinks
 matplotlib
+pydot
+pygraphviz
 qgrid
 seaborn
 vega3
-pygraphviz
-pydot
 
 # airflow requirements
 snakebite
