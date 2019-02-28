@@ -107,9 +107,10 @@ spec:
         imagePullPolicy: Always
         resources:
           limits:
-            memory: 1Gi
+            memory: 2Gi
           requests:
             memory: 500Mi
+            cpu: 3000m
       - image: gcr.io/cloudsql-docker/gce-proxy:1.11
         name: cloudsql-proxy
         command: ["/cloud_sql_proxy"]
@@ -118,8 +119,6 @@ spec:
         - configMapRef:
             name: airflow-env
       restartPolicy: Always
-      nodeSelector:
-        cloud.google.com/gke-nodepool: small
 ---
 apiVersion: apps/v1
 kind: Deployment

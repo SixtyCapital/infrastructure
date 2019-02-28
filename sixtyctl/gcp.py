@@ -140,7 +140,12 @@ def create_db_instance(project_id, db_instance_name):
             'pricingPlan': 'PER_USE',
             'storageAutoResize': True,
             'storageAutoResizeLimit': '0',
-            'tier': 'db-custom-2-7680'}}
+            # only need one this large because of the number of connections
+            # ideally would be just above 7.5GB (same between 7.5 and 15),
+            # but need to check how to send custom reqs
+            # Could also use pgbouncer or mysql - vanilla postgres seems to be bad
+            # at handling lots of connections
+            'tier': 'db-custom-4-15360'}}
     operation = svc.instances().insert(project=project_id, body=body).execute()
 
     def check_status():
