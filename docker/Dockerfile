@@ -100,6 +100,23 @@ RUN curl -L https://github.com/mozilla/sops/releases/download/3.2.0/sops_3.2.0_a
   && dpkg -i sops.deb \
   && rm sops.deb
 
+# kubectl
+# https://kubernetes.io/docs/tasks/tools/install-kubectl/#kubectl-install-1
+RUN apt-get update && apt-get install -y apt-transport-https \ 
+  && curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - \
+  && echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | tee -a /etc/apt/sources.list.d/kubernetes.list \
+  && apt-get update && apt-get install -y \ 
+  kubectl \ 
+  && rm -rf /var/lib/apt/lists/*  
+# && kubectl version
+
+# kustomize
+# https://hub.docker.com/r/bitlayer/kustomize/dockerfile
+# update to more standard installation when available
+ARG KUSTOMIZE_VER=2.0.1
+RUN curl -L https://github.com/kubernetes-sigs/kustomize/releases/download/v${KUSTOMIZE_VER}/kustomize_${KUSTOMIZE_VER}_linux_amd64  -o /usr/bin/kustomize \
+  && chmod +x /usr/bin/kustomize
+
 # Airflow
 # installed here rather than requirements to ensure dependency versions work
 # don't install gcp_api here because it downgrades the version

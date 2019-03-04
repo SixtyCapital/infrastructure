@@ -1,2 +1,5 @@
 resources:
   - airflow.yaml
+
+configMapGenerator:
+  - name: airflow-env
