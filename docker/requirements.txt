@@ -28,7 +28,6 @@ scipy
 sklearn
 statsmodels
 tensorflow
-tensorflow-gpu
 xarray==0.11.3
 xlrd
 xlwt

@@ -128,6 +128,9 @@ RUN pip install apache-airflow[celery,postgres,crypto,s3]==1.10.2 \
   # TODO: always return true until conflicts are resolved
   && pip check || true
 
+# TODO remove this test when stable
+RUN python -c "import tensorflow, keras"
+
 ENV AIRFLOW_HOME=/usr/local/airflow
 COPY airflow/airflow.cfg airflow/airflow_setup.py ${AIRFLOW_HOME}/
 COPY airflow/airflow-entry.sh /usr/local/bin/
