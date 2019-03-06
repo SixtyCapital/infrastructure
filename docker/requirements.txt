@@ -14,6 +14,7 @@ bs4
 cython
 fuzzywuzzy[speedup]
 iso3166 # country mappings
+keras
 networkx
 numba
 numexpr
