@@ -61,3 +61,5 @@ if [ "$AIRFLOW__CORE__EXECUTOR" != "LocalExecutor" ] && [ "$AIRFLOW__CORE__EXECU
     done
   fi
 fi
+
+$CMD "$@"
