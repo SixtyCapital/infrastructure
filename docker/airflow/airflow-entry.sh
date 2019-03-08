@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# from https://github.com/mumoshu/kube-airflow/blob/master/script/entrypoint.sh
+
 set -e
 
 AIRFLOW_HOME="/usr/local/airflow"
@@ -24,12 +26,10 @@ if [ "$1" = "initdb" ] || [ "$1" = "webserver" ] || [ "$1" = "worker" ] || [ "$1
   i=0
   while ! nc -z $POSTGRES_HOST $POSTGRES_PORT >/dev/null 2>&1 < /dev/null; do
     i=$((i+1))
-    if [ "$1" = "webserver" ] ; then
-      echo "$(date) - waiting for ${POSTGRES_HOST}:${POSTGRES_PORT}... $i/$TRY_LOOP"
-      if [ $i -ge $TRY_LOOP ] ; then
-        echo "$(date) - ${POSTGRES_HOST}:${POSTGRES_PORT} still not reachable, giving up"
-        exit 1
-      fi
+    echo "$(date) - waiting for ${POSTGRES_HOST}:${POSTGRES_PORT}... $i/$TRY_LOOP"
+    if [ $i -ge $TRY_LOOP ] ; then
+      echo "$(date) - ${POSTGRES_HOST}:${POSTGRES_PORT} still not reachable, giving up"
+      exit 1
     fi
     sleep 5
   done
@@ -60,18 +60,4 @@ if [ "$AIRFLOW__CORE__EXECUTOR" != "LocalExecutor" ] && [ "$AIRFLOW__CORE__EXECU
       sleep 5
     done
   fi
-fi
-
-# avoid triggering CrashLoopBackOff in kubernetes sched with --num_runs
-if [ "$1" = "scheduler" ] ; then
-  while true; do
-    $CMD "$@"
-    ret=$?
-    if [ $ret -ne 0 ]; then
-      exit $?
-    fi
-    sleep 3
-  done
-else
-  $CMD "$@"
 fi
