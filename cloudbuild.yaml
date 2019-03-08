@@ -13,3 +13,5 @@ images:
   - gcr.io/sixty-capital/base:${TAG_NAME}${BRANCH_NAME}
 
 timeout: 3600s
+
+tags: ['${TAG_NAME}${BRANCH_NAME}']
