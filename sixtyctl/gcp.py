@@ -70,6 +70,7 @@ def enable_services(project_id):
         'datastore.googleapis.com',
         'deploymentmanager.googleapis.com',
         'logging.googleapis.com',
+        'ml.googleapis.com',
         'monitoring.googleapis.com',
         'pubsub.googleapis.com',
         'replicapool.googleapis.com',
