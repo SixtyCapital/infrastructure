@@ -108,6 +108,7 @@ pygraphviz
 qgrid
 seaborn
 vega3
+jupyterthemes
 
 # airflow requirements
 snakebite
