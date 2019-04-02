@@ -61,9 +61,6 @@ RUN curl -fsSL get.docker.com | sh
 COPY requirements.txt /
 RUN pip install pip --upgrade \
   && pip install --no-cache -r requirements.txt
-# installed here rather than requirements because it doesn't list cython as a dependency, but fails
-# if it doesn't have it
-RUN pip install cartopy
 # https://github.com/antocuni/pdb/issues/58
 # remove at Py3
 RUN pip uninstall -y pyrepl
@@ -112,9 +109,10 @@ RUN apt-get update && apt-get install -y apt-transport-https \
 
 # kustomize
 # https://hub.docker.com/r/bitlayer/kustomize/dockerfile
-# update to more standard installation when available
-ARG KUSTOMIZE_VER=2.0.1
-RUN curl -L https://github.com/kubernetes-sigs/kustomize/releases/download/v${KUSTOMIZE_VER}/kustomize_${KUSTOMIZE_VER}_linux_amd64  -o /usr/bin/kustomize \
+# update to use kubectl when available more standard https://cloud.google.com/sdk/docs/release-notes
+RUN KUSTOMIZE_VER=2.0.1 \
+  curl -L https://github.com/kubernetes-sigs/kustomize/releases/download/v${KUSTOMIZE_VER}/kustomize_${KUSTOMIZE_VER}_linux_amd64 \
+  -o /usr/bin/kustomize \
   && chmod +x /usr/bin/kustomize
 
 # Airflow
@@ -122,8 +120,8 @@ RUN curl -L https://github.com/kubernetes-sigs/kustomize/releases/download/v${KU
 # don't install gcp_api here because it downgrades the version
 # includes imperfect test to ensure it loads
 # https://github.com/un33k/python-slugify/issues/52
-ARG SLUGIFY_USES_TEXT_UNIDECODE=yes
-RUN pip install apache-airflow[celery,postgres,crypto,s3]==1.10.0 \
+RUN SLUGIFY_USES_TEXT_UNIDECODE=yes \
+  pip install --no-cache apache-airflow[celery,postgres,crypto,s3]==1.10.0 \
   && airflow list_dags \
   # TODO: always return true until conflicts are resolved
   && pip check || true
