@@ -60,7 +60,7 @@ RUN curl -fsSL get.docker.com | sh
 # standard requirements
 COPY requirements.txt /
 RUN pip install pip --upgrade \
-  && pip install -r requirements.txt
+  && pip install --no-cache -r requirements.txt
 # installed here rather than requirements because it doesn't list cython as a dependency, but fails
 # if it doesn't have it
 RUN pip install cartopy
