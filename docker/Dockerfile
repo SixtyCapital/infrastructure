@@ -110,8 +110,7 @@ RUN apt-get update && apt-get install -y apt-transport-https \
 # kustomize
 # https://hub.docker.com/r/bitlayer/kustomize/dockerfile
 # update to use kubectl when available more standard https://cloud.google.com/sdk/docs/release-notes
-RUN KUSTOMIZE_VER=2.0.1 \
-  curl -L https://github.com/kubernetes-sigs/kustomize/releases/download/v${KUSTOMIZE_VER}/kustomize_${KUSTOMIZE_VER}_linux_amd64 \
+RUN curl -L https://github.com/kubernetes-sigs/kustomize/releases/download/v2.0.3/kustomize_2.0.3_linux_amd64 \
   -o /usr/bin/kustomize \
   && chmod +x /usr/bin/kustomize
 
