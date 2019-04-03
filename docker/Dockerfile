@@ -121,7 +121,7 @@ RUN KUSTOMIZE_VER=2.0.1 \
 # includes imperfect test to ensure it loads
 # https://github.com/un33k/python-slugify/issues/52
 RUN SLUGIFY_USES_TEXT_UNIDECODE=yes \
-  pip install --no-cache apache-airflow[celery,postgres,crypto,s3]==1.10.0 \
+  pip install --no-cache apache-airflow[celery,postgres,crypto,s3]==1.10.2 \
   && airflow list_dags \
   # TODO: always return true until conflicts are resolved
   && pip check || true
