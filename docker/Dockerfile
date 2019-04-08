@@ -60,7 +60,10 @@ RUN curl -fsSL get.docker.com | sh
 # standard requirements
 COPY requirements.txt /
 RUN pip install pip --upgrade \
-  && pip install --no-cache -r requirements.txt
+  # https://github.com/un33k/python-slugify/issues/52
+  && SLUGIFY_USES_TEXT_UNIDECODE=yes pip install --no-cache -r requirements.txt \
+  # TODO: always return true until conflicts are resolved
+  && pip check || true
 # https://github.com/antocuni/pdb/issues/58
 # remove at Py3
 RUN pip uninstall -y pyrepl
@@ -98,6 +101,7 @@ RUN curl -L https://github.com/mozilla/sops/releases/download/3.2.0/sops_3.2.0_a
   && rm sops.deb
 
 # kubectl
+# TODO: consider installing as part of gcloud
 # https://kubernetes.io/docs/tasks/tools/install-kubectl/#kubectl-install-1
 RUN apt-get update && apt-get install -y apt-transport-https \ 
   && curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - \
@@ -113,20 +117,6 @@ RUN apt-get update && apt-get install -y apt-transport-https \
 RUN curl -L https://github.com/kubernetes-sigs/kustomize/releases/download/v2.0.3/kustomize_2.0.3_linux_amd64 \
   -o /usr/bin/kustomize \
   && chmod +x /usr/bin/kustomize
-
-# Airflow
-# installed here rather than requirements to ensure dependency versions work
-# don't install gcp_api here because it downgrades the version
-# includes imperfect test to ensure it loads
-# https://github.com/un33k/python-slugify/issues/52
-RUN SLUGIFY_USES_TEXT_UNIDECODE=yes \
-  pip install --no-cache apache-airflow[celery,postgres,crypto,s3]==1.10.2 \
-  && airflow list_dags \
-  # TODO: always return true until conflicts are resolved
-  && pip check || true
-
-# TODO remove this test when stable
-RUN python -c "import tensorflow, keras"
 
 ENV AIRFLOW_HOME=/usr/local/airflow
 COPY airflow/airflow.cfg airflow/airflow_setup.py ${AIRFLOW_HOME}/

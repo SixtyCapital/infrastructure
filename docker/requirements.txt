@@ -50,6 +50,7 @@ SQLAlchemy
 
 # infrastructure
 # apache_beam[gcp] # currently installs old version of google-bigquery
+apache-airflow[celery,postgres,crypto]==1.10.2
 boto
 celery
 cookiecutter
