@@ -61,7 +61,7 @@ RUN curl -fsSL get.docker.com | sh
 COPY requirements.txt /
 RUN pip install pip --upgrade \
   # https://github.com/un33k/python-slugify/issues/52
-  && SLUGIFY_USES_TEXT_UNIDECODE=yes pip install --no-cache -r requirements.txt \
+  && pip install --no-cache -r requirements.txt \
   # TODO: always return true until conflicts are resolved
   && pip check || true
 # https://github.com/antocuni/pdb/issues/58
