@@ -113,6 +113,3 @@ jupyterthemes
 
 # airflow requirements
 snakebite
-
-# installed outside requirements as it's fussy about versions
-# apache-airflow[celery,postgres,crypto,s3]==1.9.0
