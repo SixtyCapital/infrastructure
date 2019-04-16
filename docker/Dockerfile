@@ -122,7 +122,6 @@ ENV AIRFLOW_HOME=/usr/local/airflow
 COPY airflow/airflow.cfg airflow/airflow_setup.py ${AIRFLOW_HOME}/
 COPY airflow/airflow-entry.sh /usr/local/bin/
 COPY airflow/dags.py ${AIRFLOW_HOME}/dags/
-COPY airflow/airflow_local_settings.py ${AIRFLOW_HOME}/settings/
 ENV PYTHONPATH="${AIRFLOW_HOME}/settings:${PYTHONPATH}"
 
 CMD /bin/bash
