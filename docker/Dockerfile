@@ -123,5 +123,6 @@ COPY airflow/airflow.cfg airflow/airflow_setup.py ${AIRFLOW_HOME}/
 COPY airflow/airflow-entry.sh /usr/local/bin/
 COPY airflow/dags.py ${AIRFLOW_HOME}/dags/
 ENV PYTHONPATH="${AIRFLOW_HOME}/settings:${PYTHONPATH}"
+RUN python -c "import airflow"
 
 CMD /bin/bash
