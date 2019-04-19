@@ -119,8 +119,7 @@ RUN curl -L https://github.com/kubernetes-sigs/kustomize/releases/download/v2.0.
   && chmod +x /usr/bin/kustomize
 
 ENV AIRFLOW_HOME=/usr/local/airflow
-COPY airflow/airflow.cfg airflow/airflow_setup.py ${AIRFLOW_HOME}/
-COPY airflow/airflow-entry.sh /usr/local/bin/
+COPY airflow/airflow.cfg airflow/airflow_setup.py airflow/airflow-init.sh ${AIRFLOW_HOME}/
 COPY airflow/dags.py ${AIRFLOW_HOME}/dags/
 ENV PYTHONPATH="${AIRFLOW_HOME}/settings:${PYTHONPATH}"
 RUN python -c "import airflow"

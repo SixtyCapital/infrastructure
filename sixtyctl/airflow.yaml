@@ -41,7 +41,8 @@ spec:
       - name: airflow
         image: gcr.io/sixty-secure/conductor:master
         command:
-        - /usr/local/bin/airflow-entry.sh
+        - airflow
+        args:
         - webserver
         envFrom:
         - configMapRef:
@@ -94,8 +95,10 @@ spec:
       - name: airflow
         image: gcr.io/sixty-secure/conductor:master
         command:
-        - /usr/local/bin/airflow-entry.sh
-        - scheduler
+        - bash
+        args:
+        # need to run initdb at start of airflow
+        - '-c "$(AIRFLOW_HOME)/airflow-init.sh && airflow scheduler"'
         envFrom:
         - configMapRef:
             name: airflow-env
@@ -141,7 +144,8 @@ spec:
       - name: airflow
         image: gcr.io/sixty-secure/conductor:master
         command:
-        - /usr/local/bin/airflow-entry.sh
+        - airflow
+        args:
         - worker
         envFrom:
         - configMapRef:

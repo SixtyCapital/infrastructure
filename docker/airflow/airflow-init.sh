@@ -13,13 +13,8 @@ TRY_LOOP="20"
 : ${REDIS_PASSWORD:=""}
 
 #
-# : ${POSTGRES_HOST:="postgres"}
+: ${POSTGRES_HOST:="postgres"}
 : ${POSTGRES_PORT:="5432"}
-# : ${POSTGRES_USER:="airflow"}
-# : ${POSTGRES_PASSWORD:="airflow"}
-# : ${POSTGRES_DB:="airflow"}
-#
-# : ${FERNET_KEY:=$(python -c "from cryptography.fernet import Fernet; FERNET_KEY = Fernet.generate_key().decode(); print(FERNET_KEY)")}
 
 # Wait for Postresql
 if [ "$1" = "initdb" ] || [ "$1" = "webserver" ] || [ "$1" = "worker" ] || [ "$1" = "scheduler" ] ; then
@@ -47,19 +42,15 @@ fi
 
 # don't wait for redis if you don't need to (this is dependent on executor being set with an env. Possible to set with
 # other config settings, and then this process won't recognize)
-if [ "$AIRFLOW__CORE__EXECUTOR" != "LocalExecutor" ] && [ "$AIRFLOW__CORE__EXECUTOR" != "SequentialExecutor" ] ; then
-  if [ "$1" = "webserver" ] || [ "$1" = "worker" ] || [ "$1" = "scheduler" ] || [ "$1" = "flower" ] ; then
-    j=0
-    while ! nc -z $REDIS_HOST $REDIS_PORT >/dev/null 2>&1 < /dev/null; do
-      j=$((j+1))
-      if [ $j -ge $TRY_LOOP ]; then
-        echo "$(date) - $REDIS_HOST still not reachable, giving up"
-        exit 1
-      fi
-      echo "$(date) - waiting for Redis... $j/$TRY_LOOP"
-      sleep 5
-    done
-  fi
+if [ "$1" = "webserver" ] || [ "$1" = "worker" ] || [ "$1" = "scheduler" ] || [ "$1" = "flower" ] ; then
+  j=0
+  while ! nc -z $REDIS_HOST $REDIS_PORT >/dev/null 2>&1 < /dev/null; do
+    j=$((j+1))
+    if [ $j -ge $TRY_LOOP ]; then
+      echo "$(date) - $REDIS_HOST still not reachable, giving up"
+      exit 1
+    fi
+    echo "$(date) - waiting for Redis... $j/$TRY_LOOP"
+    sleep 5
+  done
 fi
-
-$CMD "$@"
