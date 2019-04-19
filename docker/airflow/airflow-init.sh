@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
+# this is now only used for production, since https://github.com/SixtyCapital/sixty/pull/1441
 # from https://github.com/mumoshu/kube-airflow/blob/master/script/entrypoint.sh
 
 set -e
-
 AIRFLOW_HOME="/usr/local/airflow"
 CMD="/usr/local/bin/airflow"
 TRY_LOOP="20"
@@ -30,8 +30,6 @@ if [ "$1" = "initdb" ] || [ "$1" = "webserver" ] || [ "$1" = "worker" ] || [ "$1
   done
   echo "Initialize database..."
   $CMD initdb
-  # put GCloud connection into DB
-  python ${AIRFLOW_HOME}/airflow_setup.py
   # don't do anything else if cmd is initdb
   if [ "$1" = "initdb" ] ; then
     exit 0
