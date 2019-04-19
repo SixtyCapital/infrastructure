@@ -56,7 +56,7 @@ spec:
           requests:
             memory: 1Gi
             cpu: 1000m
-      - image: gcr.io/cloudsql-docker/gce-proxy:1.11
+      - image: gcr.io/cloudsql-docker/gce-proxy:1.14
         name: cloudsql-proxy
         command: ["/cloud_sql_proxy"]
         args: ["-instances=$(DB_CONNECTION_NAME)=tcp:5432"]
@@ -106,7 +106,7 @@ spec:
           requests:
             memory: 500Mi
             cpu: 3000m
-      - image: gcr.io/cloudsql-docker/gce-proxy:1.11
+      - image: gcr.io/cloudsql-docker/gce-proxy:1.14
         name: cloudsql-proxy
         command: ["/cloud_sql_proxy"]
         args: ["-instances=$(DB_CONNECTION_NAME)=tcp:5432"]
@@ -157,7 +157,7 @@ spec:
           requests:
             memory: 1Gi
             cpu: 300m
-      - image: gcr.io/cloudsql-docker/gce-proxy:1.11
+      - image: gcr.io/cloudsql-docker/gce-proxy:1.14
         name: cloudsql-proxy
         command: ["/cloud_sql_proxy"]
         args: ["-instances=$(DB_CONNECTION_NAME)=tcp:5432"]
