@@ -96,9 +96,8 @@ spec:
         image: gcr.io/sixty-secure/conductor:master
         command:
         - bash
-        args:
         # need to run initdb at start of airflow
-        - '-c "$(AIRFLOW_HOME)/airflow-init.sh && airflow scheduler"'
+        args: ['-c', '"${AIRFLOW_HOME}"/airflow-init.sh && airflow scheduler']
         envFrom:
         - configMapRef:
             name: airflow-env
