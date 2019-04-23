@@ -1,5 +1,6 @@
 
 # python
+click
 dill
 funcsigs  # until Py3
 futures  # until Py3
