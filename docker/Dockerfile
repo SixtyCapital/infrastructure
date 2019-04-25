@@ -120,6 +120,7 @@ RUN curl -L https://github.com/kubernetes-sigs/kustomize/releases/download/v2.0.
 
 ENV AIRFLOW_HOME=/usr/local/airflow
 COPY airflow/airflow.cfg airflow/airflow-init.sh ${AIRFLOW_HOME}/
+COPY airflow/airflow_local_settings.py ${AIRFLOW_HOME}/settings/
 ENV PYTHONPATH="${AIRFLOW_HOME}/settings:${PYTHONPATH}"
 RUN python -c "import airflow"
 

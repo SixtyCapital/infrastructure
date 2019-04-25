@@ -277,6 +277,8 @@ def create_container_cluster(project_id, cluster_name, zone=None):
 
     body = {
         'locations': zones,
+        # TODO: upgrade to newer stackdriver
+        # (done manually to existing projects)
         'loggingService': 'logging.googleapis.com',
         'monitoringService': 'monitoring.googleapis.com',
         'name': cluster_name,
@@ -399,6 +401,7 @@ def create_project_buckets(project_id):
 
 
 def grant_bucket_access(project_id):
+    # TODO: we now use groups for this access; replace with group membership
     svc_email = describe_default_compute_service_account(project_id)['email']
     # grant access to GCR buckets
     gcr_projects = SCRATCH_PROJECTS
@@ -433,6 +436,8 @@ def grant_bucket_access(project_id):
 
 
 def grant_bigquery_access(project_id):
+    # TODO: we now use groups for this access; replace with group membership
+    # of service accounts
     if project_id in SCRATCH_PROJECTS:
         logger.info('Access not granted to ext data: {} is a scratch project')
         return
@@ -464,6 +469,7 @@ def grant_bigquery_access(project_id):
 
 
 def grant_kms_access(project_id):
+    # TODO: we now use groups for this access; replace with group membership
     svc_email = describe_default_compute_service_account(project_id)['email']
 
     member = 'serviceAccount:{}'.format(svc_email)
