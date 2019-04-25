@@ -15,6 +15,7 @@ bs4
 cartopy
 cython
 fuzzywuzzy[speedup]
+gcsfs
 iso3166 # country mappings
 keras
 networkx
