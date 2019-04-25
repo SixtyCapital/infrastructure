@@ -1,6 +1,6 @@
 ## Airflow Infrastructure Setup
 
-<!-- TODO: update for kustomize -->
+TODO: update for kustomize
 
 ```sh
 gcloud container clusters get-credentials $GOOGLE_CLOUD_PROJECT --zone us-east4-c --project $GOOGLE_CLOUD_PROJECT
