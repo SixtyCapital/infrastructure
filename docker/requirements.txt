@@ -2,10 +2,7 @@
 # python
 click
 dill
-funcsigs  # until Py3
-futures  # until Py3
 lazy
-qualname  # until py3
 six
 toolz
 
@@ -41,7 +38,7 @@ dogpile.cache
 lru-dict
 lxml
 pyarrow
-pyodbc==3.1.1 # because of unicode issues
+pyodbc
 pysftp
 pyslack-real
 quandl
@@ -70,6 +67,7 @@ wheel
 # datalab https://github.com/googledatalab/datalab/issues/1641
 asv
 autopep8
+black
 docformatter
 flake8
 flake8-isort
@@ -82,7 +80,6 @@ jupyter
 jupyter_kernel_gateway
 line_profiler
 memory_profiler
-mock # until Py3
 mockredispy
 notebook
 pdbpp

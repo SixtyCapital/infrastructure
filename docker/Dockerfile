@@ -1,4 +1,4 @@
-FROM python:2.7-stretch
+FROM python:3.6-stretch
 
 # https://github.com/phusion/baseimage-docker/issues/58
 ARG DEBIAN_FRONTEND=noninteractive
@@ -25,6 +25,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   gnupg \
   gpg-agent \
   graphviz \
+  graphviz-dev \
   less \
   libblas-dev \
   libffi-dev \
@@ -33,7 +34,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   liblapack-dev \
   libproj-dev \
   libssl-dev \
-  libxft-dev \
   libyaml-dev \
   netcat \
   pkg-config \
