@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: airflow-env
+data:
+  POSTGRES_DB: "airflow"
+  POSTGRES_HOST: "localhost"
+  POSTGRES_USER: "postgres"
+  REDIS_HOST: "celery-redis"

@@ -3,3 +3,6 @@ resources:
 
 configMapGenerator:
   - name: airflow-env
+
+patchesStrategicMerge:
+  - config.yaml
