@@ -92,6 +92,8 @@ RUN echo "deb https://packages.cloud.google.com/apt cloud-sdk-stretch main" | te
 ENV PATH=$PATH:/builder/google-cloud-sdk/bin/
 
 # Mosek
+# currently resolves to 35.185.107.128
+ENV MOSEKLM_LICENSE_FILE="8888@mosek.sixty.capital:/home/ubuntu/5054.lic"
 RUN pip install -f https://download.mosek.com/stable/wheel/index.html Mosek \
   && python -c '__import__("mosek").Env()'
 
