@@ -28,7 +28,7 @@ scikit-learn
 scipy
 statsmodels
 tensorflow
-xarray==0.11.3
+xarray==0.12.1
 xlrd
 xlwt
 
