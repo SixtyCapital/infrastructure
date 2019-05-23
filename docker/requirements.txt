@@ -44,7 +44,8 @@ pyslack-real
 quandl
 redis
 requests
-slackclient
+# import error with 2.0, not sure what's happening but dnot important
+slackclient<2.0.0
 SQLAlchemy
 
 # infrastructure
