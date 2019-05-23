@@ -92,7 +92,8 @@ RUN echo "deb https://packages.cloud.google.com/apt cloud-sdk-stretch main" | te
 ENV PATH=$PATH:/builder/google-cloud-sdk/bin/
 
 # Mosek
-RUN pip install -f https://download.mosek.com/stable/wheel/index.html Mosek \
+# pinned < 9.0 for now (we would need to get maintenance for free upgrades)
+RUN pip install -f https://download.mosek.com/stable/wheel/index.html "Mosek<9.0.0" \
   && python -c '__import__("mosek").Env()'
 
 # sops
