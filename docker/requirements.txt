@@ -25,7 +25,8 @@ pandas==0.24.2
 python-dateutil
 pytz
 scikit-learn
-scipy
+# https://github.com/statsmodels/statsmodels/issues/5759
+scipy==1.2.0
 statsmodels
 tensorflow
 xarray==0.12.1
