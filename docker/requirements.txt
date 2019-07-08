@@ -26,11 +26,10 @@ pandas==0.24.2
 python-dateutil
 pytz
 scikit-learn
-# https://github.com/statsmodels/statsmodels/issues/5759
-scipy==1.2.0
+scipy
 statsmodels
 tensorflow
-xarray==0.12.1
+xarray==0.12.2
 xlrd
 xlwt
 
@@ -52,6 +51,9 @@ SQLAlchemy
 
 # infrastructure
 apache-airflow[celery,postgres,crypto]==1.10.3
+# https://github.com/apache/airflow/pull/5535
+# flask<1.10.0
+werkzeug==0.15.0
 boto
 celery
 cookiecutter
