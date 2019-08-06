@@ -65,8 +65,6 @@ RUN pip install pip --upgrade \
   # TODO: always return true until conflicts are resolved
   && pip check || true
 # https://github.com/antocuni/pdb/issues/58
-# remove at Py3
-RUN pip uninstall -y pyrepl
 
 # Jupyter & kernel gateway
 ENV JUPYTER_USE_HTTPS='1' JUPYTER_NOTEBOOK_DIR='/notebooks'

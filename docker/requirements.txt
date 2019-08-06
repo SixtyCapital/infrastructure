@@ -29,7 +29,7 @@ scikit-learn
 scipy
 statsmodels
 tensorflow
-xarray==0.12.2
+xarray==0.12.3
 xlrd
 xlwt
 
@@ -45,7 +45,7 @@ pyslack-real
 quandl
 redis
 requests
-# import error with 2.0, not sure what's happening but dnot important
+# import error with 2.0, not sure what's happening but not important
 slackclient<2.0.0
 SQLAlchemy
 
@@ -83,7 +83,8 @@ isort
 jedi
 jupyter
 jupyter_kernel_gateway
-line_profiler
+# https://github.com/rkern/line_profiler/pull/153
+# line_profiler
 memory_profiler
 mockredispy
 notebook
