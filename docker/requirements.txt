@@ -103,6 +103,7 @@ pytest-watch
 pytest-xdist
 python-language-server
 snakeviz
+structlog
 tqdm
 
 # viz
