@@ -38,21 +38,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   netcat \
   pkg-config \
   proj-bin \
-  unixodbc \
-  unixodbc-dev \
   unzip \
   vim \
   wget \
   && rm -rf /var/lib/apt/lists/*
-
-# install mssql drivers https://msdn.microsoft.com/en-us/library/hh568454(v=sql.110).aspx
-RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
-  && curl https://packages.microsoft.com/config/debian/9/prod.list > /etc/apt/sources.list.d/mssql-release.list
-RUN apt-get update && ACCEPT_EULA=Y apt-get install -y --no-install-recommends \
-  msodbcsql17 \
-  mssql-tools \
-  && rm -rf /var/lib/apt/lists/*
-RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
 
 # docker (simple version), from https://docs.docker.com/engine/installation/linux/ubuntu
 RUN curl -fsSL get.docker.com | sh
