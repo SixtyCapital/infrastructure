@@ -1,13 +1,14 @@
-from __future__ import unicode_literals
-from __future__ import absolute_import
+from __future__ import absolute_import, unicode_literals
+
 from googleapiclient.discovery import build
-from sixtyctl.util import getLogger
+
 from sixtyctl.config import (
-    SCRATCH_PROJECTS,
-    STRATEGY_PROJECTS,
     EXTERNAL_PROJECTS,
     KMS_PROJECT,
+    SCRATCH_PROJECTS,
+    STRATEGY_PROJECTS,
 )
+from sixtyctl.util import getLogger
 
 logger = getLogger(__name__)
 REGION = "us-east4"
@@ -252,10 +253,8 @@ def add_vpc_peering_to_trading(project_id):
     svc = build("compute", "v1")
     logger.info("Adding VPC peering for trading to project {}".format(project_id))
 
-    # TODO:  I WILL ADD THE PRODUCTION TRADING CONNECTION HERE, BUT FOR NOW, I DON'T WANT ANY CHANCE
-    # OF CONNECTING UP TO THAT UNTIL I'M A BIT MORE COMFORTABLE WITH THIS SETUP
     body_external = {
-        "peerNetwork": "https://www.googleapis.com/compute/v1/projects/sixty-trading-test/global/networks/default",
+        "peerNetwork": "https://www.googleapis.com/compute/v1/projects/sixty-trading-test/global/networks/default",  # noqa
         "name": "trading-link-" + project_id,
         "autoCreateRoutes": True,
     }
@@ -303,6 +302,7 @@ def create_container_cluster(project_id, cluster_name, zone=None):
         "https://www.googleapis.com/auth/logging.write",
         "https://www.googleapis.com/auth/monitoring",
         "https://www.googleapis.com/auth/sqlservice.admin",
+        "https://www.googleapis.com/auth/datastore",
     ]
 
     zones = [ZONE]

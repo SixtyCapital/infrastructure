@@ -3,7 +3,7 @@
 # """
 # Inherits the standard config with one change - log task logs to
 # stdout
-# ref https://github.com/GoogleCloudPlatform/airflow-operator/issues/72#issuecomment-486509956
+# ref https://github.com/GoogleCloudPlatform/airflow-operator/issues/72#issuecomment-486509956  # noqa
 # """
 
 # from airflow.config_templates.airflow_local_settings import *
@@ -11,7 +11,8 @@
 # K8S_LOGGING_CONFIG = DEFAULT_LOGGING_CONFIG.copy()
 # K8S_LOGGING_CONFIG['loggers']['airflow.task']['propagate'] = True
 
-# Sixty: Replaced version as we had mysterious timeout errors and a stab in the dark is sometimes better than no stab
+# Sixty: Replaced version as we had mysterious timeout errors and a stab
+# in the dark is sometimes better than no stab
 
 # -*- coding: utf-8 -*-
 #
