@@ -274,6 +274,20 @@ def add_vpc_peering_to_trading(project_id):
     ).execute()
 
 
+node_oauth_scopes = [
+    "https://www.googleapis.com/auth/bigquery",
+    "https://www.googleapis.com/auth/cloud-platform",
+    "https://www.googleapis.com/auth/compute",
+    "https://www.googleapis.com/auth/devstorage.read_write",
+    "https://www.googleapis.com/auth/service.management.readonly",
+    "https://www.googleapis.com/auth/servicecontrol",
+    "https://www.googleapis.com/auth/logging.write",
+    "https://www.googleapis.com/auth/monitoring",
+    "https://www.googleapis.com/auth/sqlservice.admin",
+    "https://www.googleapis.com/auth/datastore",
+]
+
+
 def create_container_cluster(project_id, cluster_name, zone=None):
     if not zone:
         zone = ZONE
@@ -292,28 +306,12 @@ def create_container_cluster(project_id, cluster_name, zone=None):
     if [x for x in list_res if x["name"] == cluster_name]:
         logger.warn("Container cluster {} already exists!".format(cluster_name))
         return lambda: True  # short circuit if cluster exists
-    node_oauth_scopes = [
-        "https://www.googleapis.com/auth/bigquery",
-        "https://www.googleapis.com/auth/cloud-platform",
-        "https://www.googleapis.com/auth/compute",
-        "https://www.googleapis.com/auth/devstorage.read_write",
-        "https://www.googleapis.com/auth/service.management.readonly",
-        "https://www.googleapis.com/auth/servicecontrol",
-        "https://www.googleapis.com/auth/logging.write",
-        "https://www.googleapis.com/auth/monitoring",
-        "https://www.googleapis.com/auth/sqlservice.admin",
-        "https://www.googleapis.com/auth/datastore",
-    ]
 
     zones = [ZONE]
     zones.extend(BACKUP_ZONES)
 
     body = {
         "locations": zones,
-        # TODO: upgrade to newer stackdriver
-        # (done manually to existing projects)
-        "loggingService": "logging.googleapis.com",
-        "monitoringService": "monitoring.googleapis.com",
         "name": cluster_name,
         "nodePools": [
             {
