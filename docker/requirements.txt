@@ -49,7 +49,7 @@ slackclient<2.0.0
 SQLAlchemy
 
 # infrastructure
-apache-airflow[celery,postgres,crypto]==1.10.4
+apache-airflow[celery,postgres,crypto]==1.10.5
 boto
 celery
 cookiecutter
