@@ -1,4 +1,4 @@
-FROM python:3.7-stretch
+FROM python:3.7-buster
 
 # https://github.com/phusion/baseimage-docker/issues/58
 ARG DEBIAN_FRONTEND=noninteractive
