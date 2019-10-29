@@ -78,6 +78,7 @@ ipython
 isort
 jedi
 jupyter
+jupyterlab
 jupyter_kernel_gateway
 # https://github.com/rkern/line_profiler/pull/153
 # line_profiler
